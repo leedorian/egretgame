@@ -1,0 +1,43 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-hot-code-push-plugin": {
+      "PACKAGE_NAME": "cn.joycells"
+    },
+    "cordova-plugin-camera": {
+      "PACKAGE_NAME": "cn.joycells"
+    },
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "cn.joycells"
+    },
+    "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "cn.joycells"
+    },
+    "cordova-plugin-network-information": {
+      "PACKAGE_NAME": "cn.joycells"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "cn.joycells"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "cn.joycells"
+    },
+    "cordova-plugin-vibration": {
+      "PACKAGE_NAME": "cn.joycells"
+    },
+    "cordova-plugin-wechatv2": {
+      "WECHATAPPID": "wxde833bddadcdeb1d",
+      "PACKAGE_NAME": "cn.joycells"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "cn.joycells"
+    }
+  },
+  "dependent_plugins": {}
+}

@@ -1,0 +1,37 @@
+{
+  "name": "cn.joycells",
+  "version": "1.0.0",
+  "displayName": "别碰白块",
+  "cordova": {
+    "platforms": [
+      "android"
+    ],
+    "plugins": {
+      "cordova-plugin-network-information": {},
+      "cordova-hot-code-push-plugin": {},
+      "cordova-plugin-camera": {},
+      "cordova-plugin-file": {},
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-wechatv2": {
+        "WECHATAPPID": "wxde833bddadcdeb1d"
+      },
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-vibration": {},
+      "cordova-plugin-inappbrowser": {}
+    }
+  },
+  "dependencies": {
+    "cordova-android": "^7.1.4",
+    "cordova-hot-code-push-plugin": "^1.5.3",
+    "cordova-plugin-camera": "^4.0.3",
+    "cordova-plugin-file": "^6.0.1",
+    "cordova-plugin-inappbrowser": "^3.0.0",
+    "cordova-plugin-network-information": "^2.0.1",
+    "cordova-plugin-splashscreen": "^5.0.2",
+    "cordova-plugin-statusbar": "^2.4.2",
+    "cordova-plugin-vibration": "^3.1.0",
+    "cordova-plugin-wechatv2": "^2.1.3",
+    "cordova-plugin-whitelist": "1"
+  }
+}
