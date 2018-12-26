@@ -51,6 +51,7 @@ var GameScene = (function (_super) {
                 name: "col_" + i
             });
             blockColumn.x = i * nColWidth;
+            blockColumn.width = nColWidth;
             this.addChild(blockColumn);
             this._blockColumns.push(blockColumn);
         }

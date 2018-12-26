@@ -9,14 +9,17 @@
 	],
 	"game": [
 		"bin-debug/Block.js",
+		"bin-debug/Utils.js",
+		"bin-debug/BlockNormal.js",
 		"bin-debug/BlocksColumn.js",
 		"bin-debug/Enums.js",
 		"bin-debug/Events.js",
-		"bin-debug/GameScene.js",
+		"bin-debug/BlockDouble.js",
 		"bin-debug/LoadingUI.js",
 		"bin-debug/Main.js",
 		"bin-debug/Platform.js",
 		"bin-debug/Service.js",
-		"bin-debug/Utils.js"
+		"bin-debug/UIComponents.js",
+		"bin-debug/GameScene.js"
 	]
 }

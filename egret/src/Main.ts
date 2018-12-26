@@ -33,7 +33,7 @@ class Main extends egret.DisplayObjectContainer {
 
     public constructor() {
         super();
-        
+
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this);
     }
 
@@ -66,8 +66,8 @@ class Main extends egret.DisplayObjectContainer {
     private async runGame() {
         await this.loadResource()
         this.createGameScene();
-        const result = await RES.getResAsync("description_json")
-        this.startAnimation(result);
+        // const result = await RES.getResAsync("description_json")
+        // this.startAnimation(result);
         await platform.login();
         const userInfo = await platform.getUserInfo();
         console.log(userInfo);
@@ -88,6 +88,8 @@ class Main extends egret.DisplayObjectContainer {
     }
 
     private textfield: egret.TextField;
+    private _gameScene: GameScene;
+    private _startButton: UIComponents.DefaultButton;
 
     /**
      * 创建游戏场景
@@ -95,67 +97,84 @@ class Main extends egret.DisplayObjectContainer {
      */
     private async createGameScene() {
         this.stage.setContentSize(window.innerWidth, window.innerHeight);
-        let sky = this.createBitmapByName("bg_jpg");
-        this.addChild(sky);
+        const bg = this.createBitmapByName("bg_texture_jpg");
+        bg.fillMode = egret.BitmapFillMode.REPEAT;
+        this.addChild(bg);
         let stageW = this.stage.stageWidth;
         let stageH = this.stage.stageHeight;
-        sky.width = stageW;
-        sky.height = stageH;
+        bg.width = stageW;
+        bg.height = stageH;
 
-        let topMask = new egret.Shape();
-        topMask.graphics.beginFill(0x000000, 0.5);
-        topMask.graphics.drawRect(0, 0, stageW, 172);
-        topMask.graphics.endFill();
-        topMask.y = 33;
-        this.addChild(topMask);
+        // let topMask = new egret.Shape();
+        // topMask.graphics.beginFill(0x000000, 0.5);
+        // topMask.graphics.drawRect(0, 0, stageW, 172);
+        // topMask.graphics.endFill();
+        // topMask.y = 33;
+        // this.addChild(topMask);
 
-        let icon = this.createBitmapByName("egret_icon_png");
-        this.addChild(icon);
-        icon.x = 26;
-        icon.y = 33;
+        // let icon = this.createBitmapByName("egret_icon_png");
+        // this.addChild(icon);
+        // icon.x = 26;
+        // icon.y = 33;
 
-        let line = new egret.Shape();
-        line.graphics.lineStyle(2, 0xffffff);
-        line.graphics.moveTo(0, 0);
-        line.graphics.lineTo(0, 117);
-        line.graphics.endFill();
-        line.x = 172;
-        line.y = 61;
-        this.addChild(line);
+        // let line = new egret.Shape();
+        // line.graphics.lineStyle(2, 0xffffff);
+        // line.graphics.moveTo(0, 0);
+        // line.graphics.lineTo(0, 117);
+        // line.graphics.endFill();
+        // line.x = 172;
+        // line.y = 61;
+        // this.addChild(line);
 
 
-        let colorLabel = new egret.TextField();
-        colorLabel.textColor = 0xffffff;
-        colorLabel.width = stageW - 172;
-        colorLabel.textAlign = "center";
-        colorLabel.text = "Hello Egret";
-        colorLabel.size = 24;
-        colorLabel.x = 172;
-        colorLabel.y = 80;
-        this.addChild(colorLabel);
+        // let colorLabel = new egret.TextField();
+        // colorLabel.textColor = 0xffffff;
+        // colorLabel.width = stageW - 172;
+        // colorLabel.textAlign = "center";
+        // colorLabel.text = "Hello Egret";
+        // colorLabel.size = 24;
+        // colorLabel.x = 172;
+        // colorLabel.y = 80;
+        // this.addChild(colorLabel);
 
-        let textfield = new egret.TextField();
-        this.addChild(textfield);
-        textfield.alpha = 0;
-        textfield.width = stageW - 172;
-        textfield.textAlign = egret.HorizontalAlign.CENTER;
-        textfield.size = 24;
-        textfield.textColor = 0xffffff;
-        textfield.x = 172;
-        textfield.y = 135;
-        this.textfield = textfield;
-        let gameService: Service = new Service();
-        let gameConfig: any = await gameService.getGameConfig();
-        console.log(gameConfig);
-        let gameScene = new GameScene({
-            mode: GameMode.BI_DIR,
+        // let textfield = new egret.TextField();
+        // this.addChild(textfield);
+        // textfield.alpha = 0;
+        // textfield.width = stageW - 172;
+        // textfield.textAlign = egret.HorizontalAlign.CENTER;
+        // textfield.size = 24;
+        // textfield.textColor = 0xffffff;
+        // textfield.x = 172;
+        // textfield.y = 135;
+        // this.textfield = textfield;
+
+
+        const gameService: Service = new Service();
+        const gameConfig: any = await gameService.getGameConfig();
+
+        const gameScene = new GameScene({
+            mode: GameMode.DOWN,
             level: GameLevel.EASY
         });
+        this._gameScene = gameScene;
         this.addChild(gameScene);
-        gameScene.gameStart();
-        
+
+        const startButtonWidth:number = Utils.getStageWidth()/2;
+        const startButtonHeight:number = 80;
+        const startButton: UIComponents.DefaultButton =
+            new UIComponents.DefaultButton(startButtonWidth,startButtonHeight,"Start");
+        startButton.x = Utils.getStageWidth()/2 - startButtonWidth/2;
+        startButton.y = Utils.getStageHeight() * 0.3;
+        startButton.addEventListener("touchTap", this._startGame, this);
+        this._startButton = startButton;
+        this.addChild(startButton);
+
     }
-    
+    private _startGame() {
+        this._startButton.visible = false;
+        this._gameScene.gameStart();
+    }
+
 
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。

@@ -6,7 +6,9 @@ enum BlockState{
 enum BlockColor{
     unClickable = 0xffffff,
     clickable = 0x000000,
-    clicked = 0x0000ff
+    border = 0x666666,
+
+    clickableDouble = 0x1b34ba
 }
 enum GameMode{
     BI_DIR,
@@ -17,4 +19,7 @@ enum GameLevel{
     EASY,
     NORMAL,
     HARD
+}
+enum TextColors{
+    defaultButtonLable = 0xffffff
 }

@@ -47,34 +47,47 @@ var Block = (function (_super) {
     __extends(Block, _super);
     function Block(param) {
         var _this = _super.call(this) || this;
+        _this._unClickableColor = BlockColor.unClickable;
+        _this._clickedColor = BlockColor.clicked;
         _this.touchEnabled = true;
         _this._currentState = param.state;
         _this.width = param.width;
         _this.height = param.height;
+        _this._colorRect = new egret.Shape();
+        _this._colorRect.width = _this.width;
+        _this._colorRect.height = _this.height;
+        _this._beforeDraw();
         _this._draw();
         _this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, _this._onTouch, _this);
         return _this;
     }
     Block.prototype._draw = function () {
         var fillColor;
-        var labelColor = BlockColor.unClickable;
-        var lineColor = BlockColor.clickable;
-        if (this._currentState === 0) {
-            fillColor = BlockColor.unClickable;
-            labelColor = BlockColor.clickable;
+        // let labelColor: BlockColor = BlockColor.unClickable;
+        var lineColor = BlockColor.border;
+        var rectWidth = this._colorRect.width;
+        var rectHeight = this._colorRect.height;
+        // const rectX = rectWidth / 2;
+        // const rectY = rectHeight / 2;
+        // this._colorRect.anchorOffsetX = rectX;
+        // this._colorRect.anchorOffsetY = rectY;
+        // this._colorRect.x = rectX;
+        // this._colorRect.y = rectY;
+        if (this._currentState === BlockState.clickable || this._currentState === BlockState.clicked) {
+            fillColor = this._clickableColor;
         }
-        else if (this._currentState === 1) {
-            fillColor = BlockColor.clickable;
+        this._colorRect.graphics.clear();
+        this._colorRect.graphics.lineStyle(1, lineColor);
+        if (this._currentState !== BlockState.unclickable) {
+            this._colorRect.graphics.beginFill(fillColor, 1);
         }
-        else if (this._currentState === 2) {
-            fillColor = BlockColor.clicked;
+        this._colorRect.graphics.drawRect((this.width - rectWidth) / 2, (this.height - rectHeight) / 2, rectWidth, rectHeight);
+        if (this._colorRect.parent === null) {
+            this.addChild(this._colorRect);
         }
-        this.graphics.lineStyle(1, lineColor);
-        this.graphics.beginFill(fillColor, 1);
-        this.graphics.drawRect(0, 0, this.width, this.height);
-        if (this._currentState === 1) {
-            lineColor = BlockColor.unClickable;
-        }
+        // if(this._currentState === 1){
+        //     lineColor = BlockColor.unClickable;
+        // }
         // this.graphics.lineStyle(1, lineColor);
         // this.graphics.moveTo( this.x,this.y );
         // this.graphics.lineTo( this.x  + this.width, this.y );
@@ -88,12 +101,51 @@ var Block = (function (_super) {
         // label.text = this.hashCode.toString();
         // this.addChild( label );
     };
-    Block.prototype._onTouch = function (oEvent) {
-        if (this._currentState === 1) {
-            this.state = "clicked";
-            var hitEvent = new GameEvents.BlockEvent(GameEvents.BlockEvent.HIT);
-            this.dispatchEvent(hitEvent);
+    Block.prototype._hitAni = function () {
+        var rectWidth = this._colorRect.width;
+        var rectHeight = this._colorRect.height;
+        if (rectWidth > 0) {
+            this._colorRect.width = rectWidth - 6;
         }
+        else {
+            this._colorRect.width = 0;
+        }
+        if (rectHeight > 0) {
+            this._colorRect.height = rectHeight - 8;
+        }
+        else {
+            this._colorRect.height = 0;
+        }
+        if (rectWidth === 0 && rectHeight === 0) {
+            // let rectWidth: number = this._colorRect.scaleX;
+            // let rectHeight: number = this._colorRect.scaleY;
+            // if (rectWidth > 0) {
+            //     this._colorRect.scaleX = rectWidth - 0.1;
+            // } else {
+            //     this._colorRect.scaleX = 0;
+            // }
+            // if (rectHeight > 0) {
+            //     this._colorRect.scaleY = rectHeight - 0.1;
+            // } else {
+            //     this._colorRect.scaleY = 0;
+            // }
+            // if (rectWidth === 0 && rectHeight === 0) {
+            egret.stopTick(this._hitAni, this);
+            this.removeChild(this._colorRect);
+            this._colorRect = null;
+            // this.removeEventListener(egret.Event.ENTER_FRAME, this._hitAni, this);
+        }
+        else {
+            this._draw();
+        }
+        return false;
+    };
+    Block.prototype._hit = function () {
+        // this.addEventListener(egret.Event.ENTER_FRAME, this._hitAni, this);
+        egret.startTick(this._hitAni, this);
+        this.state = "clicked";
+        var hitEvent = new GameEvents.BlockEvent(GameEvents.BlockEvent.HIT);
+        this.dispatchEvent(hitEvent);
     };
     Block.prototype.move = function (speed, dir) {
         if (dir === void 0) { dir = "down"; }
@@ -135,7 +187,7 @@ var Block = (function (_super) {
     Block.prototype._triggerMovedOutEvent = function () {
         var missed = false;
         var movedOutEvent = new GameEvents.BlockEvent(GameEvents.BlockEvent.MOVED_OUT);
-        if (this._currentState === 1) {
+        if (this._currentState === BlockState.clickable) {
             missed = true;
         }
         movedOutEvent.missed = missed;
@@ -158,6 +210,76 @@ var Block = (function (_super) {
     return Block;
 }(egret.Sprite));
 __reflect(Block.prototype, "Block");
+var Utils = (function () {
+    function Utils() {
+    }
+    Utils.getBlockWidth = function () {
+        if (Utils._blockWidth === 0) {
+            Utils._blockWidth = egret.MainContext.instance.stage.stageWidth / this.columns;
+        }
+        return Utils._blockWidth;
+    };
+    Utils.getBlockHeight = function () {
+        if (Utils._blockHeight === 0) {
+            Utils._blockHeight = Math.ceil(egret.MainContext.instance.stage.stageHeight / this.rows);
+        }
+        return Utils._blockHeight;
+    };
+    Utils.getStageWidth = function () {
+        if (Utils._stageWidth === 0) {
+            Utils._stageWidth = egret.MainContext.instance.stage.stageWidth;
+        }
+        return Utils._stageWidth;
+    };
+    Utils.getStageHeight = function () {
+        if (Utils._stageHeight === 0) {
+            Utils._stageHeight = egret.MainContext.instance.stage.stageHeight;
+        }
+        return Utils._stageHeight;
+    };
+    Utils.getRowBlockState = function (rowIndex) {
+        if (Utils.rowsState[rowIndex] === undefined) {
+            var rowState = [];
+            var clickableColmun = Math.floor(Math.random() * Utils.columns);
+            for (var i = 0; i < Utils.columns; i++) {
+                if (i === clickableColmun) {
+                    rowState.push(BlockState.clickable);
+                }
+                else {
+                    rowState.push(BlockState.unclickable);
+                }
+            }
+            Utils.rowsState.push(rowState);
+            return rowState;
+        }
+        return Utils.rowsState[rowIndex];
+    };
+    Utils._blockWidth = 0;
+    Utils._blockHeight = 0;
+    Utils._stageHeight = 0;
+    Utils._stageWidth = 0;
+    Utils.rowsState = [];
+    Utils.rows = 6;
+    Utils.columns = 6;
+    return Utils;
+}());
+__reflect(Utils.prototype, "Utils");
+var BlockNormal = (function (_super) {
+    __extends(BlockNormal, _super);
+    function BlockNormal(param) {
+        return _super.call(this, param) || this;
+    }
+    BlockNormal.prototype._beforeDraw = function () {
+        this._clickableColor = BlockColor.clickable;
+    };
+    BlockNormal.prototype._onTouch = function (oEvent) {
+        if (this._currentState === BlockState.clickable) {
+            this._hit();
+        }
+    };
+    return BlockNormal;
+}(Block));
+__reflect(BlockNormal.prototype, "BlockNormal");
 var BlocksColumn = (function (_super) {
     __extends(BlocksColumn, _super);
     function BlocksColumn(param) {
@@ -179,11 +301,17 @@ var BlocksColumn = (function (_super) {
         var blockCount = this._dir === "down" ? Utils.rows : Utils.rows + 1;
         for (var i = n; i < blockCount; i++) {
             this._creatingRowIndex = this._dir === "down" ? i + 1 : i;
+            // let block = this._createBlock({
+            //     state: Utils.getRowBlockState(this._creatingRowIndex)[
+            //         this._index
+            //     ]
+            // });
             var block = this._createBlock({
-                state: Utils.getRowBlockState(this._creatingRowIndex)[this._index]
+                state: BlockState.unclickable
             });
-            block.y = i * block.height;
             this.addChild(block);
+            block.x = 0;
+            block.y = i * block.height;
             this._blocks.push(block);
         }
     };
@@ -195,7 +323,8 @@ var BlocksColumn = (function (_super) {
             height: blockHeight,
             state: settings.state
         };
-        var block = new Block(param);
+        // let block = new BlockNormal(param);
+        var block = new BlockDouble(param);
         block.addEventListener(GameEvents.BlockEvent.MOVED_OUT, this._onMovedOut, this);
         return block;
     };
@@ -257,7 +386,6 @@ var BlocksColumn = (function (_super) {
         if (this._speedLevel === Service.GAME_CONFIG.speedLevels.length) {
             this._speedTick = true;
         }
-        console.log(this.name + "-" + this._speedLevel);
     };
     BlocksColumn.prototype._slowDown = function () {
         if (this._speedLevel > 0) {
@@ -269,7 +397,6 @@ var BlocksColumn = (function (_super) {
             this._speedTick = false;
             this._reversePause();
         }
-        console.log(this.name + "-" + this._speedLevel);
     };
     BlocksColumn.prototype._revertDir = function () {
         if (this._dir === "up") {
@@ -334,7 +461,8 @@ var BlockColor;
 (function (BlockColor) {
     BlockColor[BlockColor["unClickable"] = 16777215] = "unClickable";
     BlockColor[BlockColor["clickable"] = 0] = "clickable";
-    BlockColor[BlockColor["clicked"] = 255] = "clicked";
+    BlockColor[BlockColor["border"] = 6710886] = "border";
+    BlockColor[BlockColor["clickableDouble"] = 1782970] = "clickableDouble";
 })(BlockColor || (BlockColor = {}));
 var GameMode;
 (function (GameMode) {
@@ -348,6 +476,10 @@ var GameLevel;
     GameLevel[GameLevel["NORMAL"] = 1] = "NORMAL";
     GameLevel[GameLevel["HARD"] = 2] = "HARD";
 })(GameLevel || (GameLevel = {}));
+var TextColors;
+(function (TextColors) {
+    TextColors[TextColors["defaultButtonLable"] = 16777215] = "defaultButtonLable";
+})(TextColors || (TextColors = {}));
 var GameEvents;
 (function (GameEvents) {
     var BlockEvent = (function (_super) {
@@ -367,110 +499,31 @@ var GameEvents;
     GameEvents.BlockEvent = BlockEvent;
     __reflect(BlockEvent.prototype, "GameEvents.BlockEvent");
 })(GameEvents || (GameEvents = {}));
-///<reference path="cordova.d.ts"/>
-var GameScene = (function (_super) {
-    __extends(GameScene, _super);
-    function GameScene(param) {
-        var _this = _super.call(this) || this;
-        _this._score = 0;
-        _this._blockColumns = [];
-        _this._mode = param.mode;
-        _this._level = param.level;
-        _this._calculateColsRows();
-        _this._drawColumns();
-        _this._drawScore();
-        _this.addEventListener(GameEvents.BlockEvent.MOVED_OUT, _this._onMovedOut, _this, true);
-        _this.addEventListener(GameEvents.BlockEvent.HIT, _this._onHit, _this, true);
+var BlockDouble = (function (_super) {
+    __extends(BlockDouble, _super);
+    function BlockDouble(param) {
+        var _this = _super.call(this, param) || this;
+        _this._clickCount = 0;
         return _this;
-        // let state = "_" + (+new Date());
-        // Wechat.auth("snsapi_userinfo", state, function (response) {
-        //     // you may use response.code to get the access token.
-        //     if (response.code) {
-        //         console.log(response.code);
-        //     }
-        // }, function (reason) {
-        //     console.log("Failed: " + reason);
-        // });
     }
-    GameScene.prototype._drawColumns = function () {
-        var blockColumn;
-        var aDir = ["up", "down"];
-        var nColWidth = Utils.getBlockWidth();
-        for (var i = 0; i < Utils.columns; i++) {
-            var sDir = "up";
-            if (this._mode === GameMode.BI_DIR) {
-                sDir = aDir[Math.floor(Math.random() * 2)];
+    BlockDouble.prototype._beforeDraw = function () {
+        this._clickableColor = BlockColor.clickableDouble;
+    };
+    BlockDouble.prototype._onTouch = function (oEvent) {
+        if (this._currentState === BlockState.clickable) {
+            this._clickCount++;
+            if (this._clickCount === 1) {
+                this._clickableColor = BlockColor.clickable;
+                this._draw();
             }
-            else if (this._mode === GameMode.DOWN) {
-                sDir = aDir[1];
+            else if (this._clickCount === 2) {
+                this._hit();
             }
-            blockColumn = new BlocksColumn({
-                dir: sDir,
-                speedUpInterval: Service.GAME_CONFIG.colmuns[i].interval,
-                name: "col_" + i
-            });
-            blockColumn.x = i * nColWidth;
-            this.addChild(blockColumn);
-            this._blockColumns.push(blockColumn);
         }
     };
-    GameScene.prototype._calculateColsRows = function () {
-        var nThumbWidth = 48;
-        var nThumbHeight = 48;
-        var nStageWidth = Utils.getStageWidth();
-        var nStageHeight = Utils.getStageHeight();
-        var nColsMax = Math.floor(nStageWidth / nThumbWidth);
-        var nRowsMax = Math.floor(nStageWidth / nThumbHeight);
-        if (this._level === GameLevel.EASY) {
-            Utils.columns = 4;
-            Utils.rows = 6;
-        }
-        else if (this._level === GameLevel.NORMAL) {
-            Utils.columns = 5;
-            Utils.rows = 7;
-        }
-        else if (this._level === GameLevel.HARD) {
-            Utils.columns = 6;
-            Utils.rows = 8;
-        }
-        if (Utils.columns > nColsMax) {
-            Utils.columns = nColsMax;
-        }
-        if (Utils.rows > nRowsMax) {
-            Utils.rows = nRowsMax;
-        }
-    };
-    GameScene.prototype._drawScore = function () {
-        var label = new egret.TextField();
-        label.width = Utils.getStageWidth();
-        label.y = Utils.getStageHeight() * 0.2;
-        label.height = 30;
-        label.textAlign = egret.HorizontalAlign.CENTER;
-        label.verticalAlign = egret.VerticalAlign.MIDDLE;
-        label.textColor = 0xffffff;
-        label.bold = true;
-        label.strokeColor = 0x0000ff;
-        label.stroke = 2;
-        label.text = this._score.toString();
-        this._scoreText = label;
-        this.addChild(this._scoreText);
-    };
-    GameScene.prototype._onMovedOut = function (evt) {
-        // let tarBlock: Block = evt.target;
-        // let missed: boolean = evt.missed;
-    };
-    GameScene.prototype._onHit = function (evt) {
-        this._score++;
-        this._scoreText.text = this._score.toString();
-    };
-    GameScene.prototype.gameStart = function () {
-        for (var i = 0; i < this._blockColumns.length; i++) {
-            this._blockColumns[i].move();
-        }
-    };
-    return GameScene;
-}(egret.Sprite));
-__reflect(GameScene.prototype, "GameScene");
+    return BlockDouble;
+}(Block));
+__reflect(BlockDouble.prototype, "BlockDouble");
 //////////////////////////////////////////////////////////////////////////////////////
 //
 //  Copyright (c) 2014-present, Egret Technology.
@@ -573,22 +626,22 @@ var Main = (function (_super) {
     };
     Main.prototype.runGame = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var result, userInfo;
+            var userInfo;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.loadResource()];
                     case 1:
                         _a.sent();
                         this.createGameScene();
-                        return [4 /*yield*/, RES.getResAsync("description_json")];
-                    case 2:
-                        result = _a.sent();
-                        this.startAnimation(result);
+                        // const result = await RES.getResAsync("description_json")
+                        // this.startAnimation(result);
                         return [4 /*yield*/, platform.login()];
-                    case 3:
+                    case 2:
+                        // const result = await RES.getResAsync("description_json")
+                        // this.startAnimation(result);
                         _a.sent();
                         return [4 /*yield*/, platform.getUserInfo()];
-                    case 4:
+                    case 3:
                         userInfo = _a.sent();
                         console.log(userInfo);
                         return [2 /*return*/];
@@ -628,69 +681,44 @@ var Main = (function (_super) {
      */
     Main.prototype.createGameScene = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var sky, stageW, stageH, topMask, icon, line, colorLabel, textfield, gameService, gameConfig, gameScene;
+            var bg, stageW, stageH, gameService, gameConfig, gameScene, startButtonWidth, startButtonHeight, startButton;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         this.stage.setContentSize(window.innerWidth, window.innerHeight);
-                        sky = this.createBitmapByName("bg_jpg");
-                        this.addChild(sky);
+                        bg = this.createBitmapByName("bg_texture_jpg");
+                        bg.fillMode = egret.BitmapFillMode.REPEAT;
+                        this.addChild(bg);
                         stageW = this.stage.stageWidth;
                         stageH = this.stage.stageHeight;
-                        sky.width = stageW;
-                        sky.height = stageH;
-                        topMask = new egret.Shape();
-                        topMask.graphics.beginFill(0x000000, 0.5);
-                        topMask.graphics.drawRect(0, 0, stageW, 172);
-                        topMask.graphics.endFill();
-                        topMask.y = 33;
-                        this.addChild(topMask);
-                        icon = this.createBitmapByName("egret_icon_png");
-                        this.addChild(icon);
-                        icon.x = 26;
-                        icon.y = 33;
-                        line = new egret.Shape();
-                        line.graphics.lineStyle(2, 0xffffff);
-                        line.graphics.moveTo(0, 0);
-                        line.graphics.lineTo(0, 117);
-                        line.graphics.endFill();
-                        line.x = 172;
-                        line.y = 61;
-                        this.addChild(line);
-                        colorLabel = new egret.TextField();
-                        colorLabel.textColor = 0xffffff;
-                        colorLabel.width = stageW - 172;
-                        colorLabel.textAlign = "center";
-                        colorLabel.text = "Hello Egret";
-                        colorLabel.size = 24;
-                        colorLabel.x = 172;
-                        colorLabel.y = 80;
-                        this.addChild(colorLabel);
-                        textfield = new egret.TextField();
-                        this.addChild(textfield);
-                        textfield.alpha = 0;
-                        textfield.width = stageW - 172;
-                        textfield.textAlign = egret.HorizontalAlign.CENTER;
-                        textfield.size = 24;
-                        textfield.textColor = 0xffffff;
-                        textfield.x = 172;
-                        textfield.y = 135;
-                        this.textfield = textfield;
+                        bg.width = stageW;
+                        bg.height = stageH;
                         gameService = new Service();
                         return [4 /*yield*/, gameService.getGameConfig()];
                     case 1:
                         gameConfig = _a.sent();
-                        console.log(gameConfig);
                         gameScene = new GameScene({
-                            mode: GameMode.BI_DIR,
+                            mode: GameMode.DOWN,
                             level: GameLevel.EASY
                         });
+                        this._gameScene = gameScene;
                         this.addChild(gameScene);
-                        gameScene.gameStart();
+                        startButtonWidth = Utils.getStageWidth() / 2;
+                        startButtonHeight = 80;
+                        startButton = new UIComponents.DefaultButton(startButtonWidth, startButtonHeight, "Start");
+                        startButton.x = Utils.getStageWidth() / 2 - startButtonWidth / 2;
+                        startButton.y = Utils.getStageHeight() * 0.3;
+                        startButton.addEventListener("touchTap", this._startGame, this);
+                        this._startButton = startButton;
+                        this.addChild(startButton);
                         return [2 /*return*/];
                 }
             });
         });
+    };
+    Main.prototype._startGame = function () {
+        this._startButton.visible = false;
+        this._gameScene.gameStart();
     };
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
@@ -796,58 +824,145 @@ var Service = (function () {
     return Service;
 }());
 __reflect(Service.prototype, "Service");
-var Utils = (function () {
-    function Utils() {
+var UIComponents;
+(function (UIComponents) {
+    var DefaultButton = (function (_super) {
+        __extends(DefaultButton, _super);
+        function DefaultButton(w, h, label) {
+            var _this = _super.call(this) || this;
+            _this.width = w;
+            _this.height = h;
+            _this._label = label;
+            _this.touchEnabled = true;
+            _this.addEventListener(egret.Event.ADDED_TO_STAGE, _this._onAddToStage, _this);
+            return _this;
+        }
+        DefaultButton.prototype._onAddToStage = function () {
+            var btnImage = new egret.Bitmap();
+            btnImage.texture = RES.getRes("buttonBg_png");
+            var rect = new egret.Rectangle(30, 35, 196, 33);
+            btnImage.scale9Grid = rect;
+            btnImage.width = this.width;
+            btnImage.height = this.height;
+            this.addChild(btnImage);
+            var label = new egret.TextField();
+            label.width = this.width;
+            label.height = this.height;
+            label.textColor = TextColors.defaultButtonLable;
+            label.textAlign = egret.HorizontalAlign.CENTER;
+            label.verticalAlign = egret.VerticalAlign.MIDDLE;
+            label.text = this._label;
+            label.bold = true;
+            this.addChild(label);
+        };
+        return DefaultButton;
+    }(egret.DisplayObjectContainer));
+    UIComponents.DefaultButton = DefaultButton;
+    __reflect(DefaultButton.prototype, "UIComponents.DefaultButton");
+})(UIComponents || (UIComponents = {}));
+///<reference path="cordova.d.ts"/>
+var GameScene = (function (_super) {
+    __extends(GameScene, _super);
+    function GameScene(param) {
+        var _this = _super.call(this) || this;
+        _this._score = 0;
+        _this._blockColumns = [];
+        _this._mode = param.mode;
+        _this._level = param.level;
+        _this._calculateColsRows();
+        _this._drawColumns();
+        _this._drawScore();
+        _this.addEventListener(GameEvents.BlockEvent.MOVED_OUT, _this._onMovedOut, _this, true);
+        _this.addEventListener(GameEvents.BlockEvent.HIT, _this._onHit, _this, true);
+        return _this;
+        // let state = "_" + (+new Date());
+        // Wechat.auth("snsapi_userinfo", state, function (response) {
+        //     // you may use response.code to get the access token.
+        //     if (response.code) {
+        //         console.log(response.code);
+        //     }
+        // }, function (reason) {
+        //     console.log("Failed: " + reason);
+        // });
     }
-    Utils.getBlockWidth = function () {
-        if (Utils._blockWidth === 0) {
-            Utils._blockWidth = egret.MainContext.instance.stage.stageWidth / this.columns;
-        }
-        return Utils._blockWidth;
-    };
-    Utils.getBlockHeight = function () {
-        if (Utils._blockHeight === 0) {
-            Utils._blockHeight = Math.ceil(egret.MainContext.instance.stage.stageHeight / this.rows);
-        }
-        return Utils._blockHeight;
-    };
-    Utils.getStageWidth = function () {
-        if (Utils._stageWidth === 0) {
-            Utils._stageWidth = egret.MainContext.instance.stage.stageWidth;
-        }
-        return Utils._stageWidth;
-    };
-    Utils.getStageHeight = function () {
-        if (Utils._stageHeight === 0) {
-            Utils._stageHeight = egret.MainContext.instance.stage.stageHeight;
-        }
-        return Utils._stageHeight;
-    };
-    Utils.getRowBlockState = function (rowIndex) {
-        if (Utils.rowsState[rowIndex] === undefined) {
-            var rowState = [];
-            var clickableColmun = Math.floor(Math.random() * Utils.columns);
-            for (var i = 0; i < Utils.columns; i++) {
-                if (i === clickableColmun) {
-                    rowState.push(BlockState.clickable);
-                }
-                else {
-                    rowState.push(BlockState.unclickable);
-                }
+    GameScene.prototype._drawColumns = function () {
+        var blockColumn;
+        var aDir = ["up", "down"];
+        var nColWidth = Utils.getBlockWidth();
+        for (var i = 0; i < Utils.columns; i++) {
+            var sDir = "up";
+            if (this._mode === GameMode.BI_DIR) {
+                sDir = aDir[Math.floor(Math.random() * 2)];
             }
-            Utils.rowsState.push(rowState);
-            return rowState;
+            else if (this._mode === GameMode.DOWN) {
+                sDir = aDir[1];
+            }
+            blockColumn = new BlocksColumn({
+                dir: sDir,
+                speedUpInterval: Service.GAME_CONFIG.colmuns[i].interval,
+                name: "col_" + i
+            });
+            blockColumn.x = i * nColWidth;
+            blockColumn.width = nColWidth;
+            this.addChild(blockColumn);
+            this._blockColumns.push(blockColumn);
         }
-        return Utils.rowsState[rowIndex];
     };
-    Utils._blockWidth = 0;
-    Utils._blockHeight = 0;
-    Utils._stageHeight = 0;
-    Utils._stageWidth = 0;
-    Utils.rowsState = [];
-    Utils.rows = 6;
-    Utils.columns = 6;
-    return Utils;
-}());
-__reflect(Utils.prototype, "Utils");
+    GameScene.prototype._calculateColsRows = function () {
+        var nThumbWidth = 48;
+        var nThumbHeight = 48;
+        var nStageWidth = Utils.getStageWidth();
+        var nStageHeight = Utils.getStageHeight();
+        var nColsMax = Math.floor(nStageWidth / nThumbWidth);
+        var nRowsMax = Math.floor(nStageWidth / nThumbHeight);
+        if (this._level === GameLevel.EASY) {
+            Utils.columns = 4;
+            Utils.rows = 6;
+        }
+        else if (this._level === GameLevel.NORMAL) {
+            Utils.columns = 5;
+            Utils.rows = 7;
+        }
+        else if (this._level === GameLevel.HARD) {
+            Utils.columns = 6;
+            Utils.rows = 8;
+        }
+        if (Utils.columns > nColsMax) {
+            Utils.columns = nColsMax;
+        }
+        if (Utils.rows > nRowsMax) {
+            Utils.rows = nRowsMax;
+        }
+    };
+    GameScene.prototype._drawScore = function () {
+        var label = new egret.TextField();
+        label.width = Utils.getStageWidth();
+        label.y = Utils.getStageHeight() * 0.2;
+        label.height = 30;
+        label.textAlign = egret.HorizontalAlign.CENTER;
+        label.verticalAlign = egret.VerticalAlign.MIDDLE;
+        label.textColor = 0xffffff;
+        label.bold = true;
+        label.strokeColor = 0x0000ff;
+        label.stroke = 2;
+        label.text = this._score.toString();
+        this._scoreText = label;
+        this.addChild(this._scoreText);
+    };
+    GameScene.prototype._onMovedOut = function (evt) {
+        // let tarBlock: Block = evt.target;
+        // let missed: boolean = evt.missed;
+    };
+    GameScene.prototype._onHit = function (evt) {
+        this._score++;
+        this._scoreText.text = this._score.toString();
+    };
+    GameScene.prototype.gameStart = function () {
+        for (var i = 0; i < this._blockColumns.length; i++) {
+            this._blockColumns[i].move();
+        }
+    };
+    return GameScene;
+}(egret.Sprite));
+__reflect(GameScene.prototype, "GameScene");
 //# sourceMappingURL=main.min.js.map

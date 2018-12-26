@@ -29,11 +29,17 @@ var BlocksColumn = (function (_super) {
         var blockCount = this._dir === "down" ? Utils.rows : Utils.rows + 1;
         for (var i = n; i < blockCount; i++) {
             this._creatingRowIndex = this._dir === "down" ? i + 1 : i;
+            // let block = this._createBlock({
+            //     state: Utils.getRowBlockState(this._creatingRowIndex)[
+            //         this._index
+            //     ]
+            // });
             var block = this._createBlock({
-                state: Utils.getRowBlockState(this._creatingRowIndex)[this._index]
+                state: BlockState.unclickable
             });
-            block.y = i * block.height;
             this.addChild(block);
+            block.x = 0;
+            block.y = i * block.height;
             this._blocks.push(block);
         }
     };
@@ -45,7 +51,8 @@ var BlocksColumn = (function (_super) {
             height: blockHeight,
             state: settings.state
         };
-        var block = new Block(param);
+        // let block = new BlockNormal(param);
+        var block = new BlockDouble(param);
         block.addEventListener(GameEvents.BlockEvent.MOVED_OUT, this._onMovedOut, this);
         return block;
     };
@@ -107,7 +114,6 @@ var BlocksColumn = (function (_super) {
         if (this._speedLevel === Service.GAME_CONFIG.speedLevels.length) {
             this._speedTick = true;
         }
-        console.log(this.name + "-" + this._speedLevel);
     };
     BlocksColumn.prototype._slowDown = function () {
         if (this._speedLevel > 0) {
@@ -119,7 +125,6 @@ var BlocksColumn = (function (_super) {
             this._speedTick = false;
             this._reversePause();
         }
-        console.log(this.name + "-" + this._speedLevel);
     };
     BlocksColumn.prototype._revertDir = function () {
         if (this._dir === "up") {

@@ -22,17 +22,21 @@ class BlocksColumn extends egret.Sprite {
         let blockCount = this._dir === "down" ? Utils.rows : Utils.rows + 1;
         for (let i = n; i < blockCount; i++) {
             this._creatingRowIndex = this._dir === "down" ? i + 1 : i;
-            let block = this._createBlock({
-                state: Utils.getRowBlockState(this._creatingRowIndex)[
-                    this._index
-                ]
+            // let block = this._createBlock({
+            //     state: Utils.getRowBlockState(this._creatingRowIndex)[
+            //         this._index
+            //     ]
+            // });
+            const block = this._createBlock({
+                state: BlockState.unclickable
             });
-            block.y = i * block.height;
             this.addChild(block);
+            block.x = 0;
+            block.y = i * block.height;
             this._blocks.push(block);
         }
     }
-    private _createBlock(settings: any): Block {
+    private _createBlock(settings: any): any {
         let blockWidth: number = Utils.getBlockWidth();
         let blockHeight: number = Utils.getBlockHeight();
         let param: any = {
@@ -40,7 +44,8 @@ class BlocksColumn extends egret.Sprite {
             height: blockHeight,
             state: settings.state
         };
-        let block = new Block(param);
+        // let block = new BlockNormal(param);
+        let block = new BlockDouble(param);
         block.addEventListener(
             GameEvents.BlockEvent.MOVED_OUT,
             this._onMovedOut,

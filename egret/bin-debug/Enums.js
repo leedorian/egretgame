@@ -8,7 +8,8 @@ var BlockColor;
 (function (BlockColor) {
     BlockColor[BlockColor["unClickable"] = 16777215] = "unClickable";
     BlockColor[BlockColor["clickable"] = 0] = "clickable";
-    BlockColor[BlockColor["clicked"] = 255] = "clicked";
+    BlockColor[BlockColor["border"] = 6710886] = "border";
+    BlockColor[BlockColor["clickableDouble"] = 1782970] = "clickableDouble";
 })(BlockColor || (BlockColor = {}));
 var GameMode;
 (function (GameMode) {
@@ -22,4 +23,8 @@ var GameLevel;
     GameLevel[GameLevel["NORMAL"] = 1] = "NORMAL";
     GameLevel[GameLevel["HARD"] = 2] = "HARD";
 })(GameLevel || (GameLevel = {}));
+var TextColors;
+(function (TextColors) {
+    TextColors[TextColors["defaultButtonLable"] = 16777215] = "defaultButtonLable";
+})(TextColors || (TextColors = {}));
 //# sourceMappingURL=Enums.js.map

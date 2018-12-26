@@ -44,6 +44,7 @@ class GameScene extends egret.Sprite {
                 name: "col_" + i
             });
             blockColumn.x = i * nColWidth;
+            blockColumn.width = nColWidth;
             this.addChild(blockColumn);
             this._blockColumns.push(blockColumn);
         }
