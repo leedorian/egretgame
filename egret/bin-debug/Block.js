@@ -13,7 +13,6 @@ var Block = (function (_super) {
     function Block(param) {
         var _this = _super.call(this) || this;
         _this._unClickableColor = BlockColor.unClickable;
-        _this._clickedColor = BlockColor.clicked;
         _this.touchEnabled = true;
         _this._currentState = param.state;
         _this.width = param.width;
@@ -42,7 +41,8 @@ var Block = (function (_super) {
             fillColor = this._clickableColor;
         }
         this._colorRect.graphics.clear();
-        this._colorRect.graphics.lineStyle(1, lineColor);
+        this.graphics.lineStyle(1, lineColor);
+        this.graphics.drawRect(0, 0, this.width, this.height);
         if (this._currentState !== BlockState.unclickable) {
             this._colorRect.graphics.beginFill(fillColor, 1);
         }
@@ -121,7 +121,7 @@ var Block = (function (_super) {
     Block.prototype.stop = function () {
         egret.stopTick(this._moveBlock, this);
     };
-    Block.prototype._moveBlock = function () {
+    Block.prototype._moveBlock = function (timeStamp) {
         if (this._dir === "down") {
             if (this.y >= Utils.getStageHeight()) {
                 this._triggerMovedOutEvent();

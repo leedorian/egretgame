@@ -11,6 +11,7 @@
 		"bin-debug/Block.js",
 		"bin-debug/Utils.js",
 		"bin-debug/BlockNormal.js",
+		"bin-debug/BlockRush.js",
 		"bin-debug/BlocksColumn.js",
 		"bin-debug/Enums.js",
 		"bin-debug/Events.js",

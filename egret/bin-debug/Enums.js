@@ -1,8 +1,10 @@
 var BlockState;
 (function (BlockState) {
     BlockState[BlockState["unclickable"] = 0] = "unclickable";
-    BlockState[BlockState["clickable"] = 1] = "clickable";
-    BlockState[BlockState["clicked"] = 2] = "clicked";
+    BlockState[BlockState["clicked"] = 1] = "clicked";
+    BlockState[BlockState["clickable"] = 2] = "clickable";
+    BlockState[BlockState["clickableDouble"] = 3] = "clickableDouble";
+    BlockState[BlockState["clickableRush"] = 4] = "clickableRush";
 })(BlockState || (BlockState = {}));
 var BlockColor;
 (function (BlockColor) {
@@ -10,6 +12,7 @@ var BlockColor;
     BlockColor[BlockColor["clickable"] = 0] = "clickable";
     BlockColor[BlockColor["border"] = 6710886] = "border";
     BlockColor[BlockColor["clickableDouble"] = 1782970] = "clickableDouble";
+    BlockColor[BlockColor["clickableRush"] = 12000541] = "clickableRush";
 })(BlockColor || (BlockColor = {}));
 var GameMode;
 (function (GameMode) {

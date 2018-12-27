@@ -22,6 +22,7 @@ var GameEvents;
         BlockEvent.MOVED_OUT = "movedout";
         BlockEvent.MISSED = "missed";
         BlockEvent.HIT = "hit";
+        BlockEvent.HIT_RUSH = "hitrush";
         return BlockEvent;
     }(egret.Event));
     GameEvents.BlockEvent = BlockEvent;

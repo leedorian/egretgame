@@ -48,7 +48,6 @@ var Block = (function (_super) {
     function Block(param) {
         var _this = _super.call(this) || this;
         _this._unClickableColor = BlockColor.unClickable;
-        _this._clickedColor = BlockColor.clicked;
         _this.touchEnabled = true;
         _this._currentState = param.state;
         _this.width = param.width;
@@ -77,7 +76,8 @@ var Block = (function (_super) {
             fillColor = this._clickableColor;
         }
         this._colorRect.graphics.clear();
-        this._colorRect.graphics.lineStyle(1, lineColor);
+        this.graphics.lineStyle(1, lineColor);
+        this.graphics.drawRect(0, 0, this.width, this.height);
         if (this._currentState !== BlockState.unclickable) {
             this._colorRect.graphics.beginFill(fillColor, 1);
         }
@@ -156,7 +156,7 @@ var Block = (function (_super) {
     Block.prototype.stop = function () {
         egret.stopTick(this._moveBlock, this);
     };
-    Block.prototype._moveBlock = function () {
+    Block.prototype._moveBlock = function (timeStamp) {
         if (this._dir === "down") {
             if (this.y >= Utils.getStageHeight()) {
                 this._triggerMovedOutEvent();
@@ -280,6 +280,54 @@ var BlockNormal = (function (_super) {
     return BlockNormal;
 }(Block));
 __reflect(BlockNormal.prototype, "BlockNormal");
+var BlockRush = (function (_super) {
+    __extends(BlockRush, _super);
+    function BlockRush(param) {
+        var _this = _super.call(this, param) || this;
+        _this._rushState = false;
+        return _this;
+    }
+    BlockRush.prototype._beforeDraw = function () {
+        this._clickableColor = BlockColor.clickable;
+    };
+    BlockRush.prototype._onTouch = function (oEvent) {
+        if (this._currentState === BlockState.clickable) {
+            this._hit();
+        }
+    };
+    BlockRush.prototype._hit = function () {
+        _super.prototype._hit.call(this);
+        if (this._rushState) {
+            var hitRushEvent = new GameEvents.BlockEvent(GameEvents.BlockEvent.HIT_RUSH);
+            this.dispatchEvent(hitRushEvent);
+        }
+    };
+    BlockRush.prototype.move = function (speed, dir) {
+        if (dir === void 0) { dir = "down"; }
+        this._timeMark = egret.getTimer();
+        _super.prototype.move.call(this, speed, dir);
+    };
+    BlockRush.prototype._moveBlock = function (timeStamp) {
+        var redrawScreen = _super.prototype._moveBlock.call(this, timeStamp);
+        if (this.state === "clickable") {
+            var pass = Math.floor((timeStamp - this._timeMark) / 1000);
+            if (pass === 1) {
+                this._rushState = !this._rushState;
+                if (this._rushState) {
+                    this._clickableColor = BlockColor.clickableRush;
+                }
+                else {
+                    this._clickableColor = BlockColor.clickable;
+                }
+                this._draw();
+                this._timeMark = timeStamp;
+            }
+        }
+        return redrawScreen;
+    };
+    return BlockRush;
+}(Block));
+__reflect(BlockRush.prototype, "BlockRush");
 var BlocksColumn = (function (_super) {
     __extends(BlocksColumn, _super);
     function BlocksColumn(param) {
@@ -287,8 +335,8 @@ var BlocksColumn = (function (_super) {
         _this._blocks = [];
         _this._creatingRowIndex = 0;
         _this._speedLevel = 0;
-        _this._speed = Service.GAME_CONFIG.speedLevels[_this._speedLevel];
         _this._speedTick = false;
+        _this.speed = Service.GAME_CONFIG.speedLevels[_this._speedLevel];
         _this._dir = param.dir;
         _this.name = param.name;
         _this._speedUpInterval = param.speedUpInterval * 1000;
@@ -324,7 +372,8 @@ var BlocksColumn = (function (_super) {
             state: settings.state
         };
         // let block = new BlockNormal(param);
-        var block = new BlockDouble(param);
+        // let block = new BlockDouble(param);
+        var block = new BlockRush(param);
         block.addEventListener(GameEvents.BlockEvent.MOVED_OUT, this._onMovedOut, this);
         return block;
     };
@@ -352,15 +401,15 @@ var BlocksColumn = (function (_super) {
             this._creatingRowIndex++;
             this.addChild(newBlock);
             if (this._dir === "down") {
-                newBlock.y = this._blocks[0].y - newBlock.height + this._speed;
+                newBlock.y = this._blocks[0].y - newBlock.height + this.speed;
             }
             else {
                 newBlock.y =
                     this._blocks[this._blocks.length - 1].y +
                         newBlock.height -
-                        this._speed;
+                        this.speed;
             }
-            newBlock.move(this._speed, this._dir);
+            newBlock.move(this.speed, this._dir);
             if (this._dir === "down") {
                 this._blocks.unshift(newBlock);
             }
@@ -379,8 +428,8 @@ var BlocksColumn = (function (_super) {
     };
     BlocksColumn.prototype._speedUp = function () {
         if (this._speedLevel < Service.GAME_CONFIG.speedLevels.length) {
-            this._speed = Service.GAME_CONFIG.speedLevels[this._speedLevel];
-            this._updateSpeed();
+            this.speed = Service.GAME_CONFIG.speedLevels[this._speedLevel];
+            this.updateSpeed();
             this._speedLevel++;
         }
         if (this._speedLevel === Service.GAME_CONFIG.speedLevels.length) {
@@ -390,8 +439,8 @@ var BlocksColumn = (function (_super) {
     BlocksColumn.prototype._slowDown = function () {
         if (this._speedLevel > 0) {
             this._speedLevel--;
-            this._speed = Service.GAME_CONFIG.speedLevels[this._speedLevel];
-            this._updateSpeed();
+            this.speed = Service.GAME_CONFIG.speedLevels[this._speedLevel];
+            this.updateSpeed();
         }
         if (this._speedLevel === 0) {
             this._speedTick = false;
@@ -418,35 +467,37 @@ var BlocksColumn = (function (_super) {
         this._reverseTimer.reset();
         this._reverseTimer.start();
     };
-    BlocksColumn.prototype._updateSpeed = function () {
+    BlocksColumn.prototype.updateSpeed = function () {
         var blocks = this._blocks;
         for (var i = 0; i < blocks.length; i++) {
-            blocks[i].speed = this._speed;
+            blocks[i].speed = this.speed;
         }
     };
-    BlocksColumn.prototype._startSpeedUpTimer = function () {
+    BlocksColumn.prototype.startSpeedUpTimer = function () {
         this._speedUpTimer = new egret.Timer(this._speedUpInterval, 0);
         //注册事件侦听器
         this._speedUpTimer.addEventListener(egret.TimerEvent.TIMER, this._speedLooper, this);
         this._speedUpTimer.start();
     };
-    BlocksColumn.prototype._stopSpeedUpTimer = function () {
-        this._speedUpTimer.stop();
-        this._speedUpTimer.removeEventListener(egret.TimerEvent.TIMER, this._speedLooper, this);
-        this._speedUpTimer = null;
+    BlocksColumn.prototype.stopSpeedUpTimer = function () {
+        if (this._speedUpTimer !== null) {
+            this._speedUpTimer.stop();
+            this._speedUpTimer.removeEventListener(egret.TimerEvent.TIMER, this._speedLooper, this);
+            this._speedUpTimer = null;
+        }
     };
     BlocksColumn.prototype.move = function () {
         var blocks = this._blocks;
         for (var i = 0; i < blocks.length; i++) {
-            blocks[i].move(this._speed, this._dir);
+            blocks[i].move(this.speed, this._dir);
         }
-        this._startSpeedUpTimer();
+        this.startSpeedUpTimer();
     };
     BlocksColumn.prototype.stop = function () {
         for (var i = 0; i < this._blocks.length; i++) {
             this._blocks[i].stop();
         }
-        this._stopSpeedUpTimer();
+        this.stopSpeedUpTimer();
     };
     return BlocksColumn;
 }(egret.Sprite));
@@ -454,8 +505,10 @@ __reflect(BlocksColumn.prototype, "BlocksColumn");
 var BlockState;
 (function (BlockState) {
     BlockState[BlockState["unclickable"] = 0] = "unclickable";
-    BlockState[BlockState["clickable"] = 1] = "clickable";
-    BlockState[BlockState["clicked"] = 2] = "clicked";
+    BlockState[BlockState["clicked"] = 1] = "clicked";
+    BlockState[BlockState["clickable"] = 2] = "clickable";
+    BlockState[BlockState["clickableDouble"] = 3] = "clickableDouble";
+    BlockState[BlockState["clickableRush"] = 4] = "clickableRush";
 })(BlockState || (BlockState = {}));
 var BlockColor;
 (function (BlockColor) {
@@ -463,6 +516,7 @@ var BlockColor;
     BlockColor[BlockColor["clickable"] = 0] = "clickable";
     BlockColor[BlockColor["border"] = 6710886] = "border";
     BlockColor[BlockColor["clickableDouble"] = 1782970] = "clickableDouble";
+    BlockColor[BlockColor["clickableRush"] = 12000541] = "clickableRush";
 })(BlockColor || (BlockColor = {}));
 var GameMode;
 (function (GameMode) {
@@ -494,6 +548,7 @@ var GameEvents;
         BlockEvent.MOVED_OUT = "movedout";
         BlockEvent.MISSED = "missed";
         BlockEvent.HIT = "hit";
+        BlockEvent.HIT_RUSH = "hitrush";
         return BlockEvent;
     }(egret.Event));
     GameEvents.BlockEvent = BlockEvent;
@@ -867,6 +922,8 @@ var GameScene = (function (_super) {
         var _this = _super.call(this) || this;
         _this._score = 0;
         _this._blockColumns = [];
+        _this._columnSpeeds = [];
+        _this._rushFactor = 1.3;
         _this._mode = param.mode;
         _this._level = param.level;
         _this._calculateColsRows();
@@ -874,6 +931,7 @@ var GameScene = (function (_super) {
         _this._drawScore();
         _this.addEventListener(GameEvents.BlockEvent.MOVED_OUT, _this._onMovedOut, _this, true);
         _this.addEventListener(GameEvents.BlockEvent.HIT, _this._onHit, _this, true);
+        _this.addEventListener(GameEvents.BlockEvent.HIT_RUSH, _this._onHitRush, _this, true);
         return _this;
         // let state = "_" + (+new Date());
         // Wechat.auth("snsapi_userinfo", state, function (response) {
@@ -956,6 +1014,16 @@ var GameScene = (function (_super) {
     GameScene.prototype._onHit = function (evt) {
         this._score++;
         this._scoreText.text = this._score.toString();
+    };
+    GameScene.prototype._onHitRush = function (evt) {
+        this._columnSpeeds = [];
+        for (var i = 0; i < this._blockColumns.length; i++) {
+            var speed = this._blockColumns[i].speed;
+            this._columnSpeeds.push(speed);
+            this._blockColumns[i].speed = speed * this._rushFactor;
+            this._blockColumns[i].stopSpeedUpTimer();
+            this._blockColumns[i].updateSpeed();
+        }
     };
     GameScene.prototype.gameStart = function () {
         for (var i = 0; i < this._blockColumns.length; i++) {

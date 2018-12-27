@@ -42,7 +42,8 @@ abstract class Block extends egret.Sprite{
             fillColor = this._clickableColor;
         }
         this._colorRect.graphics.clear();
-        this._colorRect.graphics.lineStyle(1, lineColor);
+        this.graphics.lineStyle(1, lineColor);
+        this.graphics.drawRect(0, 0, this.width, this.height);
         if(this._currentState !== BlockState.unclickable){
             this._colorRect.graphics.beginFill( fillColor, 1);
         }
@@ -124,7 +125,7 @@ abstract class Block extends egret.Sprite{
     public stop(){
         egret.stopTick(this._moveBlock, this);
     }
-    private _moveBlock():boolean{
+    protected _moveBlock(timeStamp: number):boolean{
 
         if(this._dir === "down"){
             if(this.y >= Utils.getStageHeight()){
@@ -139,7 +140,6 @@ abstract class Block extends egret.Sprite{
                 this._setY();
             }
         }
-
         return false;
     }
     private _setY(){

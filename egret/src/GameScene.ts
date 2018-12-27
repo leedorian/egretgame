@@ -8,8 +8,24 @@ class GameScene extends egret.Sprite {
         this._calculateColsRows();
         this._drawColumns();
         this._drawScore();
-        this.addEventListener(GameEvents.BlockEvent.MOVED_OUT, this._onMovedOut, this, true);
-        this.addEventListener(GameEvents.BlockEvent.HIT, this._onHit, this, true);
+        this.addEventListener(
+            GameEvents.BlockEvent.MOVED_OUT,
+            this._onMovedOut,
+            this,
+            true
+        );
+        this.addEventListener(
+            GameEvents.BlockEvent.HIT,
+            this._onHit,
+            this,
+            true
+        );
+        this.addEventListener(
+            GameEvents.BlockEvent.HIT_RUSH,
+            this._onHitRush,
+            this,
+            true
+        );
         // let state = "_" + (+new Date());
         // Wechat.auth("snsapi_userinfo", state, function (response) {
         //     // you may use response.code to get the access token.
@@ -27,8 +43,10 @@ class GameScene extends egret.Sprite {
     private _score: number = 0;
     private _scoreText: egret.TextField;
     private _blockColumns: Array<BlocksColumn> = [];
+    private _columnSpeeds: Array<number> = [];
+    private _rushFactor:number = 1.3;
     private _drawColumns() {
-        let blockColumn: BlocksColumn
+        let blockColumn: BlocksColumn;
         let aDir: Array<string> = ["up", "down"];
         let nColWidth: number = Utils.getBlockWidth();
         for (let i = 0; i < Utils.columns; i++) {
@@ -48,7 +66,6 @@ class GameScene extends egret.Sprite {
             this.addChild(blockColumn);
             this._blockColumns.push(blockColumn);
         }
-
     }
     private _calculateColsRows() {
         let nThumbWidth: number = 48;
@@ -73,7 +90,6 @@ class GameScene extends egret.Sprite {
         if (Utils.rows > nRowsMax) {
             Utils.rows = nRowsMax;
         }
-
     }
     private _drawScore() {
         let label: egret.TextField = new egret.TextField();
@@ -91,15 +107,24 @@ class GameScene extends egret.Sprite {
         this.addChild(this._scoreText);
     }
     private _onMovedOut(evt: GameEvents.BlockEvent) {
-
         // let tarBlock: Block = evt.target;
         // let missed: boolean = evt.missed;
-
     }
 
     private _onHit(evt: GameEvents.BlockEvent) {
         this._score++;
         this._scoreText.text = this._score.toString();
+    }
+
+    private _onHitRush(evt: GameEvents.BlockEvent) {
+        this._columnSpeeds = [];
+        for (let i = 0; i < this._blockColumns.length; i++) {
+            let speed: number = this._blockColumns[i].speed;
+            this._columnSpeeds.push(speed);
+            this._blockColumns[i].speed = speed * this._rushFactor;
+            this._blockColumns[i].stopSpeedUpTimer();
+            this._blockColumns[i].updateSpeed();
+        }
     }
 
     public gameStart() {

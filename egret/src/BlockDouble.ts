@@ -2,7 +2,7 @@ class BlockDouble extends Block {
     public constructor(param: any) {
         super(param);
     }
-    private _clickCount:number = 0;
+    private _clickCount: number = 0;
     _beforeDraw(): void {
         this._clickableColor = BlockColor.clickableDouble;
     }
@@ -12,10 +12,9 @@ class BlockDouble extends Block {
             if (this._clickCount === 1) {
                 this._clickableColor = BlockColor.clickable;
                 this._draw();
-            }else if (this._clickCount === 2){
+            } else if (this._clickCount === 2) {
                 this._hit();
             }
-
         }
     }
 }

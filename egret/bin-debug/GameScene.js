@@ -15,6 +15,8 @@ var GameScene = (function (_super) {
         var _this = _super.call(this) || this;
         _this._score = 0;
         _this._blockColumns = [];
+        _this._columnSpeeds = [];
+        _this._rushFactor = 1.3;
         _this._mode = param.mode;
         _this._level = param.level;
         _this._calculateColsRows();
@@ -22,6 +24,7 @@ var GameScene = (function (_super) {
         _this._drawScore();
         _this.addEventListener(GameEvents.BlockEvent.MOVED_OUT, _this._onMovedOut, _this, true);
         _this.addEventListener(GameEvents.BlockEvent.HIT, _this._onHit, _this, true);
+        _this.addEventListener(GameEvents.BlockEvent.HIT_RUSH, _this._onHitRush, _this, true);
         return _this;
         // let state = "_" + (+new Date());
         // Wechat.auth("snsapi_userinfo", state, function (response) {
@@ -104,6 +107,16 @@ var GameScene = (function (_super) {
     GameScene.prototype._onHit = function (evt) {
         this._score++;
         this._scoreText.text = this._score.toString();
+    };
+    GameScene.prototype._onHitRush = function (evt) {
+        this._columnSpeeds = [];
+        for (var i = 0; i < this._blockColumns.length; i++) {
+            var speed = this._blockColumns[i].speed;
+            this._columnSpeeds.push(speed);
+            this._blockColumns[i].speed = speed * this._rushFactor;
+            this._blockColumns[i].stopSpeedUpTimer();
+            this._blockColumns[i].updateSpeed();
+        }
     };
     GameScene.prototype.gameStart = function () {
         for (var i = 0; i < this._blockColumns.length; i++) {

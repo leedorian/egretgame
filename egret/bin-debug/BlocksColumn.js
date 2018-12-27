@@ -15,8 +15,8 @@ var BlocksColumn = (function (_super) {
         _this._blocks = [];
         _this._creatingRowIndex = 0;
         _this._speedLevel = 0;
-        _this._speed = Service.GAME_CONFIG.speedLevels[_this._speedLevel];
         _this._speedTick = false;
+        _this.speed = Service.GAME_CONFIG.speedLevels[_this._speedLevel];
         _this._dir = param.dir;
         _this.name = param.name;
         _this._speedUpInterval = param.speedUpInterval * 1000;
@@ -52,7 +52,8 @@ var BlocksColumn = (function (_super) {
             state: settings.state
         };
         // let block = new BlockNormal(param);
-        var block = new BlockDouble(param);
+        // let block = new BlockDouble(param);
+        var block = new BlockRush(param);
         block.addEventListener(GameEvents.BlockEvent.MOVED_OUT, this._onMovedOut, this);
         return block;
     };
@@ -80,15 +81,15 @@ var BlocksColumn = (function (_super) {
             this._creatingRowIndex++;
             this.addChild(newBlock);
             if (this._dir === "down") {
-                newBlock.y = this._blocks[0].y - newBlock.height + this._speed;
+                newBlock.y = this._blocks[0].y - newBlock.height + this.speed;
             }
             else {
                 newBlock.y =
                     this._blocks[this._blocks.length - 1].y +
                         newBlock.height -
-                        this._speed;
+                        this.speed;
             }
-            newBlock.move(this._speed, this._dir);
+            newBlock.move(this.speed, this._dir);
             if (this._dir === "down") {
                 this._blocks.unshift(newBlock);
             }
@@ -107,8 +108,8 @@ var BlocksColumn = (function (_super) {
     };
     BlocksColumn.prototype._speedUp = function () {
         if (this._speedLevel < Service.GAME_CONFIG.speedLevels.length) {
-            this._speed = Service.GAME_CONFIG.speedLevels[this._speedLevel];
-            this._updateSpeed();
+            this.speed = Service.GAME_CONFIG.speedLevels[this._speedLevel];
+            this.updateSpeed();
             this._speedLevel++;
         }
         if (this._speedLevel === Service.GAME_CONFIG.speedLevels.length) {
@@ -118,8 +119,8 @@ var BlocksColumn = (function (_super) {
     BlocksColumn.prototype._slowDown = function () {
         if (this._speedLevel > 0) {
             this._speedLevel--;
-            this._speed = Service.GAME_CONFIG.speedLevels[this._speedLevel];
-            this._updateSpeed();
+            this.speed = Service.GAME_CONFIG.speedLevels[this._speedLevel];
+            this.updateSpeed();
         }
         if (this._speedLevel === 0) {
             this._speedTick = false;
@@ -146,35 +147,37 @@ var BlocksColumn = (function (_super) {
         this._reverseTimer.reset();
         this._reverseTimer.start();
     };
-    BlocksColumn.prototype._updateSpeed = function () {
+    BlocksColumn.prototype.updateSpeed = function () {
         var blocks = this._blocks;
         for (var i = 0; i < blocks.length; i++) {
-            blocks[i].speed = this._speed;
+            blocks[i].speed = this.speed;
         }
     };
-    BlocksColumn.prototype._startSpeedUpTimer = function () {
+    BlocksColumn.prototype.startSpeedUpTimer = function () {
         this._speedUpTimer = new egret.Timer(this._speedUpInterval, 0);
         //注册事件侦听器
         this._speedUpTimer.addEventListener(egret.TimerEvent.TIMER, this._speedLooper, this);
         this._speedUpTimer.start();
     };
-    BlocksColumn.prototype._stopSpeedUpTimer = function () {
-        this._speedUpTimer.stop();
-        this._speedUpTimer.removeEventListener(egret.TimerEvent.TIMER, this._speedLooper, this);
-        this._speedUpTimer = null;
+    BlocksColumn.prototype.stopSpeedUpTimer = function () {
+        if (this._speedUpTimer !== null) {
+            this._speedUpTimer.stop();
+            this._speedUpTimer.removeEventListener(egret.TimerEvent.TIMER, this._speedLooper, this);
+            this._speedUpTimer = null;
+        }
     };
     BlocksColumn.prototype.move = function () {
         var blocks = this._blocks;
         for (var i = 0; i < blocks.length; i++) {
-            blocks[i].move(this._speed, this._dir);
+            blocks[i].move(this.speed, this._dir);
         }
-        this._startSpeedUpTimer();
+        this.startSpeedUpTimer();
     };
     BlocksColumn.prototype.stop = function () {
         for (var i = 0; i < this._blocks.length; i++) {
             this._blocks[i].stop();
         }
-        this._stopSpeedUpTimer();
+        this.stopSpeedUpTimer();
     };
     return BlocksColumn;
 }(egret.Sprite));

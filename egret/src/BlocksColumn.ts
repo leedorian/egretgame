@@ -14,9 +14,11 @@ class BlocksColumn extends egret.Sprite {
     private _speedUpTimer: egret.Timer;
     private _speedLevel: number = 0;
     private _speedUpInterval: number;
-    private _speed: number = Service.GAME_CONFIG.speedLevels[this._speedLevel];
-    private _speedTick:boolean = false;
+    private _speedTick: boolean = false;
     private _reverseTimer: egret.Timer;
+
+    public speed: number = Service.GAME_CONFIG.speedLevels[this._speedLevel];
+
     private _draw() {
         let n: number = this._dir === "down" ? -1 : 0;
         let blockCount = this._dir === "down" ? Utils.rows : Utils.rows + 1;
@@ -45,7 +47,8 @@ class BlocksColumn extends egret.Sprite {
             state: settings.state
         };
         // let block = new BlockNormal(param);
-        let block = new BlockDouble(param);
+        // let block = new BlockDouble(param);
+        let block = new BlockRush(param);
         block.addEventListener(
             GameEvents.BlockEvent.MOVED_OUT,
             this._onMovedOut,
@@ -82,14 +85,14 @@ class BlocksColumn extends egret.Sprite {
             this._creatingRowIndex++;
             this.addChild(newBlock);
             if (this._dir === "down") {
-                newBlock.y = this._blocks[0].y - newBlock.height + this._speed;
+                newBlock.y = this._blocks[0].y - newBlock.height + this.speed;
             } else {
                 newBlock.y =
                     this._blocks[this._blocks.length - 1].y +
                     newBlock.height -
-                    this._speed;
+                    this.speed;
             }
-            newBlock.move(this._speed, this._dir);
+            newBlock.move(this.speed, this._dir);
             if (this._dir === "down") {
                 this._blocks.unshift(newBlock);
             } else {
@@ -99,47 +102,46 @@ class BlocksColumn extends egret.Sprite {
     }
     private _speedLooper() {
         if (this._speedTick) {
-            this._slowDown()
-        }else{
+            this._slowDown();
+        } else {
             this._speedUp();
         }
     }
     private _speedUp() {
         if (this._speedLevel < Service.GAME_CONFIG.speedLevels.length) {
-            this._speed = Service.GAME_CONFIG.speedLevels[this._speedLevel];
-            this._updateSpeed();
+            this.speed = Service.GAME_CONFIG.speedLevels[this._speedLevel];
+            this.updateSpeed();
             this._speedLevel++;
         }
-        if(this._speedLevel === Service.GAME_CONFIG.speedLevels.length){
+        if (this._speedLevel === Service.GAME_CONFIG.speedLevels.length) {
             this._speedTick = true;
         }
-
     }
     private _slowDown() {
         if (this._speedLevel > 0) {
             this._speedLevel--;
-            this._speed = Service.GAME_CONFIG.speedLevels[this._speedLevel];
-            this._updateSpeed();
+            this.speed = Service.GAME_CONFIG.speedLevels[this._speedLevel];
+            this.updateSpeed();
         }
-        if(this._speedLevel === 0){
+        if (this._speedLevel === 0) {
             this._speedTick = false;
             this._reversePause();
         }
     }
-    private _revertDir(){
+    private _revertDir() {
         if (this._dir === "up") {
-            this._dir = "down"
-        }else{
-            this._dir = "up"
+            this._dir = "down";
+        } else {
+            this._dir = "up";
         }
     }
-    private _reversePause(){
+    private _reversePause() {
         this.stop();
-        if(this._reverseTimer === undefined){
-            this._reverseTimer =  new egret.Timer(2000, 1);
+        if (this._reverseTimer === undefined) {
+            this._reverseTimer = new egret.Timer(2000, 1);
             this._reverseTimer.addEventListener(
                 egret.TimerEvent.TIMER_COMPLETE,
-                function(){
+                function() {
                     this._revertDir();
                     this.move();
                 },
@@ -148,15 +150,14 @@ class BlocksColumn extends egret.Sprite {
         }
         this._reverseTimer.reset();
         this._reverseTimer.start();
-
     }
-    private _updateSpeed() {
+    public updateSpeed() {
         let blocks: Array<any> = this._blocks;
         for (let i = 0; i < blocks.length; i++) {
-            blocks[i].speed = this._speed;
+            blocks[i].speed = this.speed;
         }
     }
-    private _startSpeedUpTimer() {
+    public startSpeedUpTimer() {
         this._speedUpTimer = new egret.Timer(this._speedUpInterval, 0);
         //注册事件侦听器
         this._speedUpTimer.addEventListener(
@@ -166,22 +167,28 @@ class BlocksColumn extends egret.Sprite {
         );
         this._speedUpTimer.start();
     }
-    private _stopSpeedUpTimer() {
-        this._speedUpTimer.stop();
-        this._speedUpTimer.removeEventListener(egret.TimerEvent.TIMER, this._speedLooper, this);
-        this._speedUpTimer = null;
+    public stopSpeedUpTimer() {
+        if (this._speedUpTimer !== null) {
+            this._speedUpTimer.stop();
+            this._speedUpTimer.removeEventListener(
+                egret.TimerEvent.TIMER,
+                this._speedLooper,
+                this
+            );
+            this._speedUpTimer = null;
+        }
     }
     public move() {
         let blocks: Array<any> = this._blocks;
         for (let i = 0; i < blocks.length; i++) {
-            blocks[i].move(this._speed, this._dir);
+            blocks[i].move(this.speed, this._dir);
         }
-        this._startSpeedUpTimer();
+        this.startSpeedUpTimer();
     }
     public stop() {
         for (let i = 0; i < this._blocks.length; i++) {
             this._blocks[i].stop();
         }
-        this._stopSpeedUpTimer();
+        this.stopSpeedUpTimer();
     }
 }
