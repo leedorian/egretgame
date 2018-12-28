@@ -1,5 +1,7 @@
 {
     "levelUpInterval": 10,
+    "rushFactor":3.3,
+    "rushTime":5,
     "colmuns":[
         {
             "interval": 4

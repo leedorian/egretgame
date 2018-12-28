@@ -254,6 +254,16 @@ var Utils = (function () {
         }
         return Utils.rowsState[rowIndex];
     };
+    /**
+     * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
+     * Create a Bitmap object according to name keyword.As for the property of name please refer to the configuration file of resources/resource.json.
+     */
+    Utils.createBitmapByName = function (name) {
+        var result = new egret.Bitmap();
+        var texture = RES.getRes(name);
+        result.texture = texture;
+        return result;
+    };
     Utils._blockWidth = 0;
     Utils._blockHeight = 0;
     Utils._stageHeight = 0;
@@ -736,18 +746,11 @@ var Main = (function (_super) {
      */
     Main.prototype.createGameScene = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var bg, stageW, stageH, gameService, gameConfig, gameScene, startButtonWidth, startButtonHeight, startButton;
+            var gameService, gameConfig, gameScene, startButtonWidth, startButtonHeight, startButton;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         this.stage.setContentSize(window.innerWidth, window.innerHeight);
-                        bg = this.createBitmapByName("bg_texture_jpg");
-                        bg.fillMode = egret.BitmapFillMode.REPEAT;
-                        this.addChild(bg);
-                        stageW = this.stage.stageWidth;
-                        stageH = this.stage.stageHeight;
-                        bg.width = stageW;
-                        bg.height = stageH;
                         gameService = new Service();
                         return [4 /*yield*/, gameService.getGameConfig()];
                     case 1:
@@ -874,11 +877,60 @@ var Service = (function () {
                 request.open(_this._gameConfig, egret.HttpMethod.GET);
                 request.send();
             }
+            else {
+                resolve(Service.GAME_CONFIG);
+            }
         });
     };
     return Service;
 }());
 __reflect(Service.prototype, "Service");
+var Time;
+(function (Time) {
+    var StopWatch = (function () {
+        function StopWatch(param, scope) {
+            this._time = 0;
+            this._interval = 1;
+            this._times = param.times;
+            this._callbackFinish = param.finish;
+            this._scope = scope;
+            if (param.interval) {
+                this._interval = param.interval;
+            }
+            if (param.tick) {
+                this._callbackTick = param.tick;
+            }
+        }
+        StopWatch.prototype.run = function () {
+            if (this._timer == null) {
+                this._timer = new egret.Timer(this._interval * 1000, this._times);
+                this._timer.addEventListener(egret.TimerEvent.TIMER, this._tick, this);
+                this._timer.addEventListener(egret.TimerEvent.TIMER_COMPLETE, this._fini, this);
+            }
+            else {
+                this._timer.stop();
+                this._timer.repeatCount = this._timer.repeatCount + this._times;
+            }
+            this._timer.start();
+            return this._timer;
+        };
+        StopWatch.prototype._tick = function () {
+            this._time = this._time + this._interval;
+            if (this._callbackTick) {
+                this._callbackTick.apply(this._scope, this._time);
+            }
+        };
+        StopWatch.prototype._fini = function () {
+            this._timer.removeEventListener(egret.TimerEvent.TIMER, this._tick, this);
+            this._timer.removeEventListener(egret.TimerEvent.TIMER_COMPLETE, this._fini, this);
+            this._timer = undefined;
+            this._callbackFinish.apply(this._scope);
+        };
+        return StopWatch;
+    }());
+    Time.StopWatch = StopWatch;
+    __reflect(StopWatch.prototype, "Time.StopWatch");
+})(Time || (Time = {}));
 var UIComponents;
 (function (UIComponents) {
     var DefaultButton = (function (_super) {
@@ -923,10 +975,12 @@ var GameScene = (function (_super) {
         _this._score = 0;
         _this._blockColumns = [];
         _this._columnSpeeds = [];
-        _this._rushFactor = 1.3;
         _this._mode = param.mode;
         _this._level = param.level;
+        _this._rushFactor = Service.GAME_CONFIG.rushFactor;
+        _this._rushTime = Service.GAME_CONFIG.rushTime;
         _this._calculateColsRows();
+        _this._drawBg();
         _this._drawColumns();
         _this._drawScore();
         _this.addEventListener(GameEvents.BlockEvent.MOVED_OUT, _this._onMovedOut, _this, true);
@@ -943,6 +997,15 @@ var GameScene = (function (_super) {
         //     console.log("Failed: " + reason);
         // });
     }
+    GameScene.prototype._drawBg = function () {
+        this._bg = Utils.createBitmapByName("normal_bg_png");
+        this._bg.fillMode = egret.BitmapFillMode.REPEAT;
+        this.addChild(this._bg);
+        var stageW = Utils.getStageWidth();
+        var stageH = Utils.getStageHeight();
+        this._bg.width = stageW;
+        this._bg.height = stageH;
+    };
     GameScene.prototype._drawColumns = function () {
         var blockColumn;
         var aDir = ["up", "down"];
@@ -1016,14 +1079,29 @@ var GameScene = (function (_super) {
         this._scoreText.text = this._score.toString();
     };
     GameScene.prototype._onHitRush = function (evt) {
-        this._columnSpeeds = [];
-        for (var i = 0; i < this._blockColumns.length; i++) {
-            var speed = this._blockColumns[i].speed;
-            this._columnSpeeds.push(speed);
-            this._blockColumns[i].speed = speed * this._rushFactor;
-            this._blockColumns[i].stopSpeedUpTimer();
-            this._blockColumns[i].updateSpeed();
+        if (this._rushWatch == null) {
+            this._rushWatch = new Time.StopWatch({ times: this._rushTime, finish: this._stopRush }, this);
+            this._columnSpeeds = [];
+            for (var i = 0; i < this._blockColumns.length; i++) {
+                var speed = this._blockColumns[i].speed;
+                this._columnSpeeds.push(speed);
+                this._blockColumns[i].speed = speed * this._rushFactor;
+                this._blockColumns[i].stopSpeedUpTimer();
+                this._blockColumns[i].updateSpeed();
+            }
         }
+        var rushTimer = this._rushWatch.run();
+        this._bg.texture = RES.getRes("rush_bg_png");
+    };
+    GameScene.prototype._stopRush = function () {
+        for (var i = 0; i < this._blockColumns.length; i++) {
+            var speed = this._columnSpeeds[i];
+            this._blockColumns[i].speed = speed;
+            this._blockColumns[i].updateSpeed();
+            this._blockColumns[i].startSpeedUpTimer();
+        }
+        this._rushWatch = null;
+        this._bg.texture = RES.getRes("normal_bg_png");
     };
     GameScene.prototype.gameStart = function () {
         for (var i = 0; i < this._blockColumns.length; i++) {

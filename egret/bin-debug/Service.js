@@ -37,6 +37,9 @@ var Service = (function () {
                 request.open(_this._gameConfig, egret.HttpMethod.GET);
                 request.send();
             }
+            else {
+                resolve(Service.GAME_CONFIG);
+            }
         });
     };
     return Service;

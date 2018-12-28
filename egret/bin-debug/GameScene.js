@@ -16,10 +16,12 @@ var GameScene = (function (_super) {
         _this._score = 0;
         _this._blockColumns = [];
         _this._columnSpeeds = [];
-        _this._rushFactor = 1.3;
         _this._mode = param.mode;
         _this._level = param.level;
+        _this._rushFactor = Service.GAME_CONFIG.rushFactor;
+        _this._rushTime = Service.GAME_CONFIG.rushTime;
         _this._calculateColsRows();
+        _this._drawBg();
         _this._drawColumns();
         _this._drawScore();
         _this.addEventListener(GameEvents.BlockEvent.MOVED_OUT, _this._onMovedOut, _this, true);
@@ -36,6 +38,15 @@ var GameScene = (function (_super) {
         //     console.log("Failed: " + reason);
         // });
     }
+    GameScene.prototype._drawBg = function () {
+        this._bg = Utils.createBitmapByName("normal_bg_png");
+        this._bg.fillMode = egret.BitmapFillMode.REPEAT;
+        this.addChild(this._bg);
+        var stageW = Utils.getStageWidth();
+        var stageH = Utils.getStageHeight();
+        this._bg.width = stageW;
+        this._bg.height = stageH;
+    };
     GameScene.prototype._drawColumns = function () {
         var blockColumn;
         var aDir = ["up", "down"];
@@ -109,14 +120,29 @@ var GameScene = (function (_super) {
         this._scoreText.text = this._score.toString();
     };
     GameScene.prototype._onHitRush = function (evt) {
-        this._columnSpeeds = [];
-        for (var i = 0; i < this._blockColumns.length; i++) {
-            var speed = this._blockColumns[i].speed;
-            this._columnSpeeds.push(speed);
-            this._blockColumns[i].speed = speed * this._rushFactor;
-            this._blockColumns[i].stopSpeedUpTimer();
-            this._blockColumns[i].updateSpeed();
+        if (this._rushWatch == null) {
+            this._rushWatch = new Time.StopWatch({ times: this._rushTime, finish: this._stopRush }, this);
+            this._columnSpeeds = [];
+            for (var i = 0; i < this._blockColumns.length; i++) {
+                var speed = this._blockColumns[i].speed;
+                this._columnSpeeds.push(speed);
+                this._blockColumns[i].speed = speed * this._rushFactor;
+                this._blockColumns[i].stopSpeedUpTimer();
+                this._blockColumns[i].updateSpeed();
+            }
         }
+        var rushTimer = this._rushWatch.run();
+        this._bg.texture = RES.getRes("rush_bg_png");
+    };
+    GameScene.prototype._stopRush = function () {
+        for (var i = 0; i < this._blockColumns.length; i++) {
+            var speed = this._columnSpeeds[i];
+            this._blockColumns[i].speed = speed;
+            this._blockColumns[i].updateSpeed();
+            this._blockColumns[i].startSpeedUpTimer();
+        }
+        this._rushWatch = null;
+        this._bg.texture = RES.getRes("normal_bg_png");
     };
     GameScene.prototype.gameStart = function () {
         for (var i = 0; i < this._blockColumns.length; i++) {

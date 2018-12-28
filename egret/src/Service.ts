@@ -1,6 +1,6 @@
 class Service {
     constructor() {
-        
+
     }
     private  _baseURL:string = "";
     private  _gameConfig:string = this._baseURL + "resource/config/gameconfig.json";
@@ -33,9 +33,11 @@ class Service {
                 request.once( egret.Event.COMPLETE, respHandler, this);
                 request.once( egret.IOErrorEvent.IO_ERROR, respHandler, this);
                 request.once( egret.ProgressEvent.PROGRESS, progressHandler, this);
-                request.open( this._gameConfig, egret.HttpMethod.GET ); 
+                request.open( this._gameConfig, egret.HttpMethod.GET );
                 request.send();
-            }       
+            }else{
+                resolve(Service.GAME_CONFIG);
+            }
         });
     }
 }

@@ -5,7 +5,10 @@ class GameScene extends egret.Sprite {
         super();
         this._mode = param.mode;
         this._level = param.level;
+        this._rushFactor = Service.GAME_CONFIG.rushFactor;
+        this._rushTime = Service.GAME_CONFIG.rushTime;
         this._calculateColsRows();
+        this._drawBg();
         this._drawColumns();
         this._drawScore();
         this.addEventListener(
@@ -44,7 +47,20 @@ class GameScene extends egret.Sprite {
     private _scoreText: egret.TextField;
     private _blockColumns: Array<BlocksColumn> = [];
     private _columnSpeeds: Array<number> = [];
-    private _rushFactor:number = 1.3;
+    private _rushFactor:number;
+    private _rushTime:number;
+    private _rushWatch:Time.StopWatch;
+    private _bg:egret.Bitmap;
+
+    private _drawBg(){
+        this._bg = Utils.createBitmapByName("normal_bg_png");
+        this._bg.fillMode = egret.BitmapFillMode.REPEAT;
+        this.addChild(this._bg);
+        const stageW = Utils.getStageWidth();
+        const stageH = Utils.getStageHeight();
+        this._bg.width = stageW;
+        this._bg.height = stageH;
+    }
     private _drawColumns() {
         let blockColumn: BlocksColumn;
         let aDir: Array<string> = ["up", "down"];
@@ -117,14 +133,29 @@ class GameScene extends egret.Sprite {
     }
 
     private _onHitRush(evt: GameEvents.BlockEvent) {
-        this._columnSpeeds = [];
-        for (let i = 0; i < this._blockColumns.length; i++) {
-            let speed: number = this._blockColumns[i].speed;
-            this._columnSpeeds.push(speed);
-            this._blockColumns[i].speed = speed * this._rushFactor;
-            this._blockColumns[i].stopSpeedUpTimer();
-            this._blockColumns[i].updateSpeed();
+        if (this._rushWatch == null) {
+            this._rushWatch = new Time.StopWatch({ times: this._rushTime, finish:this._stopRush }, this);
+            this._columnSpeeds = [];
+            for (let i = 0; i < this._blockColumns.length; i++) {
+                let speed: number = this._blockColumns[i].speed;
+                this._columnSpeeds.push(speed);
+                this._blockColumns[i].speed = speed * this._rushFactor;
+                this._blockColumns[i].stopSpeedUpTimer();
+                this._blockColumns[i].updateSpeed();
+            }
         }
+        const rushTimer = this._rushWatch.run();
+        this._bg.texture = RES.getRes("rush_bg_png");
+    }
+    private _stopRush(){
+        for (let i = 0; i < this._blockColumns.length; i++) {
+            let speed: number = this._columnSpeeds[i];
+            this._blockColumns[i].speed = speed;
+            this._blockColumns[i].updateSpeed();
+            this._blockColumns[i].startSpeedUpTimer();
+        }
+        this._rushWatch = null;
+        this._bg.texture = RES.getRes("normal_bg_png");
     }
 
     public gameStart() {

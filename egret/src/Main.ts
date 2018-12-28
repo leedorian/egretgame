@@ -97,13 +97,7 @@ class Main extends egret.DisplayObjectContainer {
      */
     private async createGameScene() {
         this.stage.setContentSize(window.innerWidth, window.innerHeight);
-        const bg = this.createBitmapByName("bg_texture_jpg");
-        bg.fillMode = egret.BitmapFillMode.REPEAT;
-        this.addChild(bg);
-        let stageW = this.stage.stageWidth;
-        let stageH = this.stage.stageHeight;
-        bg.width = stageW;
-        bg.height = stageH;
+
 
         // let topMask = new egret.Shape();
         // topMask.graphics.beginFill(0x000000, 0.5);

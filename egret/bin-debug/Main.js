@@ -151,18 +151,11 @@ var Main = (function (_super) {
      */
     Main.prototype.createGameScene = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var bg, stageW, stageH, gameService, gameConfig, gameScene, startButtonWidth, startButtonHeight, startButton;
+            var gameService, gameConfig, gameScene, startButtonWidth, startButtonHeight, startButton;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         this.stage.setContentSize(window.innerWidth, window.innerHeight);
-                        bg = this.createBitmapByName("bg_texture_jpg");
-                        bg.fillMode = egret.BitmapFillMode.REPEAT;
-                        this.addChild(bg);
-                        stageW = this.stage.stageWidth;
-                        stageH = this.stage.stageHeight;
-                        bg.width = stageW;
-                        bg.height = stageH;
                         gameService = new Service();
                         return [4 /*yield*/, gameService.getGameConfig()];
                     case 1:

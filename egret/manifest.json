@@ -20,6 +20,7 @@
 		"bin-debug/Main.js",
 		"bin-debug/Platform.js",
 		"bin-debug/Service.js",
+		"bin-debug/Time.js",
 		"bin-debug/UIComponents.js",
 		"bin-debug/GameScene.js"
 	]
