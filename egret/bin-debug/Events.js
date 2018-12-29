@@ -23,9 +23,25 @@ var GameEvents;
         BlockEvent.MISSED = "missed";
         BlockEvent.HIT = "hit";
         BlockEvent.HIT_RUSH = "hitrush";
+        BlockEvent.HIT_SHRINK = "hitshrink";
+        BlockEvent.HIT_UNCLICKABLE = "hitunclickable";
         return BlockEvent;
     }(egret.Event));
     GameEvents.BlockEvent = BlockEvent;
     __reflect(BlockEvent.prototype, "GameEvents.BlockEvent");
+    var PlayEvent = (function (_super) {
+        __extends(PlayEvent, _super);
+        function PlayEvent(type, bubbles, cancelable) {
+            if (bubbles === void 0) { bubbles = true; }
+            if (cancelable === void 0) { cancelable = false; }
+            var _this = _super.call(this, type, bubbles, cancelable) || this;
+            _this.score = 0;
+            return _this;
+        }
+        PlayEvent.GAME_OVER = "gameover";
+        return PlayEvent;
+    }(egret.Event));
+    GameEvents.PlayEvent = PlayEvent;
+    __reflect(PlayEvent.prototype, "GameEvents.PlayEvent");
 })(GameEvents || (GameEvents = {}));
 //# sourceMappingURL=Events.js.map

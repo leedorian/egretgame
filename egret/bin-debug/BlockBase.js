@@ -8,44 +8,58 @@ var __extends = this && this.__extends || function __extends(t, e) {
 for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
 r.prototype = e.prototype, t.prototype = new r();
 };
-var Block = (function (_super) {
-    __extends(Block, _super);
-    function Block(param) {
+var BlockBase = (function (_super) {
+    __extends(BlockBase, _super);
+    function BlockBase(param) {
         var _this = _super.call(this) || this;
         _this._unClickableColor = BlockColor.unClickable;
-        _this.touchEnabled = true;
+        _this._clickedColor = BlockColor.clicked;
         _this._currentState = param.state;
+        _this.shrinkRate = param.shrinkRate;
         _this.width = param.width;
         _this.height = param.height;
         _this._colorRect = new egret.Shape();
         _this._colorRect.width = _this.width;
         _this._colorRect.height = _this.height;
+        _this._colorRect.touchEnabled = true;
         _this._beforeDraw();
         _this._draw();
-        _this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, _this._onTouch, _this);
+        _this._colorRect.addEventListener(egret.TouchEvent.TOUCH_BEGIN, _this._onTouch, _this);
         return _this;
     }
-    Block.prototype._draw = function () {
-        var fillColor;
+    BlockBase.prototype._draw = function () {
+        // let fillColor: BlockColor;
+        // let bgFillColor: BlockColor = this._unClickableColor;
         // let labelColor: BlockColor = BlockColor.unClickable;
         var lineColor = BlockColor.border;
-        var rectWidth = this._colorRect.width;
-        var rectHeight = this._colorRect.height;
+        var rectWidth = this._colorRect.width * this.shrinkRate;
+        var rectHeight = this._colorRect.height * this.shrinkRate;
+        if (this._currentState === BlockState.unclickable) {
+            rectWidth = this._colorRect.width;
+            rectHeight = this._colorRect.height;
+        }
         // const rectX = rectWidth / 2;
         // const rectY = rectHeight / 2;
         // this._colorRect.anchorOffsetX = rectX;
         // this._colorRect.anchorOffsetY = rectY;
         // this._colorRect.x = rectX;
         // this._colorRect.y = rectY;
-        if (this._currentState === BlockState.clickable || this._currentState === BlockState.clicked) {
-            fillColor = this._clickableColor;
-        }
+        // if (this._currentState === BlockState.clickable || this._currentState === BlockState.clicked){
+        //     fillColor = this._clickableColor;
+        // }
         this._colorRect.graphics.clear();
         this.graphics.lineStyle(1, lineColor);
-        this.graphics.drawRect(0, 0, this.width, this.height);
-        if (this._currentState !== BlockState.unclickable) {
-            this._colorRect.graphics.beginFill(fillColor, 1);
+        if (this._currentState === BlockState.clicked) {
+            this.graphics.beginFill(this._clickedColor, 1);
         }
+        this.graphics.drawRect(0, 0, this.width, this.height);
+        if (this._currentState > 0) {
+            this._colorRect.graphics.beginFill(this._clickableColor, 1);
+        }
+        else {
+            this._colorRect.graphics.beginFill(this._unClickableColor, 0);
+        }
+        this._colorRect.graphics.lineStyle(1, lineColor);
         this._colorRect.graphics.drawRect((this.width - rectWidth) / 2, (this.height - rectHeight) / 2, rectWidth, rectHeight);
         if (this._colorRect.parent === null) {
             this.addChild(this._colorRect);
@@ -66,9 +80,21 @@ var Block = (function (_super) {
         // label.text = this.hashCode.toString();
         // this.addChild( label );
     };
-    Block.prototype._hitAni = function () {
-        var rectWidth = this._colorRect.width;
-        var rectHeight = this._colorRect.height;
+    BlockBase.prototype._onTouch = function (oEvent) {
+        if (this._currentState === BlockState.clickable) {
+            this._hit();
+        }
+        else if (this._currentState === BlockState.unclickable) {
+            this._hitUnclickable();
+        }
+    };
+    BlockBase.prototype._hitAni = function () {
+        var rectWidth = this._colorRect.width * this.shrinkRate;
+        var rectHeight = this._colorRect.height * this.shrinkRate;
+        if (this._currentState === BlockState.unclickable) {
+            rectWidth = this._colorRect.width;
+            rectHeight = this._colorRect.height;
+        }
         if (rectWidth > 0) {
             this._colorRect.width = rectWidth - 6;
         }
@@ -105,23 +131,27 @@ var Block = (function (_super) {
         }
         return false;
     };
-    Block.prototype._hit = function () {
+    BlockBase.prototype._hit = function () {
         // this.addEventListener(egret.Event.ENTER_FRAME, this._hitAni, this);
         egret.startTick(this._hitAni, this);
         this.state = "clicked";
         var hitEvent = new GameEvents.BlockEvent(GameEvents.BlockEvent.HIT);
         this.dispatchEvent(hitEvent);
     };
-    Block.prototype.move = function (speed, dir) {
+    BlockBase.prototype._hitUnclickable = function () {
+        var hitEvent = new GameEvents.BlockEvent(GameEvents.BlockEvent.HIT_UNCLICKABLE);
+        this.dispatchEvent(hitEvent);
+    };
+    BlockBase.prototype.move = function (speed, dir) {
         if (dir === void 0) { dir = "down"; }
         this.speed = speed;
         this._dir = dir;
         egret.startTick(this._moveBlock, this);
     };
-    Block.prototype.stop = function () {
+    BlockBase.prototype.stop = function () {
         egret.stopTick(this._moveBlock, this);
     };
-    Block.prototype._moveBlock = function (timeStamp) {
+    BlockBase.prototype._moveBlock = function (timeStamp) {
         if (this._dir === "down") {
             if (this.y >= Utils.getStageHeight()) {
                 this._triggerMovedOutEvent();
@@ -140,7 +170,7 @@ var Block = (function (_super) {
         }
         return false;
     };
-    Block.prototype._setY = function () {
+    BlockBase.prototype._setY = function () {
         var tempY = this.y;
         if (this._dir === "up") {
             this.y = tempY - this.speed;
@@ -149,7 +179,7 @@ var Block = (function (_super) {
             this.y = tempY + this.speed;
         }
     };
-    Block.prototype._triggerMovedOutEvent = function () {
+    BlockBase.prototype._triggerMovedOutEvent = function () {
         var missed = false;
         var movedOutEvent = new GameEvents.BlockEvent(GameEvents.BlockEvent.MOVED_OUT);
         if (this._currentState === BlockState.clickable) {
@@ -158,7 +188,15 @@ var Block = (function (_super) {
         movedOutEvent.missed = missed;
         this.dispatchEvent(movedOutEvent);
     };
-    Object.defineProperty(Block.prototype, "state", {
+    /**
+     * sizeUpdate
+     */
+    BlockBase.prototype.sizeUpdate = function () {
+        if (this._currentState !== BlockState.clicked) {
+            this._draw();
+        }
+    };
+    Object.defineProperty(BlockBase.prototype, "state", {
         get: function () {
             var state;
             state = BlockState[this._currentState];
@@ -172,7 +210,7 @@ var Block = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    return Block;
+    return BlockBase;
 }(egret.Sprite));
-__reflect(Block.prototype, "Block");
-//# sourceMappingURL=Block.js.map
+__reflect(BlockBase.prototype, "BlockBase");
+//# sourceMappingURL=BlockBase.js.map

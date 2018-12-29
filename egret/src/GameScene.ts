@@ -7,6 +7,8 @@ class GameScene extends egret.Sprite {
         this._level = param.level;
         this._rushFactor = Service.GAME_CONFIG.rushFactor;
         this._rushTime = Service.GAME_CONFIG.rushTime;
+        this._shrinkTime = Service.GAME_CONFIG.shrinkTime;
+        this._score = 0;
         this._calculateColsRows();
         this._drawBg();
         this._drawColumns();
@@ -29,6 +31,18 @@ class GameScene extends egret.Sprite {
             this,
             true
         );
+        this.addEventListener(
+            GameEvents.BlockEvent.HIT_UNCLICKABLE,
+            this._onHitUnclickable,
+            this,
+            true
+        );
+        this.addEventListener(
+            GameEvents.BlockEvent.HIT_SHRINK,
+            this._onHitShrink,
+            this,
+            true
+        );
         // let state = "_" + (+new Date());
         // Wechat.auth("snsapi_userinfo", state, function (response) {
         //     // you may use response.code to get the access token.
@@ -43,13 +57,15 @@ class GameScene extends egret.Sprite {
     private _level: number;
     private _cols: number;
     private _rows: number;
-    private _score: number = 0;
+    private _score: number;
     private _scoreText: egret.TextField;
     private _blockColumns: Array<BlocksColumn> = [];
     private _columnSpeeds: Array<number> = [];
     private _rushFactor:number;
     private _rushTime:number;
     private _rushWatch:Time.StopWatch;
+    private _shrinkTime:number;
+    private _shrinkWatch:Time.StopWatch;
     private _bg:egret.Bitmap;
 
     private _drawBg(){
@@ -157,10 +173,59 @@ class GameScene extends egret.Sprite {
         this._rushWatch = null;
         this._bg.texture = RES.getRes("normal_bg_png");
     }
+    private _onHitUnclickable(){
+        this._gameOver();
+    }
+    private _onHitShrink() {
+        if (this._shrinkWatch == null) {
+            this._shrinkWatch = new Time.StopWatch({ times: this._shrinkTime, finish:this._stopShrink }, this);
+            for (let i = 0; i < this._blockColumns.length; i++) {
+                this._blockColumns[i].shrink();
+            }
+        }
+        const rushTimer = this._shrinkWatch.run();
 
+    }
+    private _stopShrink(){
+        for (let i = 0; i < this._blockColumns.length; i++) {
+            this._blockColumns[i].shrinkReset();
+        }
+        this._shrinkWatch = null;
+    }
     public gameStart() {
         for (let i = 0; i < this._blockColumns.length; i++) {
             this._blockColumns[i].move();
         }
+    }
+    private _gameOver(){
+        for (let i = 0; i < this._blockColumns.length; i++) {
+            this._blockColumns[i].stop();
+        }
+
+        let gameoverEvent:GameEvents.PlayEvent = new GameEvents.PlayEvent(GameEvents.PlayEvent.GAME_OVER);
+        gameoverEvent.score = this._score;
+        this.dispatchEvent(gameoverEvent);
+    }
+    public reset(){
+        this.score = 0;
+        for (let i = 0; i < this._blockColumns.length; i++) {
+            this._blockColumns[i].reset();
+        }
+        if(this._rushWatch != null){
+            this._rushWatch.destroy();
+            this._rushWatch = null;
+            this._bg.texture = RES.getRes("normal_bg_png");
+        }
+        if(this._shrinkWatch != null){
+            this._shrinkWatch.destroy();
+            this._shrinkWatch = null;
+        }
+    }
+    public set score(val:number){
+        this._score = val;
+        this._scoreText.text = val.toString();
+    }
+    public get score():number{
+       return this._score;
     }
 }

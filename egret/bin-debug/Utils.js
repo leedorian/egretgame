@@ -29,7 +29,7 @@ var Utils = (function () {
         return Utils._stageHeight;
     };
     Utils.getRowBlockState = function (rowIndex) {
-        if (Utils.rowsState[rowIndex] === undefined) {
+        if (Utils.rowsState[rowIndex] == null) {
             var rowState = [];
             var clickableColmun = Math.floor(Math.random() * Utils.columns);
             for (var i = 0; i < Utils.columns; i++) {
@@ -40,7 +40,7 @@ var Utils = (function () {
                     rowState.push(BlockState.unclickable);
                 }
             }
-            Utils.rowsState.push(rowState);
+            Utils.rowsState[rowIndex] = rowState;
             return rowState;
         }
         return Utils.rowsState[rowIndex];
@@ -59,7 +59,7 @@ var Utils = (function () {
     Utils._blockHeight = 0;
     Utils._stageHeight = 0;
     Utils._stageWidth = 0;
-    Utils.rowsState = [];
+    Utils.rowsState = {};
     Utils.rows = 6;
     Utils.columns = 6;
     return Utils;

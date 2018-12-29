@@ -16,8 +16,10 @@ var BlocksColumn = (function (_super) {
         _this._creatingRowIndex = 0;
         _this._speedLevel = 0;
         _this._speedTick = false;
+        _this._shrinkRate = 1;
         _this.speed = Service.GAME_CONFIG.speedLevels[_this._speedLevel];
-        _this._dir = param.dir;
+        _this.dir = param.dir;
+        _this._dir = _this.dir;
         _this.name = param.name;
         _this._speedUpInterval = param.speedUpInterval * 1000;
         _this._index = parseInt(_this.name.split("_")[1], 10);
@@ -25,17 +27,18 @@ var BlocksColumn = (function (_super) {
         return _this;
     }
     BlocksColumn.prototype._draw = function () {
+        this._blocks = [];
         var n = this._dir === "down" ? -1 : 0;
         var blockCount = this._dir === "down" ? Utils.rows : Utils.rows + 1;
         for (var i = n; i < blockCount; i++) {
+            var state = BlockState.unclickable;
             this._creatingRowIndex = this._dir === "down" ? i + 1 : i;
-            // let block = this._createBlock({
-            //     state: Utils.getRowBlockState(this._creatingRowIndex)[
-            //         this._index
-            //     ]
-            // });
+            if ((this._dir === "down" && i === -1) || (this._dir === "up" && i === blockCount - 1)) {
+                state = Utils.getRowBlockState(this._creatingRowIndex)[this._index];
+            }
             var block = this._createBlock({
-                state: BlockState.unclickable
+                state: state,
+                startBlock: true
             });
             this.addChild(block);
             block.x = 0;
@@ -43,17 +46,41 @@ var BlocksColumn = (function (_super) {
             this._blocks.push(block);
         }
     };
+    BlocksColumn.prototype.reset = function () {
+        this.stop();
+        this.speedLevel = 0;
+        this._dir = this.dir;
+        this.shrinkReset();
+        var blockLength = this._blocks.length;
+        for (var i = 0; i < blockLength; i++) {
+            this.removeChild(this._blocks[i]);
+            this._blocks[i] = null;
+        }
+        this._draw();
+    };
     BlocksColumn.prototype._createBlock = function (settings) {
         var blockWidth = Utils.getBlockWidth();
         var blockHeight = Utils.getBlockHeight();
         var param = {
             width: blockWidth,
             height: blockHeight,
+            shrinkRate: this._shrinkRate,
             state: settings.state
         };
         // let block = new BlockNormal(param);
         // let block = new BlockDouble(param);
-        var block = new BlockRush(param);
+        // let block = new BlockRush(param);
+        // let block = new BlockBlink(param);
+        var block;
+        if (settings.startBlock == null && settings.state === BlockState.clickable) {
+            var weightNumbers = [0, 0, 0, 0, 0, 1, 1, 2, 3, 4];
+            var idx = Math.floor(Math.random() * weightNumbers.length);
+            var blockType = weightNumbers[idx];
+            block = new window[BlockType[blockType]](param);
+        }
+        else {
+            block = new BlockNormal(param);
+        }
         block.addEventListener(GameEvents.BlockEvent.MOVED_OUT, this._onMovedOut, this);
         return block;
     };
@@ -147,6 +174,13 @@ var BlocksColumn = (function (_super) {
         this._reverseTimer.reset();
         this._reverseTimer.start();
     };
+    BlocksColumn.prototype._blockSizeUpdate = function () {
+        for (var i = 0; i < this._blocks.length; i++) {
+            var blockInstance = this._blocks[i];
+            blockInstance.shrinkRate = this._shrinkRate;
+            blockInstance.sizeUpdate();
+        }
+    };
     BlocksColumn.prototype.updateSpeed = function () {
         var blocks = this._blocks;
         for (var i = 0; i < blocks.length; i++) {
@@ -179,6 +213,31 @@ var BlocksColumn = (function (_super) {
         }
         this.stopSpeedUpTimer();
     };
+    BlocksColumn.prototype.shrink = function () {
+        this._shrinkRate = 0.5;
+        this._blockSizeUpdate();
+    };
+    BlocksColumn.prototype.shrinkReset = function () {
+        this._shrinkRate = 1;
+        this._blockSizeUpdate();
+    };
+    Object.defineProperty(BlocksColumn.prototype, "speedLevel", {
+        /**
+         * get speedLevel
+         */
+        get: function () {
+            return this._speedLevel;
+        },
+        /**
+         * set speedLevel
+         */
+        set: function (val) {
+            this._speedLevel = val;
+            this.speed = Service.GAME_CONFIG.speedLevels[this._speedLevel];
+        },
+        enumerable: true,
+        configurable: true
+    });
     return BlocksColumn;
 }(egret.Sprite));
 __reflect(BlocksColumn.prototype, "BlocksColumn");

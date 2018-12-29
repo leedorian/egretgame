@@ -29,7 +29,7 @@ var Utils = (function () {
         return Utils._stageHeight;
     };
     Utils.getRowBlockState = function (rowIndex) {
-        if (Utils.rowsState[rowIndex] === undefined) {
+        if (Utils.rowsState[rowIndex] == null) {
             var rowState = [];
             var clickableColmun = Math.floor(Math.random() * Utils.columns);
             for (var i = 0; i < Utils.columns; i++) {
@@ -40,16 +40,26 @@ var Utils = (function () {
                     rowState.push(BlockState.unclickable);
                 }
             }
-            Utils.rowsState.push(rowState);
+            Utils.rowsState[rowIndex] = rowState;
             return rowState;
         }
         return Utils.rowsState[rowIndex];
+    };
+    /**
+     * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
+     * Create a Bitmap object according to name keyword.As for the property of name please refer to the configuration file of resources/resource.json.
+     */
+    Utils.createBitmapByName = function (name) {
+        var result = new egret.Bitmap();
+        var texture = RES.getRes(name);
+        result.texture = texture;
+        return result;
     };
     Utils._blockWidth = 0;
     Utils._blockHeight = 0;
     Utils._stageHeight = 0;
     Utils._stageWidth = 0;
-    Utils.rowsState = [];
+    Utils.rowsState = {};
     Utils.rows = 6;
     Utils.columns = 6;
     return Utils;

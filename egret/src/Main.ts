@@ -65,7 +65,8 @@ class Main extends egret.DisplayObjectContainer {
 
     private async runGame() {
         await this.loadResource()
-        this.createGameScene();
+        await this.createGameScene();
+        this._attachEvents();
         // const result = await RES.getResAsync("description_json")
         // this.startAnimation(result);
         await platform.login();
@@ -90,6 +91,7 @@ class Main extends egret.DisplayObjectContainer {
     private textfield: egret.TextField;
     private _gameScene: GameScene;
     private _startButton: UIComponents.DefaultButton;
+    private _gameOverButton: UIComponents.DefaultButton;
 
     /**
      * 创建游戏场景
@@ -147,7 +149,7 @@ class Main extends egret.DisplayObjectContainer {
         const gameConfig: any = await gameService.getGameConfig();
 
         const gameScene = new GameScene({
-            mode: GameMode.DOWN,
+            mode: GameMode.UP,
             level: GameLevel.EASY
         });
         this._gameScene = gameScene;
@@ -163,23 +165,36 @@ class Main extends egret.DisplayObjectContainer {
         this._startButton = startButton;
         this.addChild(startButton);
 
+        const gameOverButtonWidth:number = Utils.getStageWidth()/2;
+        const gameOverButtonHeight:number = 80;
+        const gameOverButton: UIComponents.DefaultButton =
+            new UIComponents.DefaultButton(gameOverButtonWidth,gameOverButtonHeight,"Game over");
+            gameOverButton.x = Utils.getStageWidth()/2 - gameOverButtonWidth/2;
+            gameOverButton.y = Utils.getStageHeight() * 0.3;
+            gameOverButton.visible = false;
+            gameOverButton.addEventListener("touchTap", this._restartGame, this);
+        this._gameOverButton = gameOverButton;
+        this.addChild(gameOverButton);
+
     }
     private _startGame() {
         this._startButton.visible = false;
         this._gameScene.gameStart();
     }
-
-
-    /**
-     * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
-     * Create a Bitmap object according to name keyword.As for the property of name please refer to the configuration file of resources/resource.json.
-     */
-    private createBitmapByName(name: string) {
-        let result = new egret.Bitmap();
-        let texture: egret.Texture = RES.getRes(name);
-        result.texture = texture;
-        return result;
+    private _restartGame() {
+        this._startButton.visible = true;
+        this._gameOverButton.visible = false;
+        this._gameScene.reset();
     }
+
+    private _attachEvents(){
+        this.addEventListener(GameEvents.PlayEvent.GAME_OVER, this._gameOver, this);
+    }
+    private _gameOver(oEvent){
+        console.log(oEvent.score);
+        this._gameOverButton.visible = true;
+    }
+
 
     /**
      * 描述文件加载成功，开始播放动画

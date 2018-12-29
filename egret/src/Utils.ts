@@ -3,7 +3,7 @@ class Utils{
     private static _blockHeight:number = 0;
     private static _stageHeight:number = 0;
     private static _stageWidth:number = 0;
-    public static rowsState:Array<Array<number>> = [];
+    public static rowsState:any = {};
     public static rows:number = 6;
     public static columns:number = 6;
     public static getBlockWidth():number{
@@ -31,7 +31,7 @@ class Utils{
         return Utils._stageHeight;
     }
     public static getRowBlockState(rowIndex:number){
-        if(Utils.rowsState[rowIndex] === undefined){
+        if(Utils.rowsState[rowIndex] == null){
             let rowState:Array<number> = [];
             let clickableColmun:number = Math.floor(Math.random() * Utils.columns);
             for(let i = 0; i < Utils.columns; i++){
@@ -42,7 +42,7 @@ class Utils{
                 }
             }
 
-            Utils.rowsState.push(rowState);
+            Utils.rowsState[rowIndex] = rowState;
             return rowState;
         }
         return Utils.rowsState[rowIndex];

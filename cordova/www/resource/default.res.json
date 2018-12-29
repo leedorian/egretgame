@@ -1,16 +1,16 @@
 {
 	"groups": [
 		{
-			"keys": "bg_jpg,egret_icon_png,description_json,white_png",
+			"keys": "rush_bg_png,egret_icon_png,description_json,buttonBg_png,normal_bg_png",
 			"name": "preload"
 		}
 	],
 	"resources": [
 		{
-			"name": "bg_jpg",
+			"name": "rush_bg_png",
 			"type": "image",
-			"url": "assets/bg.jpg"
-		},
+			"url": "assets/rush_bg.png"
+        },
 		{
 			"name": "egret_icon_png",
 			"type": "image",
@@ -22,9 +22,14 @@
 			"url": "config/description.json"
 		},
 		{
-			"name": "white_png",
+			"name": "normal_bg_png",
 			"type": "image",
-			"url": "assets/white.png"
+			"url": "assets/normal_bg.png"
+		},
+		{
+			"name": "buttonBg_png",
+			"type": "image",
+			"url": "assets/buttonBg.png"
 		}
 	]
 }

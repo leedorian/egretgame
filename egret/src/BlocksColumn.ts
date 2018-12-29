@@ -1,7 +1,8 @@
 class BlocksColumn extends egret.Sprite {
     public constructor(param: any) {
         super();
-        this._dir = param.dir;
+        this.dir = param.dir;
+        this._dir = this.dir;
         this.name = param.name;
         this._speedUpInterval = param.speedUpInterval * 1000;
         this._index = parseInt(this.name.split("_")[1], 10);
@@ -16,21 +17,26 @@ class BlocksColumn extends egret.Sprite {
     private _speedUpInterval: number;
     private _speedTick: boolean = false;
     private _reverseTimer: egret.Timer;
+    private _shrinkRate:number = 1;
 
     public speed: number = Service.GAME_CONFIG.speedLevels[this._speedLevel];
+    public dir: string;
 
     private _draw() {
+        this._blocks = [];
         let n: number = this._dir === "down" ? -1 : 0;
         let blockCount = this._dir === "down" ? Utils.rows : Utils.rows + 1;
         for (let i = n; i < blockCount; i++) {
+            let state:number = BlockState.unclickable;
             this._creatingRowIndex = this._dir === "down" ? i + 1 : i;
-            // let block = this._createBlock({
-            //     state: Utils.getRowBlockState(this._creatingRowIndex)[
-            //         this._index
-            //     ]
-            // });
+            if ((this._dir === "down" && i === -1) || (this._dir === "up" && i === blockCount - 1)) {
+                state = Utils.getRowBlockState(this._creatingRowIndex)[
+                    this._index
+                ]
+            }
             const block = this._createBlock({
-                state: BlockState.unclickable
+                state: state,
+                startBlock: true
             });
             this.addChild(block);
             block.x = 0;
@@ -38,17 +44,41 @@ class BlocksColumn extends egret.Sprite {
             this._blocks.push(block);
         }
     }
+    public reset(){
+        this.stop();
+        this.speedLevel = 0;
+        this._dir =  this.dir;
+        this.shrinkReset();
+        const blockLength =  this._blocks.length;
+        for (let i = 0; i < blockLength; i++) {
+            this.removeChild(this._blocks[i]);
+            this._blocks[i] = null;
+        }
+        this._draw();
+    }
     private _createBlock(settings: any): any {
         let blockWidth: number = Utils.getBlockWidth();
         let blockHeight: number = Utils.getBlockHeight();
         let param: any = {
             width: blockWidth,
             height: blockHeight,
+            shrinkRate: this._shrinkRate,
             state: settings.state
         };
         // let block = new BlockNormal(param);
         // let block = new BlockDouble(param);
-        let block = new BlockRush(param);
+        // let block = new BlockRush(param);
+        // let block = new BlockBlink(param);
+        let block:any;
+        if (settings.startBlock == null && settings.state === BlockState.clickable) {
+            const weightNumbers = [0, 0, 0, 0, 0, 1, 1, 2, 3, 4];
+            const idx = Math.floor(Math.random() * weightNumbers.length);
+            const blockType:number = weightNumbers[idx];
+            block = new window[BlockType[blockType]](param);
+        }else{
+            block = new BlockNormal(param);
+        }
+
         block.addEventListener(
             GameEvents.BlockEvent.MOVED_OUT,
             this._onMovedOut,
@@ -57,7 +87,7 @@ class BlocksColumn extends egret.Sprite {
         return block;
     }
     private _onMovedOut(evt: GameEvents.BlockEvent) {
-        let tarBlock: Block = evt.target;
+        let tarBlock: BlockBase = evt.target;
         // let missed: boolean = evt.missed;
         let missed: boolean = false;
         tarBlock.removeEventListener(
@@ -77,7 +107,7 @@ class BlocksColumn extends egret.Sprite {
         if (missed) {
             this.stop();
         } else {
-            let newBlock: Block = this._createBlock({
+            let newBlock: BlockBase = this._createBlock({
                 state: Utils.getRowBlockState(this._creatingRowIndex)[
                     this._index
                 ]
@@ -151,6 +181,13 @@ class BlocksColumn extends egret.Sprite {
         this._reverseTimer.reset();
         this._reverseTimer.start();
     }
+    private _blockSizeUpdate(){
+        for (let i = 0; i < this._blocks.length; i++) {
+            const blockInstance = this._blocks[i];
+            blockInstance.shrinkRate = this._shrinkRate;
+            blockInstance.sizeUpdate();
+        }
+    }
     public updateSpeed() {
         let blocks: Array<any> = this._blocks;
         for (let i = 0; i < blocks.length; i++) {
@@ -191,4 +228,27 @@ class BlocksColumn extends egret.Sprite {
         }
         this.stopSpeedUpTimer();
     }
+    public shrink() {
+        this._shrinkRate = 0.5;
+        this._blockSizeUpdate();
+    }
+    public shrinkReset() {
+        this._shrinkRate = 1;
+        this._blockSizeUpdate();
+    }
+
+    /**
+     * get speedLevel
+     */
+    public get speedLevel():number {
+        return this._speedLevel;
+    }
+    /**
+     * set speedLevel
+     */
+    public set speedLevel(val:number) {
+        this._speedLevel = val;
+        this.speed = Service.GAME_CONFIG.speedLevels[this._speedLevel];
+    }
+
 }

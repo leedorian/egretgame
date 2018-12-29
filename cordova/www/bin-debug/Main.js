@@ -96,19 +96,22 @@ var Main = (function (_super) {
     };
     Main.prototype.runGame = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var result, userInfo;
+            var userInfo;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.loadResource()];
                     case 1:
                         _a.sent();
-                        this.createGameScene();
-                        return [4 /*yield*/, RES.getResAsync("description_json")];
+                        return [4 /*yield*/, this.createGameScene()];
                     case 2:
-                        result = _a.sent();
-                        this.startAnimation(result);
+                        _a.sent();
+                        this._attachEvents();
+                        // const result = await RES.getResAsync("description_json")
+                        // this.startAnimation(result);
                         return [4 /*yield*/, platform.login()];
                     case 3:
+                        // const result = await RES.getResAsync("description_json")
+                        // this.startAnimation(result);
                         _a.sent();
                         return [4 /*yield*/, platform.getUserInfo()];
                     case 4:
@@ -150,66 +153,59 @@ var Main = (function (_super) {
      * Create a game scene
      */
     Main.prototype.createGameScene = function () {
-        this.stage.setContentSize(window.innerWidth, window.innerHeight);
-        var sky = this.createBitmapByName("bg_jpg");
-        this.addChild(sky);
-        var stageW = this.stage.stageWidth;
-        var stageH = this.stage.stageHeight;
-        sky.width = stageW;
-        sky.height = stageH;
-        var topMask = new egret.Shape();
-        topMask.graphics.beginFill(0x000000, 0.5);
-        topMask.graphics.drawRect(0, 0, stageW, 172);
-        topMask.graphics.endFill();
-        topMask.y = 33;
-        this.addChild(topMask);
-        var icon = this.createBitmapByName("egret_icon_png");
-        this.addChild(icon);
-        icon.x = 26;
-        icon.y = 33;
-        var line = new egret.Shape();
-        line.graphics.lineStyle(2, 0xffffff);
-        line.graphics.moveTo(0, 0);
-        line.graphics.lineTo(0, 117);
-        line.graphics.endFill();
-        line.x = 172;
-        line.y = 61;
-        this.addChild(line);
-        var colorLabel = new egret.TextField();
-        colorLabel.textColor = 0xffffff;
-        colorLabel.width = stageW - 172;
-        colorLabel.textAlign = "center";
-        colorLabel.text = "Hello Egret";
-        colorLabel.size = 24;
-        colorLabel.x = 172;
-        colorLabel.y = 80;
-        this.addChild(colorLabel);
-        var textfield = new egret.TextField();
-        this.addChild(textfield);
-        textfield.alpha = 0;
-        textfield.width = stageW - 172;
-        textfield.textAlign = egret.HorizontalAlign.CENTER;
-        textfield.size = 24;
-        textfield.textColor = 0xffffff;
-        textfield.x = 172;
-        textfield.y = 135;
-        this.textfield = textfield;
-        var gameScene = new GameScene({
-            mode: GameMode.BI_DIR,
-            level: GameLevel.EASY
+        return __awaiter(this, void 0, void 0, function () {
+            var gameService, gameConfig, gameScene, startButtonWidth, startButtonHeight, startButton, gameOverButtonWidth, gameOverButtonHeight, gameOverButton;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this.stage.setContentSize(window.innerWidth, window.innerHeight);
+                        gameService = new Service();
+                        return [4 /*yield*/, gameService.getGameConfig()];
+                    case 1:
+                        gameConfig = _a.sent();
+                        gameScene = new GameScene({
+                            mode: GameMode.UP,
+                            level: GameLevel.EASY
+                        });
+                        this._gameScene = gameScene;
+                        this.addChild(gameScene);
+                        startButtonWidth = Utils.getStageWidth() / 2;
+                        startButtonHeight = 80;
+                        startButton = new UIComponents.DefaultButton(startButtonWidth, startButtonHeight, "Start");
+                        startButton.x = Utils.getStageWidth() / 2 - startButtonWidth / 2;
+                        startButton.y = Utils.getStageHeight() * 0.3;
+                        startButton.addEventListener("touchTap", this._startGame, this);
+                        this._startButton = startButton;
+                        this.addChild(startButton);
+                        gameOverButtonWidth = Utils.getStageWidth() / 2;
+                        gameOverButtonHeight = 80;
+                        gameOverButton = new UIComponents.DefaultButton(gameOverButtonWidth, gameOverButtonHeight, "Game over");
+                        gameOverButton.x = Utils.getStageWidth() / 2 - gameOverButtonWidth / 2;
+                        gameOverButton.y = Utils.getStageHeight() * 0.3;
+                        gameOverButton.visible = false;
+                        gameOverButton.addEventListener("touchTap", this._restartGame, this);
+                        this._gameOverButton = gameOverButton;
+                        this.addChild(gameOverButton);
+                        return [2 /*return*/];
+                }
+            });
         });
-        this.addChild(gameScene);
-        gameScene.gameStart();
     };
-    /**
-     * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
-     * Create a Bitmap object according to name keyword.As for the property of name please refer to the configuration file of resources/resource.json.
-     */
-    Main.prototype.createBitmapByName = function (name) {
-        var result = new egret.Bitmap();
-        var texture = RES.getRes(name);
-        result.texture = texture;
-        return result;
+    Main.prototype._startGame = function () {
+        this._startButton.visible = false;
+        this._gameScene.gameStart();
+    };
+    Main.prototype._restartGame = function () {
+        this._startButton.visible = true;
+        this._gameOverButton.visible = false;
+        this._gameScene.reset();
+    };
+    Main.prototype._attachEvents = function () {
+        this.addEventListener(GameEvents.PlayEvent.GAME_OVER, this._gameOver, this);
+    };
+    Main.prototype._gameOver = function (oEvent) {
+        console.log(oEvent.score);
+        this._gameOverButton.visible = true;
     };
     /**
      * 描述文件加载成功，开始播放动画

@@ -102,16 +102,19 @@ var Main = (function (_super) {
                     case 0: return [4 /*yield*/, this.loadResource()];
                     case 1:
                         _a.sent();
-                        this.createGameScene();
+                        return [4 /*yield*/, this.createGameScene()];
+                    case 2:
+                        _a.sent();
+                        this._attachEvents();
                         // const result = await RES.getResAsync("description_json")
                         // this.startAnimation(result);
                         return [4 /*yield*/, platform.login()];
-                    case 2:
+                    case 3:
                         // const result = await RES.getResAsync("description_json")
                         // this.startAnimation(result);
                         _a.sent();
                         return [4 /*yield*/, platform.getUserInfo()];
-                    case 3:
+                    case 4:
                         userInfo = _a.sent();
                         console.log(userInfo);
                         return [2 /*return*/];
@@ -151,7 +154,7 @@ var Main = (function (_super) {
      */
     Main.prototype.createGameScene = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var gameService, gameConfig, gameScene, startButtonWidth, startButtonHeight, startButton;
+            var gameService, gameConfig, gameScene, startButtonWidth, startButtonHeight, startButton, gameOverButtonWidth, gameOverButtonHeight, gameOverButton;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -161,7 +164,7 @@ var Main = (function (_super) {
                     case 1:
                         gameConfig = _a.sent();
                         gameScene = new GameScene({
-                            mode: GameMode.DOWN,
+                            mode: GameMode.UP,
                             level: GameLevel.EASY
                         });
                         this._gameScene = gameScene;
@@ -174,6 +177,15 @@ var Main = (function (_super) {
                         startButton.addEventListener("touchTap", this._startGame, this);
                         this._startButton = startButton;
                         this.addChild(startButton);
+                        gameOverButtonWidth = Utils.getStageWidth() / 2;
+                        gameOverButtonHeight = 80;
+                        gameOverButton = new UIComponents.DefaultButton(gameOverButtonWidth, gameOverButtonHeight, "Game over");
+                        gameOverButton.x = Utils.getStageWidth() / 2 - gameOverButtonWidth / 2;
+                        gameOverButton.y = Utils.getStageHeight() * 0.3;
+                        gameOverButton.visible = false;
+                        gameOverButton.addEventListener("touchTap", this._restartGame, this);
+                        this._gameOverButton = gameOverButton;
+                        this.addChild(gameOverButton);
                         return [2 /*return*/];
                 }
             });
@@ -183,15 +195,17 @@ var Main = (function (_super) {
         this._startButton.visible = false;
         this._gameScene.gameStart();
     };
-    /**
-     * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
-     * Create a Bitmap object according to name keyword.As for the property of name please refer to the configuration file of resources/resource.json.
-     */
-    Main.prototype.createBitmapByName = function (name) {
-        var result = new egret.Bitmap();
-        var texture = RES.getRes(name);
-        result.texture = texture;
-        return result;
+    Main.prototype._restartGame = function () {
+        this._startButton.visible = true;
+        this._gameOverButton.visible = false;
+        this._gameScene.reset();
+    };
+    Main.prototype._attachEvents = function () {
+        this.addEventListener(GameEvents.PlayEvent.GAME_OVER, this._gameOver, this);
+    };
+    Main.prototype._gameOver = function (oEvent) {
+        console.log(oEvent.score);
+        this._gameOverButton.visible = true;
     };
     /**
      * 描述文件加载成功，开始播放动画

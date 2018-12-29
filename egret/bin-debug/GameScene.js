@@ -13,13 +13,14 @@ var GameScene = (function (_super) {
     __extends(GameScene, _super);
     function GameScene(param) {
         var _this = _super.call(this) || this;
-        _this._score = 0;
         _this._blockColumns = [];
         _this._columnSpeeds = [];
         _this._mode = param.mode;
         _this._level = param.level;
         _this._rushFactor = Service.GAME_CONFIG.rushFactor;
         _this._rushTime = Service.GAME_CONFIG.rushTime;
+        _this._shrinkTime = Service.GAME_CONFIG.shrinkTime;
+        _this._score = 0;
         _this._calculateColsRows();
         _this._drawBg();
         _this._drawColumns();
@@ -27,6 +28,8 @@ var GameScene = (function (_super) {
         _this.addEventListener(GameEvents.BlockEvent.MOVED_OUT, _this._onMovedOut, _this, true);
         _this.addEventListener(GameEvents.BlockEvent.HIT, _this._onHit, _this, true);
         _this.addEventListener(GameEvents.BlockEvent.HIT_RUSH, _this._onHitRush, _this, true);
+        _this.addEventListener(GameEvents.BlockEvent.HIT_UNCLICKABLE, _this._onHitUnclickable, _this, true);
+        _this.addEventListener(GameEvents.BlockEvent.HIT_SHRINK, _this._onHitShrink, _this, true);
         return _this;
         // let state = "_" + (+new Date());
         // Wechat.auth("snsapi_userinfo", state, function (response) {
@@ -144,11 +147,63 @@ var GameScene = (function (_super) {
         this._rushWatch = null;
         this._bg.texture = RES.getRes("normal_bg_png");
     };
+    GameScene.prototype._onHitUnclickable = function () {
+        this._gameOver();
+    };
+    GameScene.prototype._onHitShrink = function () {
+        if (this._shrinkWatch == null) {
+            this._shrinkWatch = new Time.StopWatch({ times: this._shrinkTime, finish: this._stopShrink }, this);
+            for (var i = 0; i < this._blockColumns.length; i++) {
+                this._blockColumns[i].shrink();
+            }
+        }
+        var rushTimer = this._shrinkWatch.run();
+    };
+    GameScene.prototype._stopShrink = function () {
+        for (var i = 0; i < this._blockColumns.length; i++) {
+            this._blockColumns[i].shrinkReset();
+        }
+        this._shrinkWatch = null;
+    };
     GameScene.prototype.gameStart = function () {
         for (var i = 0; i < this._blockColumns.length; i++) {
             this._blockColumns[i].move();
         }
     };
+    GameScene.prototype._gameOver = function () {
+        for (var i = 0; i < this._blockColumns.length; i++) {
+            this._blockColumns[i].stop();
+        }
+        var gameoverEvent = new GameEvents.PlayEvent(GameEvents.PlayEvent.GAME_OVER);
+        gameoverEvent.score = this._score;
+        this.dispatchEvent(gameoverEvent);
+    };
+    GameScene.prototype.reset = function () {
+        this.score = 0;
+        for (var i = 0; i < this._blockColumns.length; i++) {
+            this._blockColumns[i].reset();
+        }
+        if (this._rushWatch != null) {
+            this._rushWatch.destroy();
+            this._rushWatch = null;
+            this._bg.texture = RES.getRes("normal_bg_png");
+        }
+        if (this._shrinkWatch != null) {
+            this._shrinkWatch.destroy();
+            this._shrinkWatch = null;
+        }
+    };
+    Object.defineProperty(GameScene.prototype, "score", {
+        get: function () {
+            return this._score;
+        },
+        set: function (val) {
+            this._score = val;
+            this._scoreText.text = val.toString();
+        },
+        enumerable: true,
+        configurable: true
+    });
     return GameScene;
 }(egret.Sprite));
 __reflect(GameScene.prototype, "GameScene");

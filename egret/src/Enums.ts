@@ -8,10 +8,21 @@ enum BlockState{
 enum BlockColor{
     unClickable = 0xffffff,
     clickable = 0x000000,
+    clicked = 0xe5e5e5,
     border = 0x666666,
 
     clickableDouble = 0x1b34ba,
     clickableRush = 0xb71d1d,
+    clickableBlink = 0x93d500,
+    clickableShrink = 0xc900ff
+}
+enum BlockType{
+    BlockNormal = 0,
+    BlockDouble = 1,
+    BlockRush = 2,
+    BlockBlink = 3,
+    BlockShrink = 4,
+    BlockBonus = 5
 }
 enum GameMode{
     BI_DIR,
