@@ -16,7 +16,7 @@ var BlockBlink = (function (_super) {
         return _this;
     }
     BlockBlink.prototype._beforeDraw = function () {
-        this._clickableColor = BlockColor.clickableBlink;
+        this._clickableColor = RES.getRes(BlockTexture.clickableBlink);
     };
     // _hit() {
     //     super._hit();

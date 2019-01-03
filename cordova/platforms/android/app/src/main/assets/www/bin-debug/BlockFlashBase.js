@@ -16,7 +16,7 @@ var BlockFlashBase = (function (_super) {
         return _this;
     }
     BlockFlashBase.prototype._beforeDraw = function () {
-        this._clickableColor = BlockColor.clickable;
+        this._clickableColor = RES.getRes(BlockTexture.clickableNormal);
     };
     BlockFlashBase.prototype.move = function (speed, dir) {
         if (dir === void 0) { dir = "down"; }
@@ -33,7 +33,7 @@ var BlockFlashBase = (function (_super) {
                     this._clickableColor = this._activeColor;
                 }
                 else {
-                    this._clickableColor = BlockColor.clickable;
+                    this._clickableColor = RES.getRes(BlockTexture.clickableNormal);
                 }
                 this._draw();
                 this._timeMark = timeStamp;

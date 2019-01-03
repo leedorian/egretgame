@@ -33,7 +33,7 @@ var Time;
         StopWatch.prototype._tick = function () {
             this._time = this._time + this._interval;
             if (this._callbackTick) {
-                this._callbackTick.apply(this._scope, this._time);
+                this._callbackTick.call(this._scope, this._time);
             }
         };
         StopWatch.prototype._fini = function () {

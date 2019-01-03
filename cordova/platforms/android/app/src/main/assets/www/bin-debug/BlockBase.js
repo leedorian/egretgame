@@ -12,31 +12,50 @@ var BlockBase = (function (_super) {
     __extends(BlockBase, _super);
     function BlockBase(param) {
         var _this = _super.call(this) || this;
-        _this._unClickableColor = BlockColor.unClickable;
-        _this._clickedColor = BlockColor.clicked;
+        _this._unClickableColor = RES.getRes(BlockTexture.unClickable);
+        _this._blockPadding = 10;
         _this._currentState = param.state;
         _this.shrinkRate = param.shrinkRate;
         _this.width = param.width;
         _this.height = param.height;
-        _this._colorRect = new egret.Shape();
-        _this._colorRect.width = _this.width;
-        _this._colorRect.height = _this.height;
+        _this._shrinkWidth = _this.width * _this.shrinkRate - _this._blockPadding;
+        _this._shrinkHeight = _this.height * _this.shrinkRate - _this._blockPadding;
+        _this._colorRect = new egret.Bitmap();
+        _this._colorRect.width = _this._shrinkWidth;
+        _this._colorRect.height = _this._shrinkHeight;
+        _this._colorRect.x = _this._blockPadding;
+        _this._colorRect.y = _this._blockPadding;
         _this._colorRect.touchEnabled = true;
+        _this._backRect = new egret.Bitmap();
+        _this._backRect.width = _this.width - _this._blockPadding;
+        _this._backRect.height = _this.height - _this._blockPadding;
+        _this._backRect.x = _this._blockPadding;
+        _this._backRect.y = _this._blockPadding;
+        _this._backRect.alpha = 0;
+        _this._backRect.texture = RES.getRes(BlockTexture.unClickable);
+        _this._backRect.touchEnabled = true;
         _this._beforeDraw();
         _this._draw();
         _this._colorRect.addEventListener(egret.TouchEvent.TOUCH_BEGIN, _this._onTouch, _this);
+        _this._backRect.addEventListener(egret.TouchEvent.TOUCH_BEGIN, _this._onBackTouch, _this);
         return _this;
     }
     BlockBase.prototype._draw = function () {
         // let fillColor: BlockColor;
         // let bgFillColor: BlockColor = this._unClickableColor;
         // let labelColor: BlockColor = BlockColor.unClickable;
+        if (this._backRect.parent === null) {
+            this.addChild(this._backRect);
+        }
+        this._colorRect.texture = this._clickableColor;
+        var rect = new egret.Rectangle(5, 5, 90, 90);
+        this._colorRect.scale9Grid = rect;
         var lineColor = BlockColor.border;
-        var rectWidth = this._colorRect.width * this.shrinkRate;
-        var rectHeight = this._colorRect.height * this.shrinkRate;
+        var rectWidth = this._shrinkWidth;
+        var rectHeight = this._shrinkHeight;
         if (this._currentState === BlockState.unclickable) {
-            rectWidth = this._colorRect.width;
-            rectHeight = this._colorRect.height;
+            rectWidth = this.width - this._blockPadding;
+            rectHeight = this.height - this._blockPadding;
         }
         // const rectX = rectWidth / 2;
         // const rectY = rectHeight / 2;
@@ -47,20 +66,27 @@ var BlockBase = (function (_super) {
         // if (this._currentState === BlockState.clickable || this._currentState === BlockState.clicked){
         //     fillColor = this._clickableColor;
         // }
-        this._colorRect.graphics.clear();
-        this.graphics.lineStyle(1, lineColor);
+        // this._colorRect.graphics.clear();
+        // this.graphics.lineStyle(1, lineColor);
         if (this._currentState === BlockState.clicked) {
-            this.graphics.beginFill(this._clickedColor, 1);
+            rectWidth = this._colorRect.width;
+            rectHeight = this._colorRect.height;
         }
-        this.graphics.drawRect(0, 0, this.width, this.height);
+        // this.graphics.drawRect(0, 0, this.width, this.height);
         if (this._currentState > 0) {
-            this._colorRect.graphics.beginFill(this._clickableColor, 1);
+            this._colorRect.texture = this._clickableColor;
+            // this._colorRect.graphics.beginFill( this._clickableColor, 1);
         }
         else {
-            this._colorRect.graphics.beginFill(this._unClickableColor, 0);
+            this._colorRect.texture = this._unClickableColor;
+            // this._colorRect.graphics.beginFill( this._unClickableColor, 0);
         }
-        this._colorRect.graphics.lineStyle(1, lineColor);
-        this._colorRect.graphics.drawRect((this.width - rectWidth) / 2, (this.height - rectHeight) / 2, rectWidth, rectHeight);
+        // this._colorRect.graphics.lineStyle(1, lineColor);
+        // this._colorRect.graphics.drawRect((this.width - rectWidth) / 2, (this.height - rectHeight) / 2, rectWidth, rectHeight);
+        this._colorRect.x = (this.width - rectWidth) / 2;
+        this._colorRect.y = (this.height - rectHeight) / 2;
+        this._colorRect.width = rectWidth;
+        this._colorRect.height = rectHeight;
         if (this._colorRect.parent === null) {
             this.addChild(this._colorRect);
         }
@@ -88,6 +114,9 @@ var BlockBase = (function (_super) {
             this._hitUnclickable();
         }
     };
+    BlockBase.prototype._onBackTouch = function (oEvent) {
+        this._hitUnclickable();
+    };
     BlockBase.prototype._hitAni = function () {
         var rectWidth = this._colorRect.width * this.shrinkRate;
         var rectHeight = this._colorRect.height * this.shrinkRate;
@@ -96,16 +125,12 @@ var BlockBase = (function (_super) {
             rectHeight = this._colorRect.height;
         }
         if (rectWidth > 0) {
-            this._colorRect.width = rectWidth - 6;
-        }
-        else {
-            this._colorRect.width = 0;
+            var tempWidth = rectWidth - 6;
+            this._colorRect.width = tempWidth > 0 ? tempWidth : 0;
         }
         if (rectHeight > 0) {
-            this._colorRect.height = rectHeight - 8;
-        }
-        else {
-            this._colorRect.height = 0;
+            var tempHeight = rectHeight - 8;
+            this._colorRect.height = tempHeight > 0 ? tempHeight : 0;
         }
         if (rectWidth === 0 && rectHeight === 0) {
             // let rectWidth: number = this._colorRect.scaleX;
@@ -123,6 +148,7 @@ var BlockBase = (function (_super) {
             // if (rectWidth === 0 && rectHeight === 0) {
             egret.stopTick(this._hitAni, this);
             this.removeChild(this._colorRect);
+            this.removeChild(this._backRect);
             this._colorRect = null;
             // this.removeEventListener(egret.Event.ENTER_FRAME, this._hitAni, this);
         }
@@ -192,6 +218,8 @@ var BlockBase = (function (_super) {
      * sizeUpdate
      */
     BlockBase.prototype.sizeUpdate = function () {
+        this._shrinkWidth = this.width * this.shrinkRate;
+        this._shrinkHeight = this.height * this.shrinkRate;
         if (this._currentState !== BlockState.clicked) {
             this._draw();
         }

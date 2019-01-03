@@ -1,0 +1,115 @@
+enum Color{
+    unClickable = 0xffffff,
+    clickable = 0x000000,
+    clicked = 0x0000ff
+};
+class Block extends egret.Sprite{
+     public constructor(param:any){
+        super();
+        this.touchEnabled = true;
+        this._currentState = Math.floor(Math.random() * 2);
+        this.width = param.width;
+        this.height = param.height;
+        console.log(this.width + "|"+this.height )
+        this._draw();
+        this.addEventListener("touchTap",this._onTap, this);
+    }
+    private _currentState:number;
+    private _type:string;
+    // private width:number;
+    // private height:number;
+    private _speed:number;
+    private _dir:string;
+    private _draw(){
+        let fillColor: Color;
+        let labelColor: Color = Color.unClickable;
+        let lineColor: Color = Color.clickable;
+        if(this._currentState === 0){
+            fillColor = Color.unClickable;
+            labelColor = Color.clickable;
+        }else if(this._currentState === 1){
+            fillColor = Color.clickable;
+        }else if(this._currentState === 2){
+            fillColor = Color.clicked;
+        }
+        this.graphics.lineStyle(1, lineColor);
+        this.graphics.beginFill( fillColor, 1);
+        this.graphics.drawRect( 0, 0, this.width, this.height );
+        // this.graphics.lineStyle( 2, 0x00ff00 );
+        if(this._currentState === 1){
+            lineColor = Color.unClickable;
+        }
+        // this.graphics.lineStyle(1, lineColor);
+        // this.graphics.moveTo( this.x,this.y );
+        // this.graphics.lineTo( this.x  + this.width, this.y );
+        this.graphics.endFill();
+
+        var label:egret.TextField = new egret.TextField();
+        label.width = this.width;
+        label.height = this.height;
+        label.textAlign = egret.HorizontalAlign.CENTER;
+        label.verticalAlign = egret.VerticalAlign.MIDDLE;
+        label.textColor = labelColor;
+        label.text = this.hashCode.toString(); 
+        this.addChild( label );
+    }
+    private _onTap(oEvent:Event){
+        if(this._currentState === 1){
+            this.state = "clicked";
+        }
+    }
+    public move(speed:number, dir:string = "down"){
+        this._speed = speed;
+        if(dir === "up"){
+            this._speed = -speed;
+        }
+        
+        this._dir = dir;
+        //  this.addEventListener(egret.Event.ENTER_FRAME,this._moveBlock,this);
+        egret.startTick(this._moveBlock, this);
+    }
+    public stop(){
+        // this.removeEventListener(egret.Event.ENTER_FRAME,this._moveBlock,this);
+        egret.stopTick(this._moveBlock, this);
+    }
+    private _moveBlock():boolean{
+        
+        if(this._dir === "down"){
+            if(this.y >= Utils.getStageHeight()){
+                this._triggerMovedOutEvent();
+            }else{
+                this._setY();
+            }
+        }else{
+            if(this.y <= -this.height){
+                this._triggerMovedOutEvent();
+            }else{
+                this._setY();
+            }
+        }
+        
+        return false;
+    }
+    private _setY(){
+        let tempY:number = this.y;
+        this.y = tempY + this._speed;
+    }
+    private _triggerMovedOutEvent(){
+        let missed:boolean = false;
+        let movedOutEvent:GameEvents.BlockEvent = new GameEvents.BlockEvent(GameEvents.BlockEvent.MOVED_OUT);
+        if(this._currentState === 1){
+            missed = true;
+        }
+        movedOutEvent.missed = missed;
+        this.dispatchEvent(movedOutEvent);
+    }
+    public get state():string{
+        let state:string;
+        state = Enums.BlockState[this._currentState];
+        return state;
+    }
+    public set state(val:string){
+        this._currentState = Enums.BlockState[val];
+        this._draw();
+    }
+}

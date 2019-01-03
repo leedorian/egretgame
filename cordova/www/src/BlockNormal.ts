@@ -3,6 +3,6 @@ class BlockNormal extends BlockBase {
         super(param);
     }
     _beforeDraw():void{
-        this._clickableColor = BlockColor.clickable;
+        this._clickableColor = RES.getRes(BlockTexture.clickableNormal);
     }
 }

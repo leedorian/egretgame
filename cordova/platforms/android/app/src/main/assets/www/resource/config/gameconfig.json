@@ -27,52 +27,52 @@
     ],
     "difficulty":[
         {
-            "blockNormal":10,
-            "blockDouble":0,
-            "blockRush":0,
-            "blockBlink":0,
-            "blockShrink":0,
-            "blockBonus":0
+            "BlockNormal":10,
+            "BlockDouble":0,
+            "BlockRush":0,
+            "BlockBlink":0,
+            "BlockShrink":0,
+            "BlockBonus":0
         },
         {
-            "blockNormal":8,
-            "blockDouble":2,
-            "blockRush":0,
-            "blockBlink":0,
-            "blockShrink":0,
-            "blockBonus":0
+            "BlockNormal":8,
+            "BlockDouble":2,
+            "BlockRush":0,
+            "BlockBlink":0,
+            "BlockShrink":0,
+            "BlockBonus":0
         },
         {
-            "blockNormal":7,
-            "blockDouble":2,
-            "blockRush":1,
-            "blockBlink":0,
-            "blockShrink":0,
-            "blockBonus":0
+            "BlockNormal":7,
+            "BlockDouble":2,
+            "BlockRush":1,
+            "BlockBlink":0,
+            "BlockShrink":0,
+            "BlockBonus":0
         },
         {
-            "blockNormal":5,
-            "blockDouble":3,
-            "blockRush":1,
-            "blockBlink":0,
-            "blockShrink":1,
-            "blockBonus":0
+            "BlockNormal":5,
+            "BlockDouble":3,
+            "BlockRush":1,
+            "BlockBlink":0,
+            "BlockShrink":1,
+            "BlockBonus":0
         },
         {
-            "blockNormal":5,
-            "blockDouble":2,
-            "blockRush":1,
-            "blockBlink":1,
-            "blockShrink":1,
-            "blockBonus":0
+            "BlockNormal":5,
+            "BlockDouble":2,
+            "BlockRush":1,
+            "BlockBlink":1,
+            "BlockShrink":1,
+            "BlockBonus":0
         },
         {
-            "blockNormal":3,
-            "blockDouble":3,
-            "blockRush":1,
-            "blockBlink":1,
-            "blockShrink":2,
-            "blockBonus":0
+            "BlockNormal":3,
+            "BlockDouble":3,
+            "BlockRush":1,
+            "BlockBlink":1,
+            "BlockShrink":2,
+            "BlockBonus":0
         }
     ]
 }

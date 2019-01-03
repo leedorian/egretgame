@@ -1,16 +1,16 @@
 {
 	"groups": [
 		{
-			"keys": "bg_jpg,egret_icon_png,description_json,white_png",
+			"keys": "rush_bg_png,egret_icon_png,description_json,buttonBg_png,normal_bg_png,block_normal,block_unclickable,block_clicked,block_double,block_rush,block_blink,block_shrink",
 			"name": "preload"
 		}
 	],
 	"resources": [
 		{
-			"name": "bg_jpg",
+			"name": "rush_bg_png",
 			"type": "image",
-			"url": "assets/bg.jpg"
-		},
+			"url": "assets/rush_bg.png"
+        },
 		{
 			"name": "egret_icon_png",
 			"type": "image",
@@ -22,9 +22,49 @@
 			"url": "config/description.json"
 		},
 		{
-			"name": "white_png",
+			"name": "normal_bg_png",
 			"type": "image",
-			"url": "assets/white.png"
+			"url": "assets/normal_bg.png"
+		},
+		{
+			"name": "buttonBg_png",
+			"type": "image",
+			"url": "assets/buttonBg.png"
+		},
+		{
+			"name": "block_normal",
+			"type": "image",
+			"url": "assets/block_normal.png"
+		},
+		{
+			"name": "block_unclickable",
+			"type": "image",
+			"url": "assets/block_unclickable.png"
+		},
+		{
+			"name": "block_clicked",
+			"type": "image",
+			"url": "assets/block_clicked.png"
+		},
+		{
+			"name": "block_double",
+			"type": "image",
+			"url": "assets/block_double.png"
+		},
+		{
+			"name": "block_rush",
+			"type": "image",
+			"url": "assets/block_rush.png"
+		},
+		{
+			"name": "block_blink",
+			"type": "image",
+			"url": "assets/block_blink.png"
+		},
+		{
+			"name": "block_shrink",
+			"type": "image",
+			"url": "assets/block_shrink.png"
 		}
 	]
 }

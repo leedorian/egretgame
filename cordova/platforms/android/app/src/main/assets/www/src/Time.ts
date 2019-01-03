@@ -1,24 +1,24 @@
 namespace Time {
     export class StopWatch {
-        constructor(param: { times: number; finish: Function }, scope: any);
+        constructor(param: { times: number; finish: ()=>void }, scope: any);
         constructor(
-            param: { times: number; finish: Function; interval: number },
+            param: { times: number; finish: ()=>void; interval: number },
             scope: any
         );
         constructor(
             param: {
                 times: number;
-                finish: Function;
-                tick(second: number): Function;
+                finish: ()=>void;
+                tick: (second: number)=>void;
             },
             scope: any
         );
         constructor(
             param: {
                 times: number;
-                finish: Function;
+                finish: ()=>void;
                 interval: number;
-                tick(second: number): Function;
+                tick: (second: number)=>void;
             },
             scope: any
         );
@@ -68,7 +68,7 @@ namespace Time {
         private _tick() {
             this._time = this._time + this._interval;
             if (this._callbackTick) {
-                this._callbackTick.apply(this._scope, this._time);
+                this._callbackTick.call(this._scope, this._time);
             }
         }
         private _fini() {

@@ -17,6 +17,16 @@ var BlockColor;
     BlockColor[BlockColor["clickableBlink"] = 9688320] = "clickableBlink";
     BlockColor[BlockColor["clickableShrink"] = 13172991] = "clickableShrink";
 })(BlockColor || (BlockColor = {}));
+var BlockTexture;
+(function (BlockTexture) {
+    BlockTexture["unClickable"] = "block_unclickable";
+    BlockTexture["clicked"] = "block_clicked";
+    BlockTexture["clickableDouble"] = "block_double";
+    BlockTexture["clickableRush"] = "block_rush";
+    BlockTexture["clickableBlink"] = "block_blink";
+    BlockTexture["clickableShrink"] = "block_shrink";
+    BlockTexture["clickableNormal"] = "block_normal";
+})(BlockTexture || (BlockTexture = {}));
 var BlockType;
 (function (BlockType) {
     BlockType[BlockType["BlockNormal"] = 0] = "BlockNormal";

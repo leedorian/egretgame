@@ -5,10 +5,10 @@ class BlockFlashBase extends BlockBase{
 
     private _timeMark:number;
     protected _activeState:boolean = false;
-    protected _activeColor:BlockColor;
+    protected _activeColor:egret.Texture;
 
     _beforeDraw(): void {
-        this._clickableColor = BlockColor.clickable;
+        this._clickableColor  = RES.getRes(BlockTexture.clickableNormal);
     }
 
 
@@ -25,7 +25,7 @@ class BlockFlashBase extends BlockBase{
                 if (this._activeState) {
                     this._clickableColor = this._activeColor;
                 } else {
-                    this._clickableColor = BlockColor.clickable;
+                    this._clickableColor = RES.getRes(BlockTexture.clickableNormal);
                 }
                 this._draw();
                 this._timeMark = timeStamp;

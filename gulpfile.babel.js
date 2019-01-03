@@ -115,7 +115,7 @@ gulp.task('cordova-run', () => new Promise((resolve, reject) => {
         resolve.call();
     });
 }));
-// gulp.task('build', ['copy', 'minify', 'cordova-hcp', 'cordova-prepare'], () => {});
+gulp.task('build', () => runSequence('egret-build', 'clean', 'copy-debug'));
 gulp.task('mobile-run', () => runSequence('egret-build', 'clean', 'copy-debug', 'cordova-run'));
 gulp.task('release', () => runSequence('egret-release', 'clean', 'copy-release', 'cordova-hcp', 'cordova-prepare'));
 // gulp.task('deploy', ['build', 'cordova-build', 'sftp-resources', 'sftp-app'], () => {});

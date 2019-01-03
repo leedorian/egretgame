@@ -3,8 +3,10 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
 };
 var Service = (function () {
     function Service() {
-        this._baseURL = "";
-        this._gameConfig = this._baseURL + "resource/config/gameconfig.json";
+        // private  _baseURL:string = "";
+        // private  _gameConfig:string = this._baseURL + "resource/config/gameconfig.json";
+        this._baseURL = "https://game.weiplus5.com/";
+        this._gameConfig = this._baseURL + "index.php?m=game&f=index&v=public_load_dtwconfig";
     }
     /**
      * getGameConfig

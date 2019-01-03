@@ -2,8 +2,12 @@ class Service {
     constructor() {
 
     }
-    private  _baseURL:string = "";
-    private  _gameConfig:string = this._baseURL + "resource/config/gameconfig.json";
+    // private  _baseURL:string = "";
+    // private  _gameConfig:string = this._baseURL + "resource/config/gameconfig.json";
+
+
+    private  _baseURL:string = "https://game.weiplus5.com/";
+    private  _gameConfig:string = this._baseURL + "index.php?m=game&f=index&v=public_load_dtwconfig";
     public static GAME_CONFIG:any;
 
     /**

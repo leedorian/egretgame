@@ -21,6 +21,7 @@ var BlocksColumn = (function (_super) {
         _this.dir = param.dir;
         _this._dir = _this.dir;
         _this.name = param.name;
+        _this.blockWeightNumber = param.blockWeightNumber;
         _this._speedUpInterval = param.speedUpInterval * 1000;
         _this._index = parseInt(_this.name.split("_")[1], 10);
         _this._draw();
@@ -73,7 +74,19 @@ var BlocksColumn = (function (_super) {
         // let block = new BlockBlink(param);
         var block;
         if (settings.startBlock == null && settings.state === BlockState.clickable) {
-            var weightNumbers = [0, 0, 0, 0, 0, 1, 1, 2, 3, 4];
+            var weightArray = [];
+            for (var key in this._blockWeightNumber) {
+                if (this._blockWeightNumber.hasOwnProperty(key)) {
+                    var weight = this._blockWeightNumber[key];
+                    for (var index = 0; index < weight; index++) {
+                        weightArray.push(BlockType[key]);
+                    }
+                }
+            }
+            if (weightArray.length !== 10) {
+                weightArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            }
+            var weightNumbers = weightArray; //[0, 0, 0, 0, 0, 1, 1, 2, 3, 4]
             var idx = Math.floor(Math.random() * weightNumbers.length);
             var blockType = weightNumbers[idx];
             block = new window[BlockType[blockType]](param);
@@ -234,6 +247,26 @@ var BlocksColumn = (function (_super) {
         set: function (val) {
             this._speedLevel = val;
             this.speed = Service.GAME_CONFIG.speedLevels[this._speedLevel];
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(BlocksColumn.prototype, "blockWeightNumber", {
+        /**
+         * get blockWeightNumber
+         * @param val weight array
+         *
+         */
+        get: function () {
+            return this._blockWeightNumber;
+        },
+        /**
+         * set blockWeightNumber
+         * @param val weight array
+         *
+         */
+        set: function (val) {
+            this._blockWeightNumber = val;
         },
         enumerable: true,
         configurable: true

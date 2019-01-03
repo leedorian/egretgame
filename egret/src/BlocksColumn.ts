@@ -4,6 +4,7 @@ class BlocksColumn extends egret.Sprite {
         this.dir = param.dir;
         this._dir = this.dir;
         this.name = param.name;
+        this.blockWeightNumber = param.blockWeightNumber;
         this._speedUpInterval = param.speedUpInterval * 1000;
         this._index = parseInt(this.name.split("_")[1], 10);
         this._draw();
@@ -18,6 +19,7 @@ class BlocksColumn extends egret.Sprite {
     private _speedTick: boolean = false;
     private _reverseTimer: egret.Timer;
     private _shrinkRate:number = 1;
+    private _blockWeightNumber:Array<number>;
 
     public speed: number = Service.GAME_CONFIG.speedLevels[this._speedLevel];
     public dir: string;
@@ -71,7 +73,19 @@ class BlocksColumn extends egret.Sprite {
         // let block = new BlockBlink(param);
         let block:any;
         if (settings.startBlock == null && settings.state === BlockState.clickable) {
-            const weightNumbers = [0, 0, 0, 0, 0, 1, 1, 2, 3, 4];
+            let weightArray = [];
+            for (const key in this._blockWeightNumber) {
+                if (this._blockWeightNumber.hasOwnProperty(key)) {
+                    const weight = this._blockWeightNumber[key];
+                    for (let index = 0; index < weight; index++) {
+                        weightArray.push(BlockType[key]);
+                    }
+                }
+            }
+            if (weightArray.length !== 10) {
+                weightArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            }
+            const weightNumbers = weightArray;//[0, 0, 0, 0, 0, 1, 1, 2, 3, 4]
             const idx = Math.floor(Math.random() * weightNumbers.length);
             const blockType:number = weightNumbers[idx];
             block = new window[BlockType[blockType]](param);
@@ -251,4 +265,20 @@ class BlocksColumn extends egret.Sprite {
         this.speed = Service.GAME_CONFIG.speedLevels[this._speedLevel];
     }
 
+    /**
+     * set blockWeightNumber
+     * @param val weight array
+     *
+     */
+    public set blockWeightNumber(val:Array<number>) {
+        this._blockWeightNumber = val;
+    }
+    /**
+     * get blockWeightNumber
+     * @param val weight array
+     *
+     */
+    public get blockWeightNumber():Array<number> {
+        return this._blockWeightNumber;
+    }
 }

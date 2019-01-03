@@ -16,13 +16,13 @@ var BlockDouble = (function (_super) {
         return _this;
     }
     BlockDouble.prototype._beforeDraw = function () {
-        this._clickableColor = BlockColor.clickableDouble;
+        this._clickableColor = RES.getRes(BlockTexture.clickableDouble);
     };
     BlockDouble.prototype._onTouch = function (oEvent) {
         if (this._currentState === BlockState.clickable) {
             this._clickCount++;
             if (this._clickCount === 1) {
-                this._clickableColor = BlockColor.clickable;
+                this._clickableColor = RES.getRes(BlockTexture.clickableNormal);
                 this._draw();
             }
             else if (this._clickCount === 2) {

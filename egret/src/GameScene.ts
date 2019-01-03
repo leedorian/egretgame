@@ -8,6 +8,7 @@ class GameScene extends egret.Sprite {
         this._rushFactor = Service.GAME_CONFIG.rushFactor;
         this._rushTime = Service.GAME_CONFIG.rushTime;
         this._shrinkTime = Service.GAME_CONFIG.shrinkTime;
+        this._levelUpTime = Service.GAME_CONFIG.levelUpInterval;
         this._score = 0;
         this._calculateColsRows();
         this._drawBg();
@@ -66,7 +67,10 @@ class GameScene extends egret.Sprite {
     private _rushWatch:Time.StopWatch;
     private _shrinkTime:number;
     private _shrinkWatch:Time.StopWatch;
+    private _levelUpTime:number;
+    private _levelUpWatch:Time.StopWatch;
     private _bg:egret.Bitmap;
+    private _difficulty:number = 0;
 
     private _drawBg(){
         this._bg = Utils.createBitmapByName("normal_bg_png");
@@ -91,7 +95,8 @@ class GameScene extends egret.Sprite {
             blockColumn = new BlocksColumn({
                 dir: sDir,
                 speedUpInterval: Service.GAME_CONFIG.colmuns[i].interval,
-                name: "col_" + i
+                name: "col_" + i,
+                blockWeightNumber: Service.GAME_CONFIG.difficulty[this._difficulty]
             });
             blockColumn.x = i * nColWidth;
             blockColumn.width = nColWidth;
@@ -196,6 +201,7 @@ class GameScene extends egret.Sprite {
         for (let i = 0; i < this._blockColumns.length; i++) {
             this._blockColumns[i].move();
         }
+        this._startLevelUp();
     }
     private _gameOver(){
         for (let i = 0; i < this._blockColumns.length; i++) {
@@ -206,8 +212,33 @@ class GameScene extends egret.Sprite {
         gameoverEvent.score = this._score;
         this.dispatchEvent(gameoverEvent);
     }
+    private _startLevelUp(){
+        if (this._levelUpWatch == null) {
+            this._levelUpWatch = new Time.StopWatch({
+                times: Service.GAME_CONFIG.difficulty.length,
+                finish:this._stopLevelUp,
+                interval: this._levelUpTime,
+                tick: this.levelUp
+            }, this);
+        }
+        const rushTimer = this._levelUpWatch.run();
+    }
+    private _stopLevelUp() {
+        this._levelUpWatch = null;
+    }
+    public levelUp(second:number){
+        if (this._difficulty < Service.GAME_CONFIG.difficulty.length - 1) {
+            this._difficulty++;
+        }
+        console.log(this._difficulty);
+
+        for (let i = 0; i < this._blockColumns.length; i++) {
+            this._blockColumns[i].blockWeightNumber = Service.GAME_CONFIG.difficulty[this._difficulty];
+        }
+    }
     public reset(){
         this.score = 0;
+        this._difficulty = 0;
         for (let i = 0; i < this._blockColumns.length; i++) {
             this._blockColumns[i].reset();
         }
@@ -219,6 +250,10 @@ class GameScene extends egret.Sprite {
         if(this._shrinkWatch != null){
             this._shrinkWatch.destroy();
             this._shrinkWatch = null;
+        }
+        if(this._levelUpWatch != null){
+            this._levelUpWatch.destroy();
+            this._levelUpWatch = null;
         }
     }
     public set score(val:number){

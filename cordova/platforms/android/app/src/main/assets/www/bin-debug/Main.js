@@ -164,7 +164,7 @@ var Main = (function (_super) {
                     case 1:
                         gameConfig = _a.sent();
                         gameScene = new GameScene({
-                            mode: GameMode.UP,
+                            mode: GameMode.DOWN,
                             level: GameLevel.EASY
                         });
                         this._gameScene = gameScene;

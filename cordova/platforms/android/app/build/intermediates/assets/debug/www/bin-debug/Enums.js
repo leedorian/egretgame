@@ -1,15 +1,41 @@
 var BlockState;
 (function (BlockState) {
     BlockState[BlockState["unclickable"] = 0] = "unclickable";
-    BlockState[BlockState["clickable"] = 1] = "clickable";
-    BlockState[BlockState["clicked"] = 2] = "clicked";
+    BlockState[BlockState["clicked"] = 1] = "clicked";
+    BlockState[BlockState["clickable"] = 2] = "clickable";
+    BlockState[BlockState["clickableDouble"] = 3] = "clickableDouble";
+    BlockState[BlockState["clickableRush"] = 4] = "clickableRush";
 })(BlockState || (BlockState = {}));
 var BlockColor;
 (function (BlockColor) {
     BlockColor[BlockColor["unClickable"] = 16777215] = "unClickable";
     BlockColor[BlockColor["clickable"] = 0] = "clickable";
-    BlockColor[BlockColor["clicked"] = 255] = "clicked";
+    BlockColor[BlockColor["clicked"] = 15066597] = "clicked";
+    BlockColor[BlockColor["border"] = 6710886] = "border";
+    BlockColor[BlockColor["clickableDouble"] = 1782970] = "clickableDouble";
+    BlockColor[BlockColor["clickableRush"] = 12000541] = "clickableRush";
+    BlockColor[BlockColor["clickableBlink"] = 9688320] = "clickableBlink";
+    BlockColor[BlockColor["clickableShrink"] = 13172991] = "clickableShrink";
 })(BlockColor || (BlockColor = {}));
+var BlockTexture;
+(function (BlockTexture) {
+    BlockTexture["unClickable"] = "block_unclickable";
+    BlockTexture["clicked"] = "block_clicked";
+    BlockTexture["clickableDouble"] = "block_double";
+    BlockTexture["clickableRush"] = "block_rush";
+    BlockTexture["clickableBlink"] = "block_blink";
+    BlockTexture["clickableShrink"] = "block_shrink";
+    BlockTexture["clickableNormal"] = "block_normal";
+})(BlockTexture || (BlockTexture = {}));
+var BlockType;
+(function (BlockType) {
+    BlockType[BlockType["BlockNormal"] = 0] = "BlockNormal";
+    BlockType[BlockType["BlockDouble"] = 1] = "BlockDouble";
+    BlockType[BlockType["BlockRush"] = 2] = "BlockRush";
+    BlockType[BlockType["BlockBlink"] = 3] = "BlockBlink";
+    BlockType[BlockType["BlockShrink"] = 4] = "BlockShrink";
+    BlockType[BlockType["BlockBonus"] = 5] = "BlockBonus";
+})(BlockType || (BlockType = {}));
 var GameMode;
 (function (GameMode) {
     GameMode[GameMode["BI_DIR"] = 0] = "BI_DIR";
@@ -22,4 +48,8 @@ var GameLevel;
     GameLevel[GameLevel["NORMAL"] = 1] = "NORMAL";
     GameLevel[GameLevel["HARD"] = 2] = "HARD";
 })(GameLevel || (GameLevel = {}));
+var TextColors;
+(function (TextColors) {
+    TextColors[TextColors["defaultButtonLable"] = 16777215] = "defaultButtonLable";
+})(TextColors || (TextColors = {}));
 //# sourceMappingURL=Enums.js.map

@@ -14,7 +14,7 @@ var BlockNormal = (function (_super) {
         return _super.call(this, param) || this;
     }
     BlockNormal.prototype._beforeDraw = function () {
-        this._clickableColor = BlockColor.clickable;
+        this._clickableColor = RES.getRes(BlockTexture.clickableNormal);
     };
     return BlockNormal;
 }(BlockBase));

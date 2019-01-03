@@ -5,7 +5,7 @@ class BlockBlink extends BlockBase {
     private _timeMark: number;
     private _activeState: boolean = false;
     _beforeDraw(): void {
-        this._clickableColor = BlockColor.clickableBlink;
+        this._clickableColor = RES.getRes(BlockTexture.clickableBlink);
     }
     // _hit() {
     //     super._hit();

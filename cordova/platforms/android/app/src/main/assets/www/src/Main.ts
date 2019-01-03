@@ -149,7 +149,7 @@ class Main extends egret.DisplayObjectContainer {
         const gameConfig: any = await gameService.getGameConfig();
 
         const gameScene = new GameScene({
-            mode: GameMode.UP,
+            mode: GameMode.DOWN,
             level: GameLevel.EASY
         });
         this._gameScene = gameScene;

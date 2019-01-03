@@ -15,11 +15,13 @@ var GameScene = (function (_super) {
         var _this = _super.call(this) || this;
         _this._blockColumns = [];
         _this._columnSpeeds = [];
+        _this._difficulty = 0;
         _this._mode = param.mode;
         _this._level = param.level;
         _this._rushFactor = Service.GAME_CONFIG.rushFactor;
         _this._rushTime = Service.GAME_CONFIG.rushTime;
         _this._shrinkTime = Service.GAME_CONFIG.shrinkTime;
+        _this._levelUpTime = Service.GAME_CONFIG.levelUpInterval;
         _this._score = 0;
         _this._calculateColsRows();
         _this._drawBg();
@@ -65,7 +67,8 @@ var GameScene = (function (_super) {
             blockColumn = new BlocksColumn({
                 dir: sDir,
                 speedUpInterval: Service.GAME_CONFIG.colmuns[i].interval,
-                name: "col_" + i
+                name: "col_" + i,
+                blockWeightNumber: Service.GAME_CONFIG.difficulty[this._difficulty]
             });
             blockColumn.x = i * nColWidth;
             blockColumn.width = nColWidth;
@@ -169,6 +172,7 @@ var GameScene = (function (_super) {
         for (var i = 0; i < this._blockColumns.length; i++) {
             this._blockColumns[i].move();
         }
+        this._startLevelUp();
     };
     GameScene.prototype._gameOver = function () {
         for (var i = 0; i < this._blockColumns.length; i++) {
@@ -178,8 +182,32 @@ var GameScene = (function (_super) {
         gameoverEvent.score = this._score;
         this.dispatchEvent(gameoverEvent);
     };
+    GameScene.prototype._startLevelUp = function () {
+        if (this._levelUpWatch == null) {
+            this._levelUpWatch = new Time.StopWatch({
+                times: Service.GAME_CONFIG.difficulty.length,
+                finish: this._stopLevelUp,
+                interval: this._levelUpTime,
+                tick: this.levelUp
+            }, this);
+        }
+        var rushTimer = this._levelUpWatch.run();
+    };
+    GameScene.prototype._stopLevelUp = function () {
+        this._levelUpWatch = null;
+    };
+    GameScene.prototype.levelUp = function (second) {
+        if (this._difficulty < Service.GAME_CONFIG.difficulty.length - 1) {
+            this._difficulty++;
+        }
+        console.log(this._difficulty);
+        for (var i = 0; i < this._blockColumns.length; i++) {
+            this._blockColumns[i].blockWeightNumber = Service.GAME_CONFIG.difficulty[this._difficulty];
+        }
+    };
     GameScene.prototype.reset = function () {
         this.score = 0;
+        this._difficulty = 0;
         for (var i = 0; i < this._blockColumns.length; i++) {
             this._blockColumns[i].reset();
         }
@@ -191,6 +219,10 @@ var GameScene = (function (_super) {
         if (this._shrinkWatch != null) {
             this._shrinkWatch.destroy();
             this._shrinkWatch = null;
+        }
+        if (this._levelUpWatch != null) {
+            this._levelUpWatch.destroy();
+            this._levelUpWatch = null;
         }
     };
     Object.defineProperty(GameScene.prototype, "score", {

@@ -12,7 +12,7 @@ var BlockShrink = (function (_super) {
     __extends(BlockShrink, _super);
     function BlockShrink(param) {
         var _this = _super.call(this, param) || this;
-        _this._activeColor = BlockColor.clickableShrink;
+        _this._activeColor = RES.getRes(BlockTexture.clickableShrink);
         return _this;
     }
     BlockShrink.prototype._hit = function () {

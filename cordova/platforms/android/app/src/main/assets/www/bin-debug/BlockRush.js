@@ -13,11 +13,11 @@ var BlockRush = (function (_super) {
     function BlockRush(param) {
         var _this = _super.call(this, param) || this;
         _this._activeState = false;
-        _this._activeColor = BlockColor.clickableRush;
+        _this._activeColor = RES.getRes(BlockTexture.clickableRush);
         return _this;
     }
     BlockRush.prototype._beforeDraw = function () {
-        this._clickableColor = BlockColor.clickable;
+        this._clickableColor = RES.getRes(BlockTexture.clickableNormal);
     };
     BlockRush.prototype._hit = function () {
         _super.prototype._hit.call(this);
@@ -41,7 +41,7 @@ var BlockRush = (function (_super) {
                     this._clickableColor = this._activeColor;
                 }
                 else {
-                    this._clickableColor = BlockColor.clickable;
+                    this._clickableColor = RES.getRes(BlockTexture.clickableNormal);
                 }
                 this._draw();
                 this._timeMark = timeStamp;
