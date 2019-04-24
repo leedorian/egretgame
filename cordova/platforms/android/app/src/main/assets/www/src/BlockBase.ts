@@ -6,22 +6,22 @@ abstract class BlockBase extends egret.Sprite{
         this.shrinkRate = param.shrinkRate;
         this.width = param.width;
         this.height = param.height;
-        this._shrinkWidth = this.width * this.shrinkRate - this._blockPadding;
-        this._shrinkHeight = this.height * this.shrinkRate - this._blockPadding;
+        this._shrinkWidth = (this.width - (this._blockPadding + this._blockMargin) * 2) * this.shrinkRate;
+        this._shrinkHeight = (this.height - (this._blockPadding + this._blockMargin) * 2) * this.shrinkRate;
         this._colorRect = new egret.Bitmap();
         this._colorRect.width = this._shrinkWidth;
         this._colorRect.height = this._shrinkHeight;
-        this._colorRect.x = this._blockPadding;
-        this._colorRect.y = this._blockPadding;
+        // this._colorRect.x = this._blockMargin + this._blockPadding;
+        // this._colorRect.y = this._blockMargin + this._blockPadding;
         this._colorRect.touchEnabled = true;
 
-        this._backRect = new egret.Bitmap();
-        this._backRect.width = this.width - this._blockPadding;
-        this._backRect.height = this.height - this._blockPadding;
-        this._backRect.x = this._blockPadding;
-        this._backRect.y = this._blockPadding;
-        this._backRect.alpha = 0;
-        this._backRect.texture = RES.getRes(BlockTexture.unClickable);
+        this._backRect = Utils.createBitmapByName("blockFrame_png");
+        const rect:egret.Rectangle = new egret.Rectangle(6,6,88,106);
+        this._backRect.scale9Grid =rect;
+        this._backRect.width = this.width - this._blockMargin * 2;
+        this._backRect.height = this.height - this._blockMargin * 2;
+        this._backRect.x = this._blockMargin;
+        this._backRect.y = this._blockMargin;
         this._backRect.touchEnabled = true;
 
 
@@ -38,56 +38,44 @@ abstract class BlockBase extends egret.Sprite{
 
     // private _type:string;
     public speed:number;
-    private _dir:string;
     public shrinkRate:number;
+    public active:boolean = false;
+    private _dir:string;
     private _colorRect:egret.Bitmap;
     private _backRect:egret.Bitmap;
     private _unClickableColor:egret.Texture = RES.getRes(BlockTexture.unClickable);
     // private _clickedColor:egret.Texture = RES.getRes(BlockTexture.clicked);
     private _shrinkWidth:number;
     private _shrinkHeight:number;
+    private _blockMargin:number = 5;
     private _blockPadding:number = 10;
 
     protected _draw(){
         // let fillColor: BlockColor;
         // let bgFillColor: BlockColor = this._unClickableColor;
         // let labelColor: BlockColor = BlockColor.unClickable;
-        if(this._backRect.parent === null){
+        if (this._backRect.parent === null) {
             this.addChild(this._backRect);
         }
 
         this._colorRect.texture = this._clickableColor;
-        const rect:egret.Rectangle = new egret.Rectangle(5,5,90,90);
-        this._colorRect.scale9Grid =rect;
+        // const rect:egret.Rectangle = new egret.Rectangle(5,5,90,90);
+        // this._colorRect.scale9Grid =rect;
 
 
         const lineColor: BlockColor = BlockColor.border;
         let rectWidth = this._shrinkWidth;
         let rectHeight = this._shrinkHeight;
         if (this._currentState === BlockState.unclickable) {
-            rectWidth = this.width - this._blockPadding;
-            rectHeight = this.height - this._blockPadding;
+            rectWidth = this.width - (this._blockMargin + this._blockPadding) * 2;
+            rectHeight = this.height - (this._blockMargin + this._blockPadding) *2;
         }
-        // const rectX = rectWidth / 2;
-        // const rectY = rectHeight / 2;
 
-        // this._colorRect.anchorOffsetX = rectX;
-        // this._colorRect.anchorOffsetY = rectY;
-        // this._colorRect.x = rectX;
-        // this._colorRect.y = rectY;
-        // if (this._currentState === BlockState.clickable || this._currentState === BlockState.clicked){
-        //     fillColor = this._clickableColor;
-        // }
-
-
-        // this._colorRect.graphics.clear();
-        // this.graphics.lineStyle(1, lineColor);
         if(this._currentState === BlockState.clicked){
             rectWidth = this._colorRect.width;
             rectHeight = this._colorRect.height;
         }
 
-        // this.graphics.drawRect(0, 0, this.width, this.height);
         if(this._currentState > 0){
             this._colorRect.texture = this._clickableColor;
             // this._colorRect.graphics.beginFill( this._clickableColor, 1);
@@ -98,41 +86,30 @@ abstract class BlockBase extends egret.Sprite{
 
         // this._colorRect.graphics.lineStyle(1, lineColor);
         // this._colorRect.graphics.drawRect((this.width - rectWidth) / 2, (this.height - rectHeight) / 2, rectWidth, rectHeight);
-        this._colorRect.x = (this.width - rectWidth) / 2;
+        this._colorRect.x = (this.width - rectWidth) / 2 ;
         this._colorRect.y = (this.height - rectHeight) / 2;
         this._colorRect.width = rectWidth;
         this._colorRect.height = rectHeight;
+
         if(this._colorRect.parent === null){
             this.addChild(this._colorRect);
         }
 
-
-        // if(this._currentState === 1){
-        //     lineColor = BlockColor.unClickable;
-        // }
-        // this.graphics.lineStyle(1, lineColor);
-        // this.graphics.moveTo( this.x,this.y );
-        // this.graphics.lineTo( this.x  + this.width, this.y );
-        // this.graphics.endFill();
-
-        // var label:egret.TextField = new egret.TextField();
-        // label.width = this.width;
-        // label.height = this.height;
-        // label.textAlign = egret.HorizontalAlign.CENTER;
-        // label.verticalAlign = egret.VerticalAlign.MIDDLE;
-        // label.textColor = labelColor;
-        // label.text = this.hashCode.toString();
-        // this.addChild( label );
+        
     }
     protected _onTouch(oEvent: Event) {
-        if (this._currentState === BlockState.clickable) {
-            this._hit();
-        }else if(this._currentState === BlockState.unclickable){
-            this._hitUnclickable();
+        if(this.active){
+            if (this._currentState === BlockState.clickable) {
+                this._hit();
+            }else if(this._currentState === BlockState.unclickable){
+                this._hitUnclickable();
+            }
         }
     }
     private _onBackTouch(oEvent: Event) {
-        this._hitUnclickable();
+        if(this.active){
+            this._hitUnclickable();
+        }
     }
 
     private _hitAni():boolean {
@@ -167,13 +144,17 @@ abstract class BlockBase extends egret.Sprite{
         // if (rectWidth === 0 && rectHeight === 0) {
             egret.stopTick(this._hitAni, this);
             this.removeChild(this._colorRect);
-            this.removeChild(this._backRect);
-            this._colorRect = null;
+
             // this.removeEventListener(egret.Event.ENTER_FRAME, this._hitAni, this);
 
         }else{
             this._draw();
         }
+        // if(this._backRect != null && this._backRect.parent != null){
+        //     this.removeChild(this._backRect);
+        //     this._backRect = null;
+        // }
+
         return false;
     }
     protected _hit(){
@@ -203,7 +184,7 @@ abstract class BlockBase extends egret.Sprite{
     protected _moveBlock(timeStamp: number):boolean{
 
         if(this._dir === "down"){
-            if(this.y >= Utils.getStageHeight()){
+            if(this.y >= Utils.getArenaHeight()){
                 this._triggerMovedOutEvent();
             }else{
                 this._setY();
@@ -239,8 +220,8 @@ abstract class BlockBase extends egret.Sprite{
      * sizeUpdate
      */
     public sizeUpdate() {
-        this._shrinkWidth = this.width * this.shrinkRate;
-        this._shrinkHeight = this.height * this.shrinkRate;
+        this._shrinkWidth = this.width * this.shrinkRate - this._blockMargin;;
+        this._shrinkHeight = this.height * this.shrinkRate - this._blockMargin;;
         if (this._currentState !== BlockState.clicked) {
             this._draw();
         }

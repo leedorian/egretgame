@@ -79,7 +79,7 @@ var BlockBase = (function (_super) {
         // let fillColor: BlockColor;
         // let bgFillColor: BlockColor = this._unClickableColor;
         // let labelColor: BlockColor = BlockColor.unClickable;
-        if (this._backRect.parent === null) {
+        if (this._currentState > 1 && this._backRect.parent === null) {
             this.addChild(this._backRect);
         }
         this._colorRect.texture = this._clickableColor;
@@ -183,12 +183,14 @@ var BlockBase = (function (_super) {
             // if (rectWidth === 0 && rectHeight === 0) {
             egret.stopTick(this._hitAni, this);
             this.removeChild(this._colorRect);
-            this.removeChild(this._backRect);
-            this._colorRect = null;
             // this.removeEventListener(egret.Event.ENTER_FRAME, this._hitAni, this);
         }
         else {
             this._draw();
+        }
+        if (this._backRect != null && this._backRect.parent != null) {
+            this.removeChild(this._backRect);
+            this._backRect = null;
         }
         return false;
     };
@@ -253,8 +255,10 @@ var BlockBase = (function (_super) {
      * sizeUpdate
      */
     BlockBase.prototype.sizeUpdate = function () {
-        this._shrinkWidth = this.width * this.shrinkRate;
-        this._shrinkHeight = this.height * this.shrinkRate;
+        this._shrinkWidth = this.width * this.shrinkRate - this._blockPadding;
+        ;
+        this._shrinkHeight = this.height * this.shrinkRate - this._blockPadding;
+        ;
         if (this._currentState !== BlockState.clicked) {
             this._draw();
         }
@@ -622,15 +626,13 @@ var BlocksColumn = (function (_super) {
         else {
             this._dir = "up";
         }
+        this.move();
     };
     BlocksColumn.prototype._reversePause = function () {
         this.stop();
-        if (this._reverseTimer === undefined) {
+        if (this._reverseTimer == null) {
             this._reverseTimer = new egret.Timer(2000, 1);
-            this._reverseTimer.addEventListener(egret.TimerEvent.TIMER_COMPLETE, function () {
-                this._revertDir();
-                this.move();
-            }, this);
+            this._reverseTimer.addEventListener(egret.TimerEvent.TIMER_COMPLETE, this._revertDir, this);
         }
         this._reverseTimer.reset();
         this._reverseTimer.start();
@@ -660,6 +662,13 @@ var BlocksColumn = (function (_super) {
             this._speedUpTimer.removeEventListener(egret.TimerEvent.TIMER, this._speedLooper, this);
             this._speedUpTimer = null;
         }
+        this._speedTick = false;
+    };
+    BlocksColumn.prototype._stopReverseTimer = function () {
+        if (this._reverseTimer != null) {
+            this._reverseTimer.removeEventListener(egret.TimerEvent.TIMER_COMPLETE, this._revertDir, this);
+            this._reverseTimer = null;
+        }
     };
     BlocksColumn.prototype.move = function () {
         var blocks = this._blocks;
@@ -673,6 +682,7 @@ var BlocksColumn = (function (_super) {
             this._blocks[i].stop();
         }
         this.stopSpeedUpTimer();
+        this._stopReverseTimer();
     };
     BlocksColumn.prototype.shrink = function () {
         this._shrinkRate = 0.5;
@@ -843,6 +853,7 @@ var GameScene = (function (_super) {
         _this._blockColumns = [];
         _this._columnSpeeds = [];
         _this._difficulty = 0;
+        _this._bgm = RES.getRes("lone-wolf-short");
         _this._mode = param.mode;
         _this._level = param.level;
         _this._rushFactor = Service.GAME_CONFIG.rushFactor;
@@ -859,6 +870,8 @@ var GameScene = (function (_super) {
         _this.addEventListener(GameEvents.BlockEvent.HIT_RUSH, _this._onHitRush, _this, true);
         _this.addEventListener(GameEvents.BlockEvent.HIT_UNCLICKABLE, _this._onHitUnclickable, _this, true);
         _this.addEventListener(GameEvents.BlockEvent.HIT_SHRINK, _this._onHitShrink, _this, true);
+        document.addEventListener("pause", _this._onPause.bind(_this), false);
+        document.addEventListener("resume", _this._onResume.bind(_this), false);
         return _this;
         // let state = "_" + (+new Date());
         // Wechat.auth("snsapi_userinfo", state, function (response) {
@@ -878,6 +891,12 @@ var GameScene = (function (_super) {
         var stageH = Utils.getStageHeight();
         this._bg.width = stageW;
         this._bg.height = stageH;
+    };
+    GameScene.prototype._onPause = function () {
+        this._stopbgm();
+    };
+    GameScene.prototype._onResume = function () {
+        this._playbgm();
     };
     GameScene.prototype._drawColumns = function () {
         var blockColumn;
@@ -1000,6 +1019,7 @@ var GameScene = (function (_super) {
             this._blockColumns[i].move();
         }
         this._startLevelUp();
+        this._playbgm();
     };
     GameScene.prototype._gameOver = function () {
         for (var i = 0; i < this._blockColumns.length; i++) {
@@ -1008,6 +1028,7 @@ var GameScene = (function (_super) {
         var gameoverEvent = new GameEvents.PlayEvent(GameEvents.PlayEvent.GAME_OVER);
         gameoverEvent.score = this._score;
         this.dispatchEvent(gameoverEvent);
+        this._stopbgm();
     };
     GameScene.prototype._startLevelUp = function () {
         if (this._levelUpWatch == null) {
@@ -1032,10 +1053,17 @@ var GameScene = (function (_super) {
             this._blockColumns[i].blockWeightNumber = Service.GAME_CONFIG.difficulty[this._difficulty];
         }
     };
+    GameScene.prototype._playbgm = function () {
+        this._bgmChanel = this._bgm.play(0, 0);
+    };
+    GameScene.prototype._stopbgm = function () {
+        this._bgmChanel.stop();
+    };
     GameScene.prototype.reset = function () {
         this.score = 0;
         this._difficulty = 0;
         for (var i = 0; i < this._blockColumns.length; i++) {
+            this._blockColumns[i].blockWeightNumber = Service.GAME_CONFIG.difficulty[this._difficulty];
             this._blockColumns[i].reset();
         }
         if (this._rushWatch != null) {
@@ -1110,7 +1138,10 @@ var LoadingUI = (function (_super) {
         this.textField.textAlign = "center";
     };
     LoadingUI.prototype.onProgress = function (current, total) {
-        this.textField.text = "Loading..." + current + "/" + total;
+        this.textField.text = "Loading resources..." + current + "/" + total;
+    };
+    LoadingUI.prototype.onRemoteProgress = function (current, total) {
+        this.textField.text = "Loading configuration..." + current + "/" + total;
     };
     return LoadingUI;
 }(egret.Sprite));
@@ -1196,11 +1227,11 @@ var Main = (function (_super) {
     };
     Main.prototype.loadResource = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var loadingView, e_1;
+            var loadingView, gameService, gameConfig, e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 3, , 4]);
+                        _a.trys.push([0, 4, , 5]);
                         loadingView = new LoadingUI();
                         this.stage.addChild(loadingView);
                         return [4 /*yield*/, RES.loadConfig("resource/default.res.json", "resource/")];
@@ -1209,13 +1240,17 @@ var Main = (function (_super) {
                         return [4 /*yield*/, RES.loadGroup("preload", 0, loadingView)];
                     case 2:
                         _a.sent();
-                        this.stage.removeChild(loadingView);
-                        return [3 /*break*/, 4];
+                        gameService = new Service(loadingView);
+                        return [4 /*yield*/, gameService.getGameConfig()];
                     case 3:
+                        gameConfig = _a.sent();
+                        this.stage.removeChild(loadingView);
+                        return [3 /*break*/, 5];
+                    case 4:
                         e_1 = _a.sent();
                         console.error(e_1);
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
+                        return [3 /*break*/, 5];
+                    case 5: return [2 /*return*/];
                 }
             });
         });
@@ -1226,40 +1261,33 @@ var Main = (function (_super) {
      */
     Main.prototype.createGameScene = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var gameService, gameConfig, gameScene, startButtonWidth, startButtonHeight, startButton, gameOverButtonWidth, gameOverButtonHeight, gameOverButton;
+            var gameScene, startButtonWidth, startButtonHeight, startButton, gameOverButtonWidth, gameOverButtonHeight, gameOverButton;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        this.stage.setContentSize(window.innerWidth, window.innerHeight);
-                        gameService = new Service();
-                        return [4 /*yield*/, gameService.getGameConfig()];
-                    case 1:
-                        gameConfig = _a.sent();
-                        gameScene = new GameScene({
-                            mode: GameMode.DOWN,
-                            level: GameLevel.EASY
-                        });
-                        this._gameScene = gameScene;
-                        this.addChild(gameScene);
-                        startButtonWidth = Utils.getStageWidth() / 2;
-                        startButtonHeight = 80;
-                        startButton = new UIComponents.DefaultButton(startButtonWidth, startButtonHeight, "Start");
-                        startButton.x = Utils.getStageWidth() / 2 - startButtonWidth / 2;
-                        startButton.y = Utils.getStageHeight() * 0.3;
-                        startButton.addEventListener("touchTap", this._startGame, this);
-                        this._startButton = startButton;
-                        this.addChild(startButton);
-                        gameOverButtonWidth = Utils.getStageWidth() / 2;
-                        gameOverButtonHeight = 80;
-                        gameOverButton = new UIComponents.DefaultButton(gameOverButtonWidth, gameOverButtonHeight, "Game over");
-                        gameOverButton.x = Utils.getStageWidth() / 2 - gameOverButtonWidth / 2;
-                        gameOverButton.y = Utils.getStageHeight() * 0.3;
-                        gameOverButton.visible = false;
-                        gameOverButton.addEventListener("touchTap", this._restartGame, this);
-                        this._gameOverButton = gameOverButton;
-                        this.addChild(gameOverButton);
-                        return [2 /*return*/];
-                }
+                this.stage.setContentSize(window.innerWidth, window.innerHeight);
+                gameScene = new GameScene({
+                    mode: GameMode.DOWN,
+                    level: GameLevel.EASY
+                });
+                this._gameScene = gameScene;
+                this.addChild(gameScene);
+                startButtonWidth = Utils.getStageWidth() / 2;
+                startButtonHeight = 80;
+                startButton = new UIComponents.DefaultButton(startButtonWidth, startButtonHeight, "Start");
+                startButton.x = Utils.getStageWidth() / 2 - startButtonWidth / 2;
+                startButton.y = Utils.getStageHeight() * 0.3;
+                startButton.addEventListener("touchTap", this._startGame, this);
+                this._startButton = startButton;
+                this.addChild(startButton);
+                gameOverButtonWidth = Utils.getStageWidth() / 2;
+                gameOverButtonHeight = 80;
+                gameOverButton = new UIComponents.DefaultButton(gameOverButtonWidth, gameOverButtonHeight, "Game over");
+                gameOverButton.x = Utils.getStageWidth() / 2 - gameOverButtonWidth / 2;
+                gameOverButton.y = Utils.getStageHeight() * 0.3;
+                gameOverButton.visible = false;
+                gameOverButton.addEventListener("touchTap", this._restartGame, this);
+                this._gameOverButton = gameOverButton;
+                this.addChild(gameOverButton);
+                return [2 /*return*/];
             });
         });
     };
@@ -1333,11 +1361,19 @@ if (!window.platform) {
     window.platform = new DebugPlatform();
 }
 var Service = (function () {
-    function Service() {
+    function Service(loadingView) {
         // private  _baseURL:string = "";
         // private  _gameConfig:string = this._baseURL + "resource/config/gameconfig.json";
         this._baseURL = "https://game.weiplus5.com/";
         this._gameConfig = this._baseURL + "index.php?m=game&f=index&v=public_load_dtwconfig";
+        this._configrations = [
+            {
+                url: "index.php?m=game&f=index&v=public_load_dtwconfig",
+                name: "gameConfig"
+            }
+        ];
+        this._loaded = 0;
+        this._loadingView = loadingView;
     }
     /**
      * getGameConfig
@@ -1345,33 +1381,43 @@ var Service = (function () {
     Service.prototype.getGameConfig = function () {
         var _this = this;
         return new Promise(function (resolve) {
-            if (Service.GAME_CONFIG === undefined) {
-                var request = new egret.HttpRequest();
-                var respHandler = function (evt) {
-                    switch (evt.type) {
-                        case egret.Event.COMPLETE:
-                            var request = evt.currentTarget;
-                            Service.GAME_CONFIG = JSON.parse(request.response);
-                            resolve(Service.GAME_CONFIG);
-                            break;
-                        case egret.IOErrorEvent.IO_ERROR:
-                            resolve({
-                                message: "IO ERROR in" + this._gameConfig
-                            });
-                            break;
-                    }
-                };
-                var progressHandler = function (evt) {
-                    console.log("progress:", evt.bytesLoaded, evt.bytesTotal);
-                };
-                request.once(egret.Event.COMPLETE, respHandler, _this);
-                request.once(egret.IOErrorEvent.IO_ERROR, respHandler, _this);
-                request.once(egret.ProgressEvent.PROGRESS, progressHandler, _this);
-                request.open(_this._gameConfig, egret.HttpMethod.GET);
-                request.send();
-            }
-            else {
-                resolve(Service.GAME_CONFIG);
+            var _loop_1 = function (i) {
+                _this._loadingView.onRemoteProgress(i + 1, _this._configrations.length);
+                var resource = _this._configrations[i];
+                if (Service.GAME_CONFIG == null || resource.name !== "gameConfig") {
+                    var request = new egret.HttpRequest();
+                    var respHandler = function (evt) {
+                        switch (evt.type) {
+                            case egret.Event.COMPLETE:
+                                var request = evt.currentTarget;
+                                var result = JSON.parse(request.response);
+                                if (resource.name === "gameConfig") {
+                                    Service.GAME_CONFIG = result;
+                                }
+                                resolve(result);
+                                break;
+                            case egret.IOErrorEvent.IO_ERROR:
+                                resolve({
+                                    message: "IO ERROR in" + resource.name
+                                });
+                                break;
+                        }
+                    };
+                    // let progressHandler = function( evt:egret.ProgressEvent ):void{
+                    //     console.log( "progress:", evt.bytesLoaded, evt.bytesTotal );
+                    // }
+                    request.once(egret.Event.COMPLETE, respHandler, _this);
+                    request.once(egret.IOErrorEvent.IO_ERROR, respHandler, _this);
+                    // request.once( egret.ProgressEvent.PROGRESS, progressHandler, this);
+                    request.open(_this._baseURL + resource.url, egret.HttpMethod.GET);
+                    request.send();
+                }
+                else {
+                    resolve(Service.GAME_CONFIG);
+                }
+            };
+            for (var i = 0; i < _this._configrations.length; i++) {
+                _loop_1(i);
             }
         });
     };

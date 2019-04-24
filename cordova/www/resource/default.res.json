@@ -1,25 +1,25 @@
 {
 	"groups": [
 		{
-			"keys": "rush_bg_png,egret_icon_png,description_json,buttonBg_png,normal_bg_png,block_normal,block_unclickable,block_clicked,block_double,block_rush,block_blink,block_shrink",
+			"keys": "thumb_pb_png,track_pb_png,buttonBg_png,normal_bg_png,block_normal,block_unclickable,block_clicked,block_double,block_rush,block_blink,block_shrink,lone-wolf-short,game_config,GoogleBtn_png,Bg01_png,WechatBtn_png,BgColor01_png,bg_png,b_black_jpeg,b_blue_jpeg,b_purple_jpeg,b_red_jpeg,b_yellow_jpeg,shanguang_json,shanguang_png,blockFrame_png,b_normal_png,bg_score_png,freeze_png,purify_png,nuke_png,rock_bg_png,skull_png",
 			"name": "preload"
 		}
 	],
 	"resources": [
 		{
+			"url": "assets/ProgressBar/thumb_pb.png",
+			"type": "image",
+			"name": "thumb_pb_png"
+		},
+		{
+			"url": "assets/ProgressBar/track_pb.png",
+			"type": "image",
+			"name": "track_pb_png"
+		},
+		{
 			"name": "rush_bg_png",
 			"type": "image",
 			"url": "assets/rush_bg.png"
-        },
-		{
-			"name": "egret_icon_png",
-			"type": "image",
-			"url": "assets/egret_icon.png"
-		},
-		{
-			"name": "description_json",
-			"type": "json",
-			"url": "config/description.json"
 		},
 		{
 			"name": "normal_bg_png",
@@ -65,6 +65,112 @@
 			"name": "block_shrink",
 			"type": "image",
 			"url": "assets/block_shrink.png"
+		},
+		{
+			"name": "lone-wolf-short",
+			"type": "sound",
+			"soundType": "music",
+			"url": "assets/lone-wolf-short.wav"
+		},
+		{
+			"name": "GoogleBtn_png",
+			"type": "image",
+			"url": "assets/Login/GoogleBtn.jpeg"
+		},
+		{
+			"name": "Bg01_png",
+			"type": "image",
+			"url": "assets/Bg01.png"
+		},
+		{
+			"name": "WechatBtn_png",
+			"type": "image",
+			"url": "assets/Login/WechatBtn.jpeg"
+		},
+		{
+			"name": "BgColor01_png",
+			"type": "image",
+			"url": "assets/BgColor01.png"
+		},
+		{
+			"name": "bg_png",
+			"type": "image",
+			"url": "assets/bg.png"
+		},
+		{
+			"name": "b_black_jpeg",
+			"type": "image",
+			"url": "assets/b_black.jpeg"
+		},
+		{
+			"name": "b_blue_jpeg",
+			"type": "image",
+			"url": "assets/b_blue.jpeg"
+		},
+		{
+			"name": "b_purple_jpeg",
+			"type": "image",
+			"url": "assets/b_purple.jpeg"
+		},
+		{
+			"name": "b_red_jpeg",
+			"type": "image",
+			"url": "assets/b_red.jpeg"
+		},
+		{
+			"name": "b_yellow_jpeg",
+			"type": "image",
+			"url": "assets/b_yellow.jpeg"
+		},
+		{
+			"name": "shanguang_json",
+			"type": "json",
+			"url": "assets/shanguang.json"
+		},
+		{
+			"name": "shanguang_png",
+			"type": "image",
+			"url": "assets/shanguang.png"
+		},
+		{
+			"name": "blockFrame_png",
+			"type": "image",
+			"url": "assets/blockFrame.png"
+		},
+		{
+			"name": "b_normal_png",
+			"type": "image",
+			"url": "assets/b_normal.png"
+		},
+		{
+			"name": "bg_score_png",
+			"type": "image",
+			"url": "assets/bg_score.png"
+		},
+		{
+			"name": "freeze_png",
+			"type": "image",
+			"url": "assets/freeze.png"
+		},
+		{
+			"name": "purify_png",
+			"type": "image",
+			"url": "assets/purify.png"
+		},
+		{
+			"name": "nuke_png",
+			"type": "image",
+			"url": "assets/nuke.png"
+		},
+		{
+			"name": "rock_bg_png",
+			"type": "image",
+			"url": "assets/rock_bg.png"
+		},
+		{
+			"name": "skull_png",
+			"type": "image",
+			"url": "assets/skull.png"
 		}
 	]
 }

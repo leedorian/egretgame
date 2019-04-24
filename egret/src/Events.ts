@@ -14,7 +14,7 @@ module GameEvents {
     }
     export class PlayEvent extends egret.Event{
         public static GAME_OVER:string = "gameover";
-        public score:number = 0;
+        // public score:number = 0;
         public constructor(type:string, bubbles:boolean=true, cancelable:boolean=false)
         {
             super(type,bubbles,cancelable);

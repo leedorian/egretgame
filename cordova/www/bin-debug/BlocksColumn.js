@@ -12,7 +12,10 @@ var BlocksColumn = (function (_super) {
     __extends(BlocksColumn, _super);
     function BlocksColumn(param) {
         var _this = _super.call(this) || this;
+        //blocks array
         _this._blocks = [];
+        //blocks in initial screen
+        _this._initialBlocks = [];
         _this._creatingRowIndex = 0;
         _this._speedLevel = 0;
         _this._speedTick = false;
@@ -29,6 +32,7 @@ var BlocksColumn = (function (_super) {
     }
     BlocksColumn.prototype._draw = function () {
         this._blocks = [];
+        this._initialBlocks = [];
         var n = this._dir === "down" ? -1 : 0;
         var blockCount = this._dir === "down" ? Utils.rows : Utils.rows + 1;
         for (var i = n; i < blockCount; i++) {
@@ -45,6 +49,7 @@ var BlocksColumn = (function (_super) {
             block.x = 0;
             block.y = i * block.height;
             this._blocks.push(block);
+            this._initialBlocks.push(block);
         }
     };
     BlocksColumn.prototype.reset = function () {
@@ -94,6 +99,9 @@ var BlocksColumn = (function (_super) {
         else {
             block = new BlockNormal(param);
         }
+        if (!settings.startBlock) {
+            block.active = true;
+        }
         block.addEventListener(GameEvents.BlockEvent.MOVED_OUT, this._onMovedOut, this);
         return block;
     };
@@ -119,7 +127,7 @@ var BlocksColumn = (function (_super) {
                 state: Utils.getRowBlockState(this._creatingRowIndex)[this._index]
             });
             this._creatingRowIndex++;
-            this.addChild(newBlock);
+            this.addChildAt(newBlock, 0);
             if (this._dir === "down") {
                 newBlock.y = this._blocks[0].y - newBlock.height + this.speed;
             }
@@ -174,15 +182,31 @@ var BlocksColumn = (function (_super) {
         else {
             this._dir = "up";
         }
+        this.move();
     };
     BlocksColumn.prototype._reversePause = function () {
+        egret.startTick(this._checkPauseToFit, this);
+    };
+    BlocksColumn.prototype._checkPauseToFit = function () {
+        var nBlocks = this._blocks.length;
+        var lastBlockIndex = 0;
+        if (this._dir === "down") {
+            lastBlockIndex = nBlocks - 1;
+        }
+        var bDowScrollOut = this._dir === "down" && this._blocks[lastBlockIndex].y >= Utils.getArenaHeight();
+        var bUpScrollOut = this._dir === "up" && this._blocks[lastBlockIndex].y <= -this._blocks[lastBlockIndex].height;
+        if (bDowScrollOut || bUpScrollOut) {
+            egret.stopTick(this._checkPauseToFit, this);
+            this._excuteReversePause();
+        }
+        return false;
+    };
+    BlocksColumn.prototype._excuteReversePause = function () {
         this.stop();
-        if (this._reverseTimer === undefined) {
+        console.log(this._blocks);
+        if (this._reverseTimer == null) {
             this._reverseTimer = new egret.Timer(2000, 1);
-            this._reverseTimer.addEventListener(egret.TimerEvent.TIMER_COMPLETE, function () {
-                this._revertDir();
-                this.move();
-            }, this);
+            this._reverseTimer.addEventListener(egret.TimerEvent.TIMER_COMPLETE, this._revertDir, this);
         }
         this._reverseTimer.reset();
         this._reverseTimer.start();
@@ -207,24 +231,44 @@ var BlocksColumn = (function (_super) {
         this._speedUpTimer.start();
     };
     BlocksColumn.prototype.stopSpeedUpTimer = function () {
-        if (this._speedUpTimer !== null) {
+        if (this._speedUpTimer != null) {
             this._speedUpTimer.stop();
             this._speedUpTimer.removeEventListener(egret.TimerEvent.TIMER, this._speedLooper, this);
             this._speedUpTimer = null;
         }
+        this._speedTick = false;
     };
-    BlocksColumn.prototype.move = function () {
+    BlocksColumn.prototype._stopReverseTimer = function () {
+        if (this._reverseTimer != null) {
+            this._reverseTimer.removeEventListener(egret.TimerEvent.TIMER_COMPLETE, this._revertDir, this);
+            this._reverseTimer = null;
+        }
+    };
+    //start moving blocks in this column
+    BlocksColumn.prototype.move = function (isGameSceneTriggered) {
+        if (isGameSceneTriggered === void 0) { isGameSceneTriggered = false; }
         var blocks = this._blocks;
         for (var i = 0; i < blocks.length; i++) {
             blocks[i].move(this.speed, this._dir);
         }
+        if (isGameSceneTriggered) {
+            var initialBlocks = this._initialBlocks;
+            for (var i = 0; i < initialBlocks.length; i++) {
+                initialBlocks[i].active = true;
+            }
+        }
         this.startSpeedUpTimer();
     };
-    BlocksColumn.prototype.stop = function () {
+    BlocksColumn.prototype.stop = function (isGameSceneTriggered) {
+        if (isGameSceneTriggered === void 0) { isGameSceneTriggered = false; }
         for (var i = 0; i < this._blocks.length; i++) {
             this._blocks[i].stop();
+            if (isGameSceneTriggered) {
+                this._blocks[i].active = false;
+            }
         }
         this.stopSpeedUpTimer();
+        this._stopReverseTimer();
     };
     BlocksColumn.prototype.shrink = function () {
         this._shrinkRate = 0.5;

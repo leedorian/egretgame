@@ -17,13 +17,13 @@ enum BlockColor{
     clickableShrink = 0xc900ff
 }
 enum BlockTexture{
-    unClickable = "block_unclickable",
+    unClickable = "b_normal_png",
     clicked = "block_clicked",
-    clickableDouble = "block_double",
-    clickableRush = "block_rush",
-    clickableBlink = "block_blink",
-    clickableShrink = "block_shrink",
-    clickableNormal= "block_normal"
+    clickableDouble = "b_blue_jpeg",
+    clickableRush = "b_red_jpeg",
+    clickableBlink = "b_green_jpeg",
+    clickableShrink = "b_purple_jpeg",
+    clickableNormal= "b_black_jpeg"
 }
 enum BlockType{
     BlockNormal = 0,

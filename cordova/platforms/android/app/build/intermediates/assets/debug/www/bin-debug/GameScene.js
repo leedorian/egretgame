@@ -16,22 +16,26 @@ var GameScene = (function (_super) {
         _this._blockColumns = [];
         _this._columnSpeeds = [];
         _this._difficulty = 0;
+        _this._bgm = RES.getRes("lone-wolf-short");
+        _this._stated = false;
         _this._mode = param.mode;
         _this._level = param.level;
         _this._rushFactor = Service.GAME_CONFIG.rushFactor;
         _this._rushTime = Service.GAME_CONFIG.rushTime;
         _this._shrinkTime = Service.GAME_CONFIG.shrinkTime;
         _this._levelUpTime = Service.GAME_CONFIG.levelUpInterval;
-        _this._score = 0;
         _this._calculateColsRows();
-        _this._drawBg();
+        // this._drawBg();
         _this._drawColumns();
-        _this._drawScore();
+        _this.width = Utils.getArenaWidth();
+        _this.height = Utils.getArenaHeight();
+        _this.scrollRect = new egret.Rectangle(0, 0, _this.width, _this.height);
         _this.addEventListener(GameEvents.BlockEvent.MOVED_OUT, _this._onMovedOut, _this, true);
-        _this.addEventListener(GameEvents.BlockEvent.HIT, _this._onHit, _this, true);
         _this.addEventListener(GameEvents.BlockEvent.HIT_RUSH, _this._onHitRush, _this, true);
         _this.addEventListener(GameEvents.BlockEvent.HIT_UNCLICKABLE, _this._onHitUnclickable, _this, true);
         _this.addEventListener(GameEvents.BlockEvent.HIT_SHRINK, _this._onHitShrink, _this, true);
+        document.addEventListener("pause", _this._onPause.bind(_this), false);
+        document.addEventListener("resume", _this._onResume.bind(_this), false);
         return _this;
         // let state = "_" + (+new Date());
         // Wechat.auth("snsapi_userinfo", state, function (response) {
@@ -43,14 +47,19 @@ var GameScene = (function (_super) {
         //     console.log("Failed: " + reason);
         // });
     }
-    GameScene.prototype._drawBg = function () {
-        this._bg = Utils.createBitmapByName("normal_bg_png");
-        this._bg.fillMode = egret.BitmapFillMode.REPEAT;
-        this.addChild(this._bg);
-        var stageW = Utils.getStageWidth();
-        var stageH = Utils.getStageHeight();
-        this._bg.width = stageW;
-        this._bg.height = stageH;
+    // private _drawBg(){
+    //     this._bg = Utils.createBitmapByName("bg_png");
+    //     const stageW = Utils.getStageWidth();
+    //     const stageH = Utils.getStageHeight();
+    //     this._bg.width = stageW;
+    //     this._bg.height = stageH;
+    //     this.addChildAt(this._bg, 0);
+    // }
+    GameScene.prototype._onPause = function () {
+        this._stopbgm();
+    };
+    GameScene.prototype._onResume = function () {
+        this._playbgm();
     };
     GameScene.prototype._drawColumns = function () {
         var blockColumn;
@@ -72,20 +81,20 @@ var GameScene = (function (_super) {
             });
             blockColumn.x = i * nColWidth;
             blockColumn.width = nColWidth;
-            this.addChild(blockColumn);
+            this.addChildAt(blockColumn, 1);
             this._blockColumns.push(blockColumn);
         }
     };
     GameScene.prototype._calculateColsRows = function () {
         var nThumbWidth = 48;
         var nThumbHeight = 48;
-        var nStageWidth = Utils.getStageWidth();
-        var nStageHeight = Utils.getStageHeight();
-        var nColsMax = Math.floor(nStageWidth / nThumbWidth);
-        var nRowsMax = Math.floor(nStageWidth / nThumbHeight);
+        var nArenaWidth = Utils.getStageWidth();
+        var nArenaHeight = Utils.getStageHeight();
+        var nColsMax = Math.floor(nArenaWidth / nThumbWidth);
+        var nRowsMax = Math.floor(nArenaHeight / nThumbHeight);
         if (this._level === GameLevel.EASY) {
             Utils.columns = 4;
-            Utils.rows = 6;
+            Utils.rows = 5;
         }
         else if (this._level === GameLevel.NORMAL) {
             Utils.columns = 5;
@@ -102,28 +111,9 @@ var GameScene = (function (_super) {
             Utils.rows = nRowsMax;
         }
     };
-    GameScene.prototype._drawScore = function () {
-        var label = new egret.TextField();
-        label.width = Utils.getStageWidth();
-        label.y = Utils.getStageHeight() * 0.2;
-        label.height = 30;
-        label.textAlign = egret.HorizontalAlign.CENTER;
-        label.verticalAlign = egret.VerticalAlign.MIDDLE;
-        label.textColor = 0xffffff;
-        label.bold = true;
-        label.strokeColor = 0x0000ff;
-        label.stroke = 2;
-        label.text = this._score.toString();
-        this._scoreText = label;
-        this.addChild(this._scoreText);
-    };
     GameScene.prototype._onMovedOut = function (evt) {
         // let tarBlock: Block = evt.target;
         // let missed: boolean = evt.missed;
-    };
-    GameScene.prototype._onHit = function (evt) {
-        this._score++;
-        this._scoreText.text = this._score.toString();
     };
     GameScene.prototype._onHitRush = function (evt) {
         if (this._rushWatch == null) {
@@ -170,17 +160,21 @@ var GameScene = (function (_super) {
     };
     GameScene.prototype.gameStart = function () {
         for (var i = 0; i < this._blockColumns.length; i++) {
-            this._blockColumns[i].move();
+            this._blockColumns[i].move(true);
         }
         this._startLevelUp();
+        this._playbgm();
+        this._stated = true;
     };
     GameScene.prototype._gameOver = function () {
         for (var i = 0; i < this._blockColumns.length; i++) {
-            this._blockColumns[i].stop();
+            this._blockColumns[i].stop(true);
         }
         var gameoverEvent = new GameEvents.PlayEvent(GameEvents.PlayEvent.GAME_OVER);
-        gameoverEvent.score = this._score;
+        // gameoverEvent.score = this._score.score;
         this.dispatchEvent(gameoverEvent);
+        this._stopbgm();
+        this._stated = false;
     };
     GameScene.prototype._startLevelUp = function () {
         if (this._levelUpWatch == null) {
@@ -205,10 +199,16 @@ var GameScene = (function (_super) {
             this._blockColumns[i].blockWeightNumber = Service.GAME_CONFIG.difficulty[this._difficulty];
         }
     };
+    GameScene.prototype._playbgm = function () {
+        this._bgmChanel = this._bgm.play(0, 0);
+    };
+    GameScene.prototype._stopbgm = function () {
+        this._bgmChanel.stop();
+    };
     GameScene.prototype.reset = function () {
-        this.score = 0;
         this._difficulty = 0;
         for (var i = 0; i < this._blockColumns.length; i++) {
+            this._blockColumns[i].blockWeightNumber = Service.GAME_CONFIG.difficulty[this._difficulty];
             this._blockColumns[i].reset();
         }
         if (this._rushWatch != null) {
@@ -225,17 +225,6 @@ var GameScene = (function (_super) {
             this._levelUpWatch = null;
         }
     };
-    Object.defineProperty(GameScene.prototype, "score", {
-        get: function () {
-            return this._score;
-        },
-        set: function (val) {
-            this._score = val;
-            this._scoreText.text = val.toString();
-        },
-        enumerable: true,
-        configurable: true
-    });
     return GameScene;
 }(egret.Sprite));
 __reflect(GameScene.prototype, "GameScene");

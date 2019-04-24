@@ -9,7 +9,10 @@ class BlocksColumn extends egret.Sprite {
         this._index = parseInt(this.name.split("_")[1], 10);
         this._draw();
     }
+    //blocks array
     private _blocks: Array<any> = [];
+    //blocks in initial screen
+    private _initialBlocks: Array<any> = [];
     private _dir: string;
     private _index: number;
     private _creatingRowIndex: number = 0;
@@ -26,6 +29,7 @@ class BlocksColumn extends egret.Sprite {
 
     private _draw() {
         this._blocks = [];
+        this._initialBlocks = [];
         let n: number = this._dir === "down" ? -1 : 0;
         let blockCount = this._dir === "down" ? Utils.rows : Utils.rows + 1;
         for (let i = n; i < blockCount; i++) {
@@ -44,6 +48,7 @@ class BlocksColumn extends egret.Sprite {
             block.x = 0;
             block.y = i * block.height;
             this._blocks.push(block);
+            this._initialBlocks.push(block);
         }
     }
     public reset(){
@@ -92,7 +97,9 @@ class BlocksColumn extends egret.Sprite {
         }else{
             block = new BlockNormal(param);
         }
-
+        if(!settings.startBlock){
+            block.active = true;
+        }
         block.addEventListener(
             GameEvents.BlockEvent.MOVED_OUT,
             this._onMovedOut,
@@ -127,7 +134,7 @@ class BlocksColumn extends egret.Sprite {
                 ]
             });
             this._creatingRowIndex++;
-            this.addChild(newBlock);
+            this.addChildAt(newBlock, 0);
             if (this._dir === "down") {
                 newBlock.y = this._blocks[0].y - newBlock.height + this.speed;
             } else {
@@ -178,17 +185,34 @@ class BlocksColumn extends egret.Sprite {
         } else {
             this._dir = "up";
         }
+        this.move();
     }
     private _reversePause() {
+        egret.startTick(this._checkPauseToFit, this);
+        
+    }
+    private _checkPauseToFit(){
+        let nBlocks:number = this._blocks.length;
+        let lastBlockIndex:number = 0;
+        if(this._dir === "down"){
+            lastBlockIndex = nBlocks - 1;
+        }
+        let bDowScrollOut:boolean = this._dir === "down" && this._blocks[lastBlockIndex].y >= Utils.getArenaHeight();
+        let bUpScrollOut:boolean = this._dir === "up" && this._blocks[lastBlockIndex].y <= - this._blocks[lastBlockIndex].height;
+        if( bDowScrollOut || bUpScrollOut){
+            egret.stopTick(this._checkPauseToFit, this);
+            this._excuteReversePause();
+        }
+        return false;
+    }
+    private _excuteReversePause() {
         this.stop();
-        if (this._reverseTimer === undefined) {
+        console.log(this._blocks);
+        if (this._reverseTimer == null) {
             this._reverseTimer = new egret.Timer(2000, 1);
             this._reverseTimer.addEventListener(
                 egret.TimerEvent.TIMER_COMPLETE,
-                function() {
-                    this._revertDir();
-                    this.move();
-                },
+                this._revertDir,
                 this
             );
         }
@@ -219,7 +243,7 @@ class BlocksColumn extends egret.Sprite {
         this._speedUpTimer.start();
     }
     public stopSpeedUpTimer() {
-        if (this._speedUpTimer !== null) {
+        if (this._speedUpTimer != null) {
             this._speedUpTimer.stop();
             this._speedUpTimer.removeEventListener(
                 egret.TimerEvent.TIMER,
@@ -228,19 +252,41 @@ class BlocksColumn extends egret.Sprite {
             );
             this._speedUpTimer = null;
         }
+        this._speedTick = false;
     }
-    public move() {
-        let blocks: Array<any> = this._blocks;
+    private _stopReverseTimer(){
+        if(this._reverseTimer != null){
+            this._reverseTimer.removeEventListener(
+                egret.TimerEvent.TIMER_COMPLETE,
+                this._revertDir,
+                this
+            );
+            this._reverseTimer = null;
+        }
+    }
+    //start moving blocks in this column
+    public move(isGameSceneTriggered:boolean = false) {
+        const blocks: Array<any> = this._blocks;
         for (let i = 0; i < blocks.length; i++) {
             blocks[i].move(this.speed, this._dir);
         }
+        if(isGameSceneTriggered){
+            const initialBlocks: Array<any> = this._initialBlocks;
+            for (let i = 0; i < initialBlocks.length; i++) {
+                initialBlocks[i].active = true;
+            }
+        }
         this.startSpeedUpTimer();
     }
-    public stop() {
+    public stop(isGameSceneTriggered:boolean = false) {
         for (let i = 0; i < this._blocks.length; i++) {
             this._blocks[i].stop();
+            if(isGameSceneTriggered){
+                this._blocks[i].active = false;
+            }
         }
         this.stopSpeedUpTimer();
+        this._stopReverseTimer();
     }
     public shrink() {
         this._shrinkRate = 0.5;

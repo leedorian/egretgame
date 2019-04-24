@@ -6,15 +6,27 @@ var Utils = (function () {
     }
     Utils.getBlockWidth = function () {
         if (Utils._blockWidth === 0) {
-            Utils._blockWidth = egret.MainContext.instance.stage.stageWidth / this.columns;
+            var aspectRadio = 175 / 214;
+            var preferedWidth = Utils.getBlockHeight() * aspectRadio;
+            Utils._blockWidth = preferedWidth;
+            // Utils._blockWidth = (egret.MainContext.instance.stage.stageWidth - Utils.horizontalMargin * 2) / this.columns;
         }
         return Utils._blockWidth;
     };
     Utils.getBlockHeight = function () {
         if (Utils._blockHeight === 0) {
-            Utils._blockHeight = Math.ceil(egret.MainContext.instance.stage.stageHeight / this.rows);
+            // const aspectRadio = 214/175;
+            // var preferedHeight = Utils.getBlockWidth() * aspectRadio;
+            // Utils._blockHeight = preferedHeight;
+            Utils._blockHeight = Math.ceil((egret.MainContext.instance.stage.stageHeight - (Utils.verticalMarginTop + Utils.verticalMarginBottom)) / this.rows);
         }
         return Utils._blockHeight;
+    };
+    Utils.getArenaHeight = function () {
+        return Utils.getBlockHeight() * Utils.rows;
+    };
+    Utils.getArenaWidth = function () {
+        return Utils.getBlockWidth() * Utils.columns;
     };
     Utils.getStageWidth = function () {
         if (Utils._stageWidth === 0) {
@@ -55,10 +67,17 @@ var Utils = (function () {
         result.texture = texture;
         return result;
     };
+    Utils.fitToWidth = function (img, width) {
+        img.width = width;
+        img.height = width * img.texture.textureHeight / img.texture.textureWidth;
+    };
     Utils._blockWidth = 0;
     Utils._blockHeight = 0;
     Utils._stageHeight = 0;
     Utils._stageWidth = 0;
+    Utils.verticalMarginTop = 100;
+    Utils.verticalMarginBottom = 150;
+    Utils.horizontalMargin = 30;
     Utils.rowsState = {};
     Utils.rows = 6;
     Utils.columns = 6;

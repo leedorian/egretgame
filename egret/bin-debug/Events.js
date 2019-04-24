@@ -31,12 +31,11 @@ var GameEvents;
     __reflect(BlockEvent.prototype, "GameEvents.BlockEvent");
     var PlayEvent = (function (_super) {
         __extends(PlayEvent, _super);
+        // public score:number = 0;
         function PlayEvent(type, bubbles, cancelable) {
             if (bubbles === void 0) { bubbles = true; }
             if (cancelable === void 0) { cancelable = false; }
-            var _this = _super.call(this, type, bubbles, cancelable) || this;
-            _this.score = 0;
-            return _this;
+            return _super.call(this, type, bubbles, cancelable) || this;
         }
         PlayEvent.GAME_OVER = "gameover";
         return PlayEvent;

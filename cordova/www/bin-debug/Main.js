@@ -90,6 +90,11 @@ var Main = (function (_super) {
         egret.lifecycle.onResume = function () {
             egret.ticker.resume();
         };
+        //inject the custom material parser
+        //注入自定义的素材解析器
+        var assetAdapter = new AssetAdapter();
+        egret.registerImplementation("eui.IAssetAdapter", assetAdapter);
+        egret.registerImplementation("eui.IThemeAdapter", new ThemeAdapter());
         this.runGame().catch(function (e) {
             console.log(e);
         });
@@ -122,28 +127,46 @@ var Main = (function (_super) {
             });
         });
     };
+    Main.prototype.loadTheme = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            // load skin theme configuration file, you can manually modify the file. And replace the default skin.
+            //加载皮肤主题配置文件,可以手动修改这个文件。替换默认皮肤。
+            var theme = new eui.Theme("resource/default.thm.json", _this.stage);
+            theme.addEventListener(eui.UIEvent.COMPLETE, function () {
+                resolve();
+            }, _this);
+        });
+    };
     Main.prototype.loadResource = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var loadingView, e_1;
+            var loadingView, gameService, gameConfig, e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 3, , 4]);
+                        _a.trys.push([0, 5, , 6]);
                         loadingView = new LoadingUI();
                         this.stage.addChild(loadingView);
                         return [4 /*yield*/, RES.loadConfig("resource/default.res.json", "resource/")];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, RES.loadGroup("preload", 0, loadingView)];
+                        return [4 /*yield*/, this.loadTheme()];
                     case 2:
                         _a.sent();
-                        this.stage.removeChild(loadingView);
-                        return [3 /*break*/, 4];
+                        return [4 /*yield*/, RES.loadGroup("preload", 0, loadingView)];
                     case 3:
+                        _a.sent();
+                        gameService = new Service(loadingView);
+                        return [4 /*yield*/, gameService.getGameConfig()];
+                    case 4:
+                        gameConfig = _a.sent();
+                        this.stage.removeChild(loadingView);
+                        return [3 /*break*/, 6];
+                    case 5:
                         e_1 = _a.sent();
                         console.error(e_1);
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
+                        return [3 /*break*/, 6];
+                    case 6: return [2 /*return*/];
                 }
             });
         });
@@ -154,57 +177,83 @@ var Main = (function (_super) {
      */
     Main.prototype.createGameScene = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var gameService, gameConfig, gameScene, startButtonWidth, startButtonHeight, startButton, gameOverButtonWidth, gameOverButtonHeight, gameOverButton;
+            var startButtonWidth, startButtonHeight, startButton, gameOverButtonWidth, gameOverButtonHeight, gameOverButton;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        this.stage.setContentSize(window.innerWidth, window.innerHeight);
-                        gameService = new Service();
-                        return [4 /*yield*/, gameService.getGameConfig()];
-                    case 1:
-                        gameConfig = _a.sent();
-                        gameScene = new GameScene({
-                            mode: GameMode.DOWN,
-                            level: GameLevel.EASY
-                        });
-                        this._gameScene = gameScene;
-                        this.addChild(gameScene);
-                        startButtonWidth = Utils.getStageWidth() / 2;
-                        startButtonHeight = 80;
-                        startButton = new UIComponents.DefaultButton(startButtonWidth, startButtonHeight, "Start");
-                        startButton.x = Utils.getStageWidth() / 2 - startButtonWidth / 2;
-                        startButton.y = Utils.getStageHeight() * 0.3;
-                        startButton.addEventListener("touchTap", this._startGame, this);
-                        this._startButton = startButton;
-                        this.addChild(startButton);
-                        gameOverButtonWidth = Utils.getStageWidth() / 2;
-                        gameOverButtonHeight = 80;
-                        gameOverButton = new UIComponents.DefaultButton(gameOverButtonWidth, gameOverButtonHeight, "Game over");
-                        gameOverButton.x = Utils.getStageWidth() / 2 - gameOverButtonWidth / 2;
-                        gameOverButton.y = Utils.getStageHeight() * 0.3;
-                        gameOverButton.visible = false;
-                        gameOverButton.addEventListener("touchTap", this._restartGame, this);
-                        this._gameOverButton = gameOverButton;
-                        this.addChild(gameOverButton);
-                        return [2 /*return*/];
-                }
+                this.stage.setContentSize(window.innerWidth, window.innerHeight);
+                // let topMask = new egret.Shape();
+                // topMask.graphics.beginFill(0x000000, 0.5);
+                // topMask.graphics.drawRect(0, 0, stageW, 172);
+                // topMask.graphics.endFill();
+                // topMask.y = 33;
+                // this.addChild(topMask);
+                // let icon = this.createBitmapByName("egret_icon_png");
+                // this.addChild(icon);
+                // icon.x = 26;
+                // icon.y = 33;
+                // let line = new egret.Shape();
+                // line.graphics.lineStyle(2, 0xffffff);
+                // line.graphics.moveTo(0, 0);
+                // line.graphics.lineTo(0, 117);
+                // line.graphics.endFill();
+                // line.x = 172;
+                // line.y = 61;
+                // this.addChild(line);
+                // let colorLabel = new egret.TextField();
+                // colorLabel.textColor = 0xffffff;
+                // colorLabel.width = stageW - 172;
+                // colorLabel.textAlign = "center";
+                // colorLabel.text = "Hello Egret";
+                // colorLabel.size = 24;
+                // colorLabel.x = 172;
+                // colorLabel.y = 80;
+                // this.addChild(colorLabel);
+                // let textfield = new egret.TextField();
+                // this.addChild(textfield);
+                // textfield.alpha = 0;
+                // textfield.width = stageW - 172;
+                // textfield.textAlign = egret.HorizontalAlign.CENTER;
+                // textfield.size = 24;
+                // textfield.textColor = 0xffffff;
+                // textfield.x = 172;
+                // textfield.y = 135;
+                // this.textfield = textfield;
+                this._GameScreen = new GameScreen();
+                this.addChild(this._GameScreen);
+                startButtonWidth = Utils.getStageWidth() / 2;
+                console.log(Utils.getStageWidth());
+                startButtonHeight = 80;
+                startButton = new UIComponents.DefaultButton(startButtonWidth, startButtonHeight, "Start");
+                startButton.x = Utils.getStageWidth() / 2 - startButtonWidth / 2;
+                startButton.y = Utils.getStageHeight() * 0.3;
+                startButton.addEventListener("touchTap", this._startGame, this);
+                this._startButton = startButton;
+                this.addChild(startButton);
+                gameOverButtonWidth = Utils.getStageWidth() / 2;
+                gameOverButtonHeight = 80;
+                gameOverButton = new UIComponents.DefaultButton(gameOverButtonWidth, gameOverButtonHeight, "Game over");
+                gameOverButton.x = Utils.getStageWidth() / 2 - gameOverButtonWidth / 2;
+                gameOverButton.y = Utils.getStageHeight() * 0.3;
+                gameOverButton.visible = false;
+                gameOverButton.addEventListener("touchTap", this._restartGame, this);
+                this._gameOverButton = gameOverButton;
+                this.addChild(gameOverButton);
+                return [2 /*return*/];
             });
         });
     };
     Main.prototype._startGame = function () {
         this._startButton.visible = false;
-        this._gameScene.gameStart();
+        this._GameScreen.gameScene.gameStart();
     };
     Main.prototype._restartGame = function () {
         this._startButton.visible = true;
         this._gameOverButton.visible = false;
-        this._gameScene.reset();
+        this._GameScreen.reset();
     };
     Main.prototype._attachEvents = function () {
         this.addEventListener(GameEvents.PlayEvent.GAME_OVER, this._gameOver, this);
     };
     Main.prototype._gameOver = function (oEvent) {
-        console.log(oEvent.score);
         this._gameOverButton.visible = true;
     };
     /**

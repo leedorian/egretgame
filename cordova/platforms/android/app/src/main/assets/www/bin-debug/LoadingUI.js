@@ -50,9 +50,21 @@ var LoadingUI = (function (_super) {
         this.textField.width = 480;
         this.textField.height = 100;
         this.textField.textAlign = "center";
+        // this.pBar = new eui.ProgressBar();
+        // this.pBar.maximum = 100;//设置进度条的最大值
+        // this.pBar.minimum = 0;//设置进度条的最小值
+        // this.pBar.width = Utils.getStageWidth() * 0.8;
+        // this.pBar.height = 30;
+        // this.pBar.x = Utils.getStageWidth() * 0.2 / 2;
+        // this.pBar.y = Utils.getStageHeight() * 0.5 - 30;
+        // this.addChild(this.pBar);
     };
     LoadingUI.prototype.onProgress = function (current, total) {
-        this.textField.text = "Loading..." + current + "/" + total;
+        // this.pBar.value = current / total;
+        this.textField.text = "Loading resources..." + current + "/" + total;
+    };
+    LoadingUI.prototype.onRemoteProgress = function (current, total) {
+        this.textField.text = "Loading configuration..." + current + "/" + total;
     };
     return LoadingUI;
 }(egret.Sprite));

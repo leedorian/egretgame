@@ -12,27 +12,29 @@ var BlockBase = (function (_super) {
     __extends(BlockBase, _super);
     function BlockBase(param) {
         var _this = _super.call(this) || this;
+        _this.active = false;
         _this._unClickableColor = RES.getRes(BlockTexture.unClickable);
+        _this._blockMargin = 5;
         _this._blockPadding = 10;
         _this._currentState = param.state;
         _this.shrinkRate = param.shrinkRate;
         _this.width = param.width;
         _this.height = param.height;
-        _this._shrinkWidth = _this.width * _this.shrinkRate - _this._blockPadding;
-        _this._shrinkHeight = _this.height * _this.shrinkRate - _this._blockPadding;
+        _this._shrinkWidth = (_this.width - (_this._blockPadding + _this._blockMargin) * 2) * _this.shrinkRate;
+        _this._shrinkHeight = (_this.height - (_this._blockPadding + _this._blockMargin) * 2) * _this.shrinkRate;
         _this._colorRect = new egret.Bitmap();
         _this._colorRect.width = _this._shrinkWidth;
         _this._colorRect.height = _this._shrinkHeight;
-        _this._colorRect.x = _this._blockPadding;
-        _this._colorRect.y = _this._blockPadding;
+        // this._colorRect.x = this._blockMargin + this._blockPadding;
+        // this._colorRect.y = this._blockMargin + this._blockPadding;
         _this._colorRect.touchEnabled = true;
-        _this._backRect = new egret.Bitmap();
-        _this._backRect.width = _this.width - _this._blockPadding;
-        _this._backRect.height = _this.height - _this._blockPadding;
-        _this._backRect.x = _this._blockPadding;
-        _this._backRect.y = _this._blockPadding;
-        _this._backRect.alpha = 0;
-        _this._backRect.texture = RES.getRes(BlockTexture.unClickable);
+        _this._backRect = Utils.createBitmapByName("blockFrame_png");
+        var rect = new egret.Rectangle(6, 6, 88, 106);
+        _this._backRect.scale9Grid = rect;
+        _this._backRect.width = _this.width - _this._blockMargin * 2;
+        _this._backRect.height = _this.height - _this._blockMargin * 2;
+        _this._backRect.x = _this._blockMargin;
+        _this._backRect.y = _this._blockMargin;
         _this._backRect.touchEnabled = true;
         _this._beforeDraw();
         _this._draw();
@@ -48,31 +50,19 @@ var BlockBase = (function (_super) {
             this.addChild(this._backRect);
         }
         this._colorRect.texture = this._clickableColor;
-        var rect = new egret.Rectangle(5, 5, 90, 90);
-        this._colorRect.scale9Grid = rect;
+        // const rect:egret.Rectangle = new egret.Rectangle(5,5,90,90);
+        // this._colorRect.scale9Grid =rect;
         var lineColor = BlockColor.border;
         var rectWidth = this._shrinkWidth;
         var rectHeight = this._shrinkHeight;
         if (this._currentState === BlockState.unclickable) {
-            rectWidth = this.width - this._blockPadding;
-            rectHeight = this.height - this._blockPadding;
+            rectWidth = this.width - (this._blockMargin + this._blockPadding) * 2;
+            rectHeight = this.height - (this._blockMargin + this._blockPadding) * 2;
         }
-        // const rectX = rectWidth / 2;
-        // const rectY = rectHeight / 2;
-        // this._colorRect.anchorOffsetX = rectX;
-        // this._colorRect.anchorOffsetY = rectY;
-        // this._colorRect.x = rectX;
-        // this._colorRect.y = rectY;
-        // if (this._currentState === BlockState.clickable || this._currentState === BlockState.clicked){
-        //     fillColor = this._clickableColor;
-        // }
-        // this._colorRect.graphics.clear();
-        // this.graphics.lineStyle(1, lineColor);
         if (this._currentState === BlockState.clicked) {
             rectWidth = this._colorRect.width;
             rectHeight = this._colorRect.height;
         }
-        // this.graphics.drawRect(0, 0, this.width, this.height);
         if (this._currentState > 0) {
             this._colorRect.texture = this._clickableColor;
             // this._colorRect.graphics.beginFill( this._clickableColor, 1);
@@ -90,32 +80,21 @@ var BlockBase = (function (_super) {
         if (this._colorRect.parent === null) {
             this.addChild(this._colorRect);
         }
-        // if(this._currentState === 1){
-        //     lineColor = BlockColor.unClickable;
-        // }
-        // this.graphics.lineStyle(1, lineColor);
-        // this.graphics.moveTo( this.x,this.y );
-        // this.graphics.lineTo( this.x  + this.width, this.y );
-        // this.graphics.endFill();
-        // var label:egret.TextField = new egret.TextField();
-        // label.width = this.width;
-        // label.height = this.height;
-        // label.textAlign = egret.HorizontalAlign.CENTER;
-        // label.verticalAlign = egret.VerticalAlign.MIDDLE;
-        // label.textColor = labelColor;
-        // label.text = this.hashCode.toString();
-        // this.addChild( label );
     };
     BlockBase.prototype._onTouch = function (oEvent) {
-        if (this._currentState === BlockState.clickable) {
-            this._hit();
-        }
-        else if (this._currentState === BlockState.unclickable) {
-            this._hitUnclickable();
+        if (this.active) {
+            if (this._currentState === BlockState.clickable) {
+                this._hit();
+            }
+            else if (this._currentState === BlockState.unclickable) {
+                this._hitUnclickable();
+            }
         }
     };
     BlockBase.prototype._onBackTouch = function (oEvent) {
-        this._hitUnclickable();
+        if (this.active) {
+            this._hitUnclickable();
+        }
     };
     BlockBase.prototype._hitAni = function () {
         var rectWidth = this._colorRect.width * this.shrinkRate;
@@ -148,13 +127,15 @@ var BlockBase = (function (_super) {
             // if (rectWidth === 0 && rectHeight === 0) {
             egret.stopTick(this._hitAni, this);
             this.removeChild(this._colorRect);
-            this.removeChild(this._backRect);
-            this._colorRect = null;
             // this.removeEventListener(egret.Event.ENTER_FRAME, this._hitAni, this);
         }
         else {
             this._draw();
         }
+        // if(this._backRect != null && this._backRect.parent != null){
+        //     this.removeChild(this._backRect);
+        //     this._backRect = null;
+        // }
         return false;
     };
     BlockBase.prototype._hit = function () {
@@ -179,7 +160,7 @@ var BlockBase = (function (_super) {
     };
     BlockBase.prototype._moveBlock = function (timeStamp) {
         if (this._dir === "down") {
-            if (this.y >= Utils.getStageHeight()) {
+            if (this.y >= Utils.getArenaHeight()) {
                 this._triggerMovedOutEvent();
             }
             else {
@@ -218,8 +199,10 @@ var BlockBase = (function (_super) {
      * sizeUpdate
      */
     BlockBase.prototype.sizeUpdate = function () {
-        this._shrinkWidth = this.width * this.shrinkRate;
-        this._shrinkHeight = this.height * this.shrinkRate;
+        this._shrinkWidth = this.width * this.shrinkRate - this._blockMargin;
+        ;
+        this._shrinkHeight = this.height * this.shrinkRate - this._blockMargin;
+        ;
         if (this._currentState !== BlockState.clicked) {
             this._draw();
         }

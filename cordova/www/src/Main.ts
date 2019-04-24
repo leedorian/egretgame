@@ -55,6 +55,12 @@ class Main extends egret.DisplayObjectContainer {
             egret.ticker.resume();
         }
 
+        //inject the custom material parser
+        //注入自定义的素材解析器
+        let assetAdapter = new AssetAdapter();
+        egret.registerImplementation("eui.IAssetAdapter", assetAdapter);
+        egret.registerImplementation("eui.IThemeAdapter", new ThemeAdapter());
+
         this.runGame().catch(e => {
             console.log(e);
         })
@@ -64,8 +70,9 @@ class Main extends egret.DisplayObjectContainer {
     }
 
     private async runGame() {
-        await this.loadResource()
-        await this.createGameScene();
+        await this.loadResource();
+       await this.createGameScene();
+
         this._attachEvents();
         // const result = await RES.getResAsync("description_json")
         // this.startAnimation(result);
@@ -74,22 +81,66 @@ class Main extends egret.DisplayObjectContainer {
         console.log(userInfo);
 
     }
+    private loadTheme() {
+        return new Promise((resolve, reject) => {
+            // load skin theme configuration file, you can manually modify the file. And replace the default skin.
+            //加载皮肤主题配置文件,可以手动修改这个文件。替换默认皮肤。
+            let theme = new eui.Theme("resource/default.thm.json", this.stage);
+            theme.addEventListener(eui.UIEvent.COMPLETE, () => {
+                resolve();
+            }, this);
 
+        })
+    }
+    
     private async loadResource() {
+        // this._loadingView = new LoadingUI();
+        // this.stage.addChild(this._loadingView);
+        // await RES.loadConfig("resource/default.res.json", "resource/");
+        // RES.addEventListener( RES.ResourceEvent.GROUP_COMPLETE, this._onResourceLoadComplete, this );
+        // RES.addEventListener( RES.ResourceEvent.GROUP_PROGRESS, this._onResourceProgress, this );
+        // RES.addEventListener( RES.ResourceEvent.GROUP_LOAD_ERROR, this._onResourceLoadErr, this );
+        // await RES.loadGroup("preload", 0);
         try {
             const loadingView = new LoadingUI();
             this.stage.addChild(loadingView);
             await RES.loadConfig("resource/default.res.json", "resource/");
+
+            await this.loadTheme();
             await RES.loadGroup("preload", 0, loadingView);
+
+            const gameService: Service = new Service(loadingView);
+            const gameConfig: any = await gameService.getGameConfig();
             this.stage.removeChild(loadingView);
+            
         }
         catch (e) {
             console.error(e);
         }
     }
 
+    // private _onResourceProgress( event:RES.ResourceEvent ):void {
+    //     if( event.groupName=="preload" ){
+    //         this._loadingView.onProgress( event.itemsLoaded,event.itemsTotal );
+    //     }
+    // }
+
+    // private _onResourceLoadComplete( event:RES.ResourceEvent ):void {
+    //     if( event.groupName=="preload" ){
+
+    //     }
+    // }
+
+    // private _onResourceLoadErr( event:RES.ResourceEvent ):void {
+    //     if( event.groupName=="preload" ){
+
+    //     }
+    // }
+
+    // private _loadingView: LoadingUI;
     private textfield: egret.TextField;
-    private _gameScene: GameScene;
+    // private _gameScene: GameScene;
+    private _GameScreen: GameScreen;
     private _startButton: UIComponents.DefaultButton;
     private _gameOverButton: UIComponents.DefaultButton;
 
@@ -145,17 +196,29 @@ class Main extends egret.DisplayObjectContainer {
         // this.textfield = textfield;
 
 
-        const gameService: Service = new Service();
-        const gameConfig: any = await gameService.getGameConfig();
 
-        const gameScene = new GameScene({
-            mode: GameMode.DOWN,
-            level: GameLevel.EASY
-        });
-        this._gameScene = gameScene;
-        this.addChild(gameScene);
+
+        this._GameScreen = new GameScreen();
+        this.addChild(this._GameScreen);
+        // gameScene.skewX = 3;
+        // gameScene.skewY = 50;
+
+        // gameScene.anchorOffsetX = gameScene.width/2;
+        // gameScene.anchorOffsetY = gameScene.height/2;
+        // gameScene.x = Utils.getStageWidth()/2;
+        // gameScene.y = Utils.getStageHeight()/2;
+        // gameScene.rotation = -45;
+        // gameScene.scaleX = 0.5;
+        // gameScene.scaleY = 0.5;
+
+        // this._gameScene = gameScene;
+        // this._gameScene.x =  Utils.horizontalMargin;
+        // this._gameScene.y =  Utils.verticalMarginTop;
+        // this.addChild(gameScene);
 
         const startButtonWidth:number = Utils.getStageWidth()/2;
+        console.log(Utils.getStageWidth());
+        
         const startButtonHeight:number = 80;
         const startButton: UIComponents.DefaultButton =
             new UIComponents.DefaultButton(startButtonWidth,startButtonHeight,"Start");
@@ -175,23 +238,28 @@ class Main extends egret.DisplayObjectContainer {
             gameOverButton.addEventListener("touchTap", this._restartGame, this);
         this._gameOverButton = gameOverButton;
         this.addChild(gameOverButton);
+        
+        
+        // const loginScreen = new Login();
+        
+        // this.stage.addChild(loginScreen);
 
     }
     private _startGame() {
         this._startButton.visible = false;
-        this._gameScene.gameStart();
+        this._GameScreen.gameScene.gameStart();
     }
     private _restartGame() {
         this._startButton.visible = true;
         this._gameOverButton.visible = false;
-        this._gameScene.reset();
+        this._GameScreen.reset();
+
     }
 
     private _attachEvents(){
         this.addEventListener(GameEvents.PlayEvent.GAME_OVER, this._gameOver, this);
     }
     private _gameOver(oEvent){
-        console.log(oEvent.score);
         this._gameOverButton.visible = true;
     }
 

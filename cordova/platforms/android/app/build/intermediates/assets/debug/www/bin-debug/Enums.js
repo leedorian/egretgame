@@ -19,13 +19,13 @@ var BlockColor;
 })(BlockColor || (BlockColor = {}));
 var BlockTexture;
 (function (BlockTexture) {
-    BlockTexture["unClickable"] = "block_unclickable";
+    BlockTexture["unClickable"] = "b_normal_png";
     BlockTexture["clicked"] = "block_clicked";
-    BlockTexture["clickableDouble"] = "block_double";
-    BlockTexture["clickableRush"] = "block_rush";
-    BlockTexture["clickableBlink"] = "block_blink";
-    BlockTexture["clickableShrink"] = "block_shrink";
-    BlockTexture["clickableNormal"] = "block_normal";
+    BlockTexture["clickableDouble"] = "b_blue_jpeg";
+    BlockTexture["clickableRush"] = "b_red_jpeg";
+    BlockTexture["clickableBlink"] = "b_green_jpeg";
+    BlockTexture["clickableShrink"] = "b_purple_jpeg";
+    BlockTexture["clickableNormal"] = "b_black_jpeg";
 })(BlockTexture || (BlockTexture = {}));
 var BlockType;
 (function (BlockType) {

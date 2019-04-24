@@ -32,10 +32,12 @@ class LoadingUI extends egret.Sprite implements RES.PromiseTaskReporter {
     public constructor() {
         super();
         this.createView();
+        
     }
 
     private textField: egret.TextField;
-
+    private pBar:eui.ProgressBar;
+   
     private createView(): void {
         this.textField = new egret.TextField();
         this.addChild(this.textField);
@@ -43,9 +45,24 @@ class LoadingUI extends egret.Sprite implements RES.PromiseTaskReporter {
         this.textField.width = 480;
         this.textField.height = 100;
         this.textField.textAlign = "center";
+
+        // this.pBar = new eui.ProgressBar();
+        // this.pBar.maximum = 100;//设置进度条的最大值
+        // this.pBar.minimum = 0;//设置进度条的最小值
+        // this.pBar.width = Utils.getStageWidth() * 0.8;
+        // this.pBar.height = 30;
+        // this.pBar.x = Utils.getStageWidth() * 0.2 / 2;
+        // this.pBar.y = Utils.getStageHeight() * 0.5 - 30;
+        // this.addChild(this.pBar);
+        
     }
 
     public onProgress(current: number, total: number): void {
-        this.textField.text = `Loading...${current}/${total}`;
+        // this.pBar.value = current / total;
+        this.textField.text = `Loading resources...${current}/${total}`;
+    }
+
+    public onRemoteProgress(current: number, total: number): void {
+        this.textField.text = `Loading configuration...${current}/${total}`;
     }
 }
