@@ -2,8 +2,11 @@ class BlockShrink extends BlockFlashBase{
     public constructor(param: any) {
         super(param);
     }
-    protected _activeColor:egret.Texture = RES.getRes(BlockTexture.clickableShrink);
-
+    
+    _beforeDraw(): void {
+        this._clickableRushColor = RES.getRes(BlockTexture.clickableShrinkRushStyle);
+        this._clickableColor = RES.getRes(BlockTexture.clickableShrink);
+    }
     _hit() {
         super._hit();
         if (this._activeState) {

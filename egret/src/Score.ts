@@ -1,7 +1,7 @@
 class Score extends egret.Sprite {
     public constructor() {
         super();
-        const scoreY:number = 40;
+        const scoreY:number = 20;
         const scoreHeight:number = 35;
         let bg:egret.Bitmap = Utils.createBitmapByName("bg_score_png");
         bg.height = scoreHeight;

@@ -19,11 +19,16 @@ enum BlockColor{
 enum BlockTexture{
     unClickable = "b_normal_png",
     clicked = "block_clicked",
-    clickableDouble = "b_blue_jpeg",
-    clickableRush = "b_red_jpeg",
-    clickableBlink = "b_green_jpeg",
-    clickableShrink = "b_purple_jpeg",
-    clickableNormal= "b_black_jpeg"
+    clickableDouble = "b_blue_png",
+    clickableRush = "b_red_png",
+    clickableBlink = "b_yellow_png",
+    clickableShrink = "b_purple_png",
+    clickableNormal= "b_black_png",
+    clickableNormalRushStyle= "b_black_rush_png",
+    clickableShrinkRushStyle= "b_purple_rush_png",
+    clickableBlinkRushStyle= "b_yellow_rush_png",
+    clickableRushRushStyle= "b_red_rush_png",
+    clickableDoubleRushStyle= "b_blue_rush_png"
 }
 enum BlockType{
     BlockNormal = 0,
@@ -32,6 +37,11 @@ enum BlockType{
     BlockBlink = 3,
     BlockShrink = 4,
     BlockBonus = 5
+}
+//块样式
+enum BlockStyle{
+    Default = 0,//普通
+    Rush = 1//加速
 }
 enum GameMode{
     BI_DIR,

@@ -16,7 +16,6 @@ class GameScreen extends egret.Sprite {
     }
 
     private _score: Score;
-    private _scoreNumber: number;
     private _bg: egret.Bitmap;
     private _gameScene: GameScene;
     private _magicFreeze: MagicFreeze;
@@ -94,11 +93,9 @@ class GameScreen extends egret.Sprite {
 
     }
     private _onHit(evt: GameEvents.BlockEvent) {
-        this._scoreNumber++;
-        this._score.score = this._scoreNumber;
+        this._score.score = this._score.score + 1;
     }
     private _drawScore() {
-        this._scoreNumber = 0;
         this._score = new Score();
         this.addChild(this._score);
     }

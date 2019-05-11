@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "thumb_pb_png,track_pb_png,buttonBg_png,normal_bg_png,lone-wolf-short,game_config,GoogleBtn_png,Bg01_png,WechatBtn_png,BgColor01_png,bg_png,b_black_jpeg,b_blue_jpeg,b_purple_jpeg,b_red_jpeg,b_yellow_jpeg,shanguang_json,shanguang_png,blockFrame_png,b_normal_png,bg_score_png,freeze_png,purify_png,nuke_png,rock_bg_png,skull_png",
+			"keys": "thumb_pb_png,track_pb_png,buttonBg_png,normal_bg_png,lone-wolf-short,game_config,GoogleBtn_png,Bg01_png,WechatBtn_png,BgColor01_png,bg_png,shanguang_json,shanguang_png,blockFrame_png,b_normal_png,bg_score_png,freeze_png,purify_png,nuke_png,rock_bg_png,skull_png,b_purple_rush_png,b_purple_png,b_red_png,b_red_rush_png,b_blue_png,b_blue_rush_png,b_yellow_png,b_yellow_rush_png,b_black_png,b_black_rush_png",
 			"name": "preload"
 		}
 	],
@@ -63,31 +63,6 @@
 			"url": "assets/bg.png"
 		},
 		{
-			"name": "b_black_jpeg",
-			"type": "image",
-			"url": "assets/b_black.jpeg"
-		},
-		{
-			"name": "b_blue_jpeg",
-			"type": "image",
-			"url": "assets/b_blue.jpeg"
-		},
-		{
-			"name": "b_purple_jpeg",
-			"type": "image",
-			"url": "assets/b_purple.jpeg"
-		},
-		{
-			"name": "b_red_jpeg",
-			"type": "image",
-			"url": "assets/b_red.jpeg"
-		},
-		{
-			"name": "b_yellow_jpeg",
-			"type": "image",
-			"url": "assets/b_yellow.jpeg"
-		},
-		{
 			"name": "shanguang_json",
 			"type": "json",
 			"url": "assets/shanguang.json"
@@ -136,6 +111,56 @@
 			"name": "skull_png",
 			"type": "image",
 			"url": "assets/skull.png"
+		},
+		{
+			"name": "b_purple_rush_png",
+			"type": "image",
+			"url": "assets/b_purple_rush.png"
+		},
+		{
+			"name": "b_purple_png",
+			"type": "image",
+			"url": "assets/b_purple.png"
+		},
+		{
+			"name": "b_red_png",
+			"type": "image",
+			"url": "assets/b_red.png"
+		},
+		{
+			"name": "b_red_rush_png",
+			"type": "image",
+			"url": "assets/b_red_rush.png"
+		},
+		{
+			"name": "b_blue_png",
+			"type": "image",
+			"url": "assets/b_blue.png"
+		},
+		{
+			"name": "b_blue_rush_png",
+			"type": "image",
+			"url": "assets/b_blue_rush.png"
+		},
+		{
+			"name": "b_yellow_png",
+			"type": "image",
+			"url": "assets/b_yellow.png"
+		},
+		{
+			"name": "b_yellow_rush_png",
+			"type": "image",
+			"url": "assets/b_yellow_rush.png"
+		},
+		{
+			"name": "b_black_png",
+			"type": "image",
+			"url": "assets/b_black.png"
+		},
+		{
+			"name": "b_black_rush_png",
+			"type": "image",
+			"url": "assets/b_black_rush.png"
 		}
 	]
 }

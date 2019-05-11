@@ -10,7 +10,6 @@ class GameScene extends egret.Sprite {
         this._shrinkTime = Service.GAME_CONFIG.shrinkTime;
         this._levelUpTime = Service.GAME_CONFIG.levelUpInterval;
         this._calculateColsRows();
-        // this._drawBg();
         this._drawColumns();
         this.width = Utils.getArenaWidth();
         this.height = Utils.getArenaHeight();
@@ -64,7 +63,6 @@ class GameScene extends egret.Sprite {
     private _shrinkWatch:Time.StopWatch;
     private _levelUpTime:number;
     private _levelUpWatch:Time.StopWatch;
-    private _bg:egret.Bitmap;
     private _difficulty:number = 0;
     private _bgm:egret.Sound = RES.getRes("lone-wolf-short");
     private _bgmChanel:egret.SoundChannel;
@@ -82,7 +80,9 @@ class GameScene extends egret.Sprite {
         this._stopbgm();
     }
     private _onResume(){
-        this._playbgm();
+        if(this._stated){
+            this._playbgm();
+        }
     }
     private _drawColumns() {
         let blockColumn: BlocksColumn;
@@ -108,28 +108,8 @@ class GameScene extends egret.Sprite {
         }
     }
     private _calculateColsRows() {
-        let nThumbWidth: number = 48;
-        let nThumbHeight: number = 48;
-        let nArenaWidth: number = Utils.getStageWidth();
-        let nArenaHeight: number = Utils.getStageHeight();
-        let nColsMax: number = Math.floor(nArenaWidth / nThumbWidth);
-        let nRowsMax: number = Math.floor(nArenaHeight / nThumbHeight);
-        if (this._level === GameLevel.EASY) {
-            Utils.columns = 4;
-            Utils.rows = 5;
-        } else if (this._level === GameLevel.NORMAL) {
-            Utils.columns = 5;
-            Utils.rows = 7;
-        } else if (this._level === GameLevel.HARD) {
-            Utils.columns = 6;
-            Utils.rows = 8;
-        }
-        if (Utils.columns > nColsMax) {
-            Utils.columns = nColsMax;
-        }
-        if (Utils.rows > nRowsMax) {
-            Utils.rows = nRowsMax;
-        }
+        Utils.columns = 4;
+        Utils.rows = 5;
     }
 
     private _onMovedOut(evt: GameEvents.BlockEvent) {
@@ -151,7 +131,9 @@ class GameScene extends egret.Sprite {
             }
         }
         const rushTimer = this._rushWatch.run();
-        this._bg.texture = RES.getRes("rush_bg_png");
+        //All blocks are in rush style
+        Utils.blockStyle = 1;
+        // this._bg.texture = RES.getRes("rush_bg_png");
     }
     private _stopRush(){
         for (let i = 0; i < this._blockColumns.length; i++) {
@@ -161,7 +143,9 @@ class GameScene extends egret.Sprite {
             this._blockColumns[i].startSpeedUpTimer();
         }
         this._rushWatch = null;
-        this._bg.texture = RES.getRes("normal_bg_png");
+        //All blocks are in non rush style
+        Utils.blockStyle = 0;
+        // this._bg.texture = RES.getRes("normal_bg_png");
     }
     private _onHitUnclickable(){
         this._gameOver();
@@ -240,7 +224,7 @@ class GameScene extends egret.Sprite {
         if(this._rushWatch != null){
             this._rushWatch.destroy();
             this._rushWatch = null;
-            this._bg.texture = RES.getRes("normal_bg_png");
+            // this._bg.texture = RES.getRes("normal_bg_png");
         }
         if(this._shrinkWatch != null){
             this._shrinkWatch.destroy();

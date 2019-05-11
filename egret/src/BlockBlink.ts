@@ -3,8 +3,9 @@ class BlockBlink extends BlockBase {
         super(param);
     }
     private _timeMark: number;
-    private _activeState: boolean = false;
+    private _activeState: boolean = true;
     _beforeDraw(): void {
+        this._clickableRushColor = RES.getRes(BlockTexture.clickableBlinkRushStyle);
         this._clickableColor = RES.getRes(BlockTexture.clickableBlink);
     }
     // _hit() {

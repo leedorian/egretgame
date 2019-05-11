@@ -30,7 +30,7 @@
             "blockNormal":10,//普通块 10个/10个
             "blockDouble":0,//蓝块 0个/10个
             "blockRush":0,//红块 0个/10个
-            "blockBlink":0,//黄块 0个/10个
+            "blockBlink":0,//绿块 0个/10个
             "blockShrink":0,//紫块 0个/10个
             "blockBonus":0//金块 0个/10个
         },

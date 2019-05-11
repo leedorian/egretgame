@@ -4,5 +4,7 @@ class BlockNormal extends BlockBase {
     }
     _beforeDraw():void{
         this._clickableColor = RES.getRes(BlockTexture.clickableNormal);
+        this._clickableRushColor = RES.getRes(BlockTexture.clickableNormalRushStyle);
+        
     }
 }

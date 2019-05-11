@@ -3,12 +3,13 @@ class Utils{
     private static _blockHeight:number = 0;
     private static _stageHeight:number = 0;
     private static _stageWidth:number = 0;
-    public static verticalMarginTop = 100;
-    public static verticalMarginBottom = 150;
+    public static verticalMarginTop = 60;
+    public static verticalMarginBottom = 140;
     public static horizontalMargin = 30;
     public static rowsState:any = {};
     public static rows:number = 6;
     public static columns:number = 6;
+    public static blockStyle:number = 0;
 
     
     public static getBlockWidth():number{

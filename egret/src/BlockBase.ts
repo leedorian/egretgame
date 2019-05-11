@@ -35,6 +35,7 @@ abstract class BlockBase extends egret.Sprite{
 
     protected _currentState:number;
     protected _clickableColor: egret.Texture;
+    protected _clickableRushColor: egret.Texture;
 
     // private _type:string;
     public speed:number;
@@ -45,10 +46,11 @@ abstract class BlockBase extends egret.Sprite{
     private _backRect:egret.Bitmap;
     private _unClickableColor:egret.Texture = RES.getRes(BlockTexture.unClickable);
     // private _clickedColor:egret.Texture = RES.getRes(BlockTexture.clicked);
+
     private _shrinkWidth:number;
     private _shrinkHeight:number;
-    private _blockMargin:number = 5;
-    private _blockPadding:number = 10;
+    private _blockMargin:number = 2;
+    private _blockPadding:number = 3;
 
     protected _draw(){
         // let fillColor: BlockColor;
@@ -58,7 +60,13 @@ abstract class BlockBase extends egret.Sprite{
             this.addChild(this._backRect);
         }
 
-        this._colorRect.texture = this._clickableColor;
+        const blockStyle = Utils.blockStyle;
+        if(blockStyle === 1){
+            this._colorRect.texture = this._clickableRushColor;
+        }else{
+            this._colorRect.texture = this._clickableColor;
+        }
+        
         // const rect:egret.Rectangle = new egret.Rectangle(5,5,90,90);
         // this._colorRect.scale9Grid =rect;
 
@@ -77,7 +85,11 @@ abstract class BlockBase extends egret.Sprite{
         }
 
         if(this._currentState > 0){
-            this._colorRect.texture = this._clickableColor;
+            if(blockStyle === 1){
+                this._colorRect.texture = this._clickableRushColor;
+            }else{
+                this._colorRect.texture = this._clickableColor;
+            }
             // this._colorRect.graphics.beginFill( this._clickableColor, 1);
         }else{
             this._colorRect.texture = this._unClickableColor;

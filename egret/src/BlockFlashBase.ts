@@ -4,11 +4,12 @@ class BlockFlashBase extends BlockBase{
     }
 
     private _timeMark:number;
-    protected _activeState:boolean = false;
-    protected _activeColor:egret.Texture;
+    private _cachedClickableColor:egret.Texture = this._clickableColor;
+    private _cachedClickableRushColor:egret.Texture = this._clickableRushColor;
+    protected _activeState:boolean = true;
 
     _beforeDraw(): void {
-        this._clickableColor  = RES.getRes(BlockTexture.clickableNormal);
+       
     }
 
 
@@ -18,14 +19,24 @@ class BlockFlashBase extends BlockBase{
     }
     _moveBlock(timeStamp: number): boolean {
         let redrawScreen = super._moveBlock(timeStamp);
+        const blockStyle = Utils.blockStyle;
         if (this.state === "clickable") {
             let pass = Math.floor((timeStamp - this._timeMark) / 1000);
-            if (pass === 1) {
+            console.log(pass);
+            if(pass === 1){
                 this._activeState = !this._activeState;
                 if (this._activeState) {
-                    this._clickableColor = this._activeColor;
+                    if(blockStyle === 1){
+                        this._clickableRushColor = this._cachedClickableRushColor;
+                    }else{
+                        this._clickableColor = this._cachedClickableColor;
+                    }
                 } else {
-                    this._clickableColor = RES.getRes(BlockTexture.clickableNormal);
+                    if(blockStyle === 1){
+                        this._clickableRushColor = RES.getRes(BlockTexture.clickableNormalRushStyle);
+                    }else{
+                        this._clickableColor = RES.getRes(BlockTexture.clickableNormal);
+                    }
                 }
                 this._draw();
                 this._timeMark = timeStamp;
