@@ -1,4 +1,4 @@
-class BlockDouble extends BlockFlashBase {
+class BlockDouble extends BlockBase {
     public constructor(param: any) {
         super(param);
     }
