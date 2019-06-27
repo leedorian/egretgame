@@ -3,6 +3,7 @@ abstract class BlockBase extends egret.Sprite{
         super();
 
         this._currentState = param.state;
+        this._coverState = param.coverState;
         this.shrinkRate = param.shrinkRate;
         this.width = param.width;
         this.height = param.height;
@@ -13,7 +14,12 @@ abstract class BlockBase extends egret.Sprite{
         this._colorRect.height = this._shrinkHeight;
         // this._colorRect.x = this._blockMargin + this._blockPadding;
         // this._colorRect.y = this._blockMargin + this._blockPadding;
-        this._colorRect.touchEnabled = true;
+        // this._colorRect.touchEnabled = true;
+
+        this._coverRect = new egret.Bitmap();
+        this._coverRect.width = this._shrinkWidth;
+        this._coverRect.height = this._shrinkHeight;
+        this._coverRect.touchEnabled = true;
 
         this._backRect = Utils.createBitmapByName("blockFrame_png");
         const rect:egret.Rectangle = new egret.Rectangle(6,6,88,106);
@@ -29,6 +35,7 @@ abstract class BlockBase extends egret.Sprite{
         this._beforeDraw();
         this._draw();
         this._colorRect.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this._onTouch, this);
+        this._coverRect.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this._onTouch, this);
         this._backRect.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this._onBackTouch, this);
     }
     abstract _beforeDraw(): void;
@@ -44,6 +51,8 @@ abstract class BlockBase extends egret.Sprite{
     private _dir:string;
     private _colorRect:egret.Bitmap;
     private _backRect:egret.Bitmap;
+    private _coverRect:egret.Bitmap;
+    private _coverState:number;
     private _unClickableColor:egret.Texture = RES.getRes(BlockTexture.unClickable);
     // private _clickedColor:egret.Texture = RES.getRes(BlockTexture.clicked);
 
@@ -61,7 +70,7 @@ abstract class BlockBase extends egret.Sprite{
         }
 
         const blockStyle = Utils.blockStyle;
-        if(blockStyle === 1){
+        if(blockStyle === "rush"){
             this._colorRect.texture = this._clickableRushColor;
         }else{
             this._colorRect.texture = this._clickableColor;
@@ -85,7 +94,7 @@ abstract class BlockBase extends egret.Sprite{
         }
 
         if(this._currentState > 0){
-            if(blockStyle === 1){
+            if(blockStyle === "rush"){
                 this._colorRect.texture = this._clickableRushColor;
             }else{
                 this._colorRect.texture = this._clickableColor;
@@ -107,6 +116,22 @@ abstract class BlockBase extends egret.Sprite{
             this.addChild(this._colorRect);
         }
 
+        if(this._currentState !== BlockState.unclickable){
+            if(this._coverState === BlockCoverState.freezed){
+                this._coverRect.texture = RES.getRes("ice_png");
+            }else{
+                this._coverRect.texture = null;
+            }
+            this._coverRect.x = (this.width - rectWidth) / 2 ;
+            this._coverRect.y = (this.height - rectHeight) / 2;
+            this._coverRect.width = rectWidth;
+            this._coverRect.height = rectHeight;
+
+            if(this._coverRect.parent === null){
+                this.addChild(this._coverRect);
+            }
+        }
+        
         
     }
     protected _onTouch(oEvent: Event) {
@@ -196,12 +221,18 @@ abstract class BlockBase extends egret.Sprite{
     protected _moveBlock(timeStamp: number):boolean{
 
         if(this._dir === "down"){
+            if(this.y >= this.height){
+                this._triggerAllMovedInEvent();
+            }
             if(this.y >= Utils.getArenaHeight()){
                 this._triggerMovedOutEvent();
             }else{
                 this._setY();
             }
         }else{
+            if(this.y <= Utils.getArenaHeight() - this.height ){
+                this._triggerAllMovedInEvent();
+            }
             if(this.y <= -this.height){
                 this._triggerMovedOutEvent();
             }else{
@@ -228,6 +259,10 @@ abstract class BlockBase extends egret.Sprite{
         movedOutEvent.missed = missed;
         this.dispatchEvent(movedOutEvent);
     }
+    private _triggerAllMovedInEvent(){
+        let allMovedInEvent:GameEvents.BlockEvent = new GameEvents.BlockEvent(GameEvents.BlockEvent.ALL_MOVED_IN);
+        this.dispatchEvent(allMovedInEvent);
+    }
     /**
      * sizeUpdate
      */
@@ -248,5 +283,17 @@ abstract class BlockBase extends egret.Sprite{
 
         this.graphics.clear();
         this._draw();
+    }
+    public freeze(){
+        if(this._currentState !== BlockState.unclickable){
+            this._coverState = BlockCoverState.freezed;
+            this._coverRect.texture = RES.getRes("ice_png");
+        }
+    }
+    public cleanCover(){
+        if(this._currentState !== BlockState.unclickable){
+            this._coverRect.texture = null;
+            this._coverState = BlockCoverState.normal;
+        }
     }
 }

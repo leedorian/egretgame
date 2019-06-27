@@ -13,6 +13,17 @@ class GameScreen extends egret.Sprite {
             true
         );
         this.addEventListener(GameEvents.PlayEvent.GAME_OVER, this._gameOver, this);
+        this.addEventListener(GameEvents.MagicEvent.UNFREEZE, this._enableMagic, this);
+        this.addEventListener(GameEvents.MagicEvent.UNQUELL, this._enableMagic, this);
+        this.addEventListener(GameEvents.MagicEvent.UNPURIFY, this._enableMagic, this);
+        this.addEventListener(GameEvents.MagicEvent.DESTROY, this._enableMagic, this);
+
+        this.addEventListener(
+            GameEvents.PlayEvent.SCORE,
+            this._onMagicScore,
+            this,
+            true
+        );
     }
 
     private _score: Score;
@@ -69,6 +80,7 @@ class GameScreen extends egret.Sprite {
         this._magicFreeze.x = magicCount * (itemSpace + itemWidth)+ Utils.horizontalMargin;
         this._magicFreeze.y = Utils.getStageHeight() - 20;
         this.addChild(this._magicFreeze);
+        this._magicFreeze.addEventListener(egret.TouchEvent.TOUCH_TAP, this._freeze, this);
         magicCount++;
 
         this._magicQuell = new MagicQuell();
@@ -76,6 +88,7 @@ class GameScreen extends egret.Sprite {
         this._magicQuell.x = magicCount * (itemSpace + itemWidth)+ Utils.horizontalMargin;
         this._magicQuell.y = Utils.getStageHeight() - 20;
         this.addChild(this._magicQuell);
+        this._magicQuell.addEventListener(egret.TouchEvent.TOUCH_TAP, this._quell, this);
         magicCount++;
 
         this._magicPurify = new MagicPurify();
@@ -83,6 +96,7 @@ class GameScreen extends egret.Sprite {
         this._magicPurify.x = magicCount * (itemSpace + itemWidth)+ Utils.horizontalMargin;
         this._magicPurify.y = Utils.getStageHeight() - 20;
         this.addChild(this._magicPurify);
+        this._magicPurify.addEventListener(egret.TouchEvent.TOUCH_TAP, this._purify, this);
         magicCount++;
 
         this._magicDestroy = new MagicDestroy();
@@ -90,6 +104,7 @@ class GameScreen extends egret.Sprite {
         this._magicDestroy.x = magicCount * (itemSpace + itemWidth)+ Utils.horizontalMargin;
         this._magicDestroy.y = Utils.getStageHeight() - 20;
         this.addChild(this._magicDestroy);
+        this._magicDestroy.addEventListener(egret.TouchEvent.TOUCH_TAP, this._destroy, this);
 
     }
     private _onHit(evt: GameEvents.BlockEvent) {
@@ -102,10 +117,59 @@ class GameScreen extends egret.Sprite {
     private _gameOver() {
         console.log(this._score.score);
     }
+    private _handleMagicsState(reset?:boolean){
+        var aMagic = [
+            this._magicFreeze,
+            this._magicQuell,
+            this._magicPurify,
+            this._magicDestroy
+        ];
+        const len = aMagic.length;
+        
+        for(var i = 0; i < len; i++){
+            if(reset){
+                aMagic[i].enable();
+            }else{
+                aMagic[i].disable();
+            }
+            
+        }
+    }
+    private _freeze(){
+        if(this._gameScene.started && Utils.blockStyle.indexOf("freeze") === -1){
+            this._handleMagicsState();
+            this._gameScene.freeze();
+        }
+    }
+    private _enableMagic(){
+        this._handleMagicsState(true);
+    }
+    private _quell(){
+        if(this._gameScene.started && Utils.blockStyle.indexOf("quell") === -1){
+            this._handleMagicsState();
+            this._gameScene.quell();
+        }
+    }
+    private _purify(){
+        if(this._gameScene.started && Utils.blockStyle.indexOf("purify") === -1){
+            this._handleMagicsState();
+            this._gameScene.purify();
+        }
+    }
+    private _destroy(){
+        if(this._gameScene.started && Utils.blockStyle.indexOf("destroy") === -1){
+            this._handleMagicsState();
+            this._gameScene.destroy(this._score);
+        }
+    }
+    private _onMagicScore(evt:GameEvents.PlayEvent){
+        var nScore:number = evt.score;
+        this._score.score = this._score.score + nScore;
+    }
     public reset() {
         this._score.score = 0;
         this._gameScene.reset();
-
+        this._handleMagicsState(true);
     }
     public get gameScene() {
         return this._gameScene;

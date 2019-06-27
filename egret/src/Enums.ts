@@ -56,3 +56,7 @@ enum GameLevel{
 enum TextColors{
     defaultButtonLable = 0xffffff
 }
+enum BlockCoverState{
+    normal = 0,
+    freezed = 1
+}

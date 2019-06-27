@@ -15,4 +15,10 @@ class MagicFreeze extends MagicBase{
 			offsetY: this.icon.height * this._zoomRate - 19
 		};
 	}
+	disable(){
+		this.icon.texture = RES.getRes("freeze_disabled_png");
+	}
+	enable(){
+		this.icon.texture = RES.getRes("freeze_png");
+	}
 }

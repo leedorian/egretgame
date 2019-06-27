@@ -23,6 +23,7 @@ class BlocksColumn extends egret.Sprite {
     private _reverseTimer: egret.Timer;
     private _shrinkRate:number = 1;
     private _blockWeightNumber:Array<number>;
+    private _blockCoverState:number = BlockCoverState.normal;
 
     public speed: number = Service.GAME_CONFIG.speedLevels[this._speedLevel];
     public dir: string;
@@ -42,7 +43,8 @@ class BlocksColumn extends egret.Sprite {
             }
             const block = this._createBlock({
                 state: state,
-                startBlock: true
+                startBlock: true,
+                coverState: this._blockCoverState
             });
             this.addChild(block);
             block.x = 0;
@@ -54,6 +56,7 @@ class BlocksColumn extends egret.Sprite {
     public reset(){
         this.stop();
         this.speedLevel = 0;
+        this._blockCoverState = BlockCoverState.normal;
         this._dir =  this.dir;
         this.shrinkReset();
         const blockLength =  this._blocks.length;
@@ -70,7 +73,8 @@ class BlocksColumn extends egret.Sprite {
             width: blockWidth,
             height: blockHeight,
             shrinkRate: this._shrinkRate,
-            state: settings.state
+            state: settings.state,
+            coverState: settings.coverState
         };
         // let block = new BlockNormal(param);
         // let block = new BlockDouble(param);
@@ -78,22 +82,26 @@ class BlocksColumn extends egret.Sprite {
         // let block = new BlockBlink(param);
         let block:any;
         if (settings.startBlock == null && settings.state === BlockState.clickable) {
-            let weightArray = [];
-            for (const key in this._blockWeightNumber) {
-                if (this._blockWeightNumber.hasOwnProperty(key)) {
-                    const weight = this._blockWeightNumber[key];
-                    for (let index = 0; index < weight; index++) {
-                        weightArray.push(BlockType[key]);
+            if(Utils.blockStyle.indexOf("quell") === -1){
+                let weightArray = [];
+                for (const key in this._blockWeightNumber) {
+                    if (this._blockWeightNumber.hasOwnProperty(key)) {
+                        const weight = this._blockWeightNumber[key];
+                        for (let index = 0; index < weight; index++) {
+                            weightArray.push(BlockType[key]);
+                        }
                     }
                 }
+                if (weightArray.length !== 10) {
+                    weightArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                }
+                const weightNumbers = weightArray;//[0, 0, 0, 0, 0, 1, 1, 2, 3, 4]
+                const idx = Math.floor(Math.random() * weightNumbers.length);
+                const blockType:number = weightNumbers[idx];
+                block = new window[BlockType[blockType]](param);
+            }else{
+                block = new BlockNormal(param);
             }
-            if (weightArray.length !== 10) {
-                weightArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-            }
-            const weightNumbers = weightArray;//[0, 0, 0, 0, 0, 1, 1, 2, 3, 4]
-            const idx = Math.floor(Math.random() * weightNumbers.length);
-            const blockType:number = weightNumbers[idx];
-            block = new window[BlockType[blockType]](param);
         }else{
             block = new BlockNormal(param);
         }
@@ -105,7 +113,41 @@ class BlocksColumn extends egret.Sprite {
             this._onMovedOut,
             this
         );
+        block.addEventListener(
+            GameEvents.BlockEvent.ALL_MOVED_IN,
+            this._onAllMovedIn,
+            this
+        );
         return block;
+    }
+    private _onAllMovedIn(evt: GameEvents.BlockEvent) {
+        let tarBlock: BlockBase = evt.target;
+        let y = tarBlock.y;
+        let idx;
+        if(Utils.blockStyle.indexOf("destroy") !== -1 && (tarBlock.state === "clickable" || tarBlock instanceof BlockBlink || tarBlock instanceof BlockShrink)){
+            for(var i = 0; i< this._blocks.length; i++){
+                if(this._blocks[i] === tarBlock){
+                    idx = i;
+                    break;
+                }
+            }
+            tarBlock.stop();
+            this.removeChild(tarBlock);
+            tarBlock = null;
+            const block = this._createBlock({
+                state:BlockState.unclickable
+            });
+            this.addChild(block);
+            block.x = 0;
+            block.y = y;
+            block.move(this.speed, this._dir);
+            this._blocks[idx] = block;
+
+            let scoreEvent:GameEvents.PlayEvent = new GameEvents.PlayEvent(GameEvents.PlayEvent.SCORE);
+            
+            scoreEvent.score = 1;
+            this.dispatchEvent(scoreEvent);
+        }
     }
     private _onMovedOut(evt: GameEvents.BlockEvent) {
         let tarBlock: BlockBase = evt.target;
@@ -131,7 +173,8 @@ class BlocksColumn extends egret.Sprite {
             let newBlock: BlockBase = this._createBlock({
                 state: Utils.getRowBlockState(this._creatingRowIndex)[
                     this._index
-                ]
+                ],
+                coverState: this._blockCoverState
             });
             this._creatingRowIndex++;
             this.addChildAt(newBlock, 0);
@@ -152,15 +195,18 @@ class BlocksColumn extends egret.Sprite {
         }
     }
     private _speedLooper() {
-        if (this._speedTick) {
-            this._slowDown();
-        } else {
-            this._speedUp();
+        if(Utils.blockStyle.indexOf("freeze") == -1){
+            if (this._speedTick) {
+                this._slowDown();
+            } else {
+                this._speedUp();
+            }
         }
     }
     private _speedUp() {
         if (this._speedLevel < Service.GAME_CONFIG.speedLevels.length) {
-            this.speed = Service.GAME_CONFIG.speedLevels[this._speedLevel];
+            this._CalculateSpeed();
+            
             this.updateSpeed();
             this._speedLevel++;
         }
@@ -168,10 +214,17 @@ class BlocksColumn extends egret.Sprite {
             this._speedTick = true;
         }
     }
+    private _CalculateSpeed() {
+            if(Utils.blockStyle === "rush"){
+                this.speed = Service.GAME_CONFIG.speedLevels[this._speedLevel] * Service.GAME_CONFIG.rushFactor;
+            }else{
+                this.speed = Service.GAME_CONFIG.speedLevels[this._speedLevel];
+            }
+    }
     private _slowDown() {
         if (this._speedLevel > 0) {
             this._speedLevel--;
-            this.speed = Service.GAME_CONFIG.speedLevels[this._speedLevel];
+            this._CalculateSpeed();
             this.updateSpeed();
         }
         if (this._speedLevel === 0) {
@@ -327,4 +380,88 @@ class BlocksColumn extends egret.Sprite {
     public get blockWeightNumber():Array<number> {
         return this._blockWeightNumber;
     }
+
+    public freezeBlocks(){
+        this._blockCoverState = BlockCoverState.freezed;
+        const blocks: Array<any> = this._blocks;
+        for (let i = 0; i < blocks.length; i++) {
+            blocks[i].freeze();
+        }
+    }
+
+    public unFreezeBlocks(){
+        this._blockCoverState = BlockCoverState.normal;
+        const blocks: Array<any> = this._blocks;
+        for (let i = 0; i < blocks.length; i++) {
+            blocks[i].cleanCover();
+        }
+        
+    }
+
+    public quell(){
+        const blocks: Array<any> = this._blocks;
+        for (let i = 0; i < blocks.length; i++) {
+            let tarBlock = blocks[i];
+            let y = tarBlock.y;
+            if(tarBlock.state === "clickable" || tarBlock instanceof BlockBlink || tarBlock instanceof BlockShrink){
+                tarBlock.stop();
+                this.removeChild(tarBlock);
+                tarBlock = null;
+                const block = this._createBlock({
+                    state:BlockState.clickable
+                });
+                this.addChild(block);
+                block.x = 0;
+                block.y = y;
+                block.move(this.speed, this._dir);
+                this._blocks[i] = block;
+            }
+        }
+    }
+
+    public purify(){
+        const blocks: Array<any> = this._blocks;
+        for (let i = 0; i < blocks.length; i++) {
+            let tarBlock = blocks[i];
+            let y = tarBlock.y;
+            if(tarBlock.state === "clickable" || tarBlock instanceof BlockBlink || tarBlock instanceof BlockShrink){
+                tarBlock.stop();
+                this.removeChild(tarBlock);
+                tarBlock = null;
+                const block = this._createBlock({
+                    state:BlockState.unclickable
+                });
+                this.addChild(block);
+                block.x = 0;
+                block.y = y;
+                block.move(this.speed, this._dir);
+                this._blocks[i] = block;
+            }
+        }
+    }
+
+    public destroy():number{
+        const blocks: Array<any> = this._blocks;
+        var destroyed:number = 0;
+        for (let i = 0; i < blocks.length; i++) {
+            let tarBlock = blocks[i];
+            let y = tarBlock.y;
+            if(tarBlock.state === "clickable" || tarBlock instanceof BlockBlink || tarBlock instanceof BlockShrink){
+                tarBlock.stop();
+                this.removeChild(tarBlock);
+                tarBlock = null;
+                const block = this._createBlock({
+                    state:BlockState.unclickable
+                });
+                this.addChild(block);
+                block.x = 0;
+                block.y = y;
+                block.move(this.speed, this._dir);
+                this._blocks[i] = block;
+                destroyed++;
+            }
+        }
+        return destroyed;
+    }
+
 }

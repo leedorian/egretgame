@@ -22,17 +22,16 @@ class BlockFlashBase extends BlockBase{
         const blockStyle = Utils.blockStyle;
         if (this.state === "clickable") {
             let pass = Math.floor((timeStamp - this._timeMark) / 1000);
-            console.log(pass);
             if(pass === 1){
                 this._activeState = !this._activeState;
                 if (this._activeState) {
-                    if(blockStyle === 1){
+                    if(blockStyle === "rush"){
                         this._clickableRushColor = this._cachedClickableRushColor;
                     }else{
                         this._clickableColor = this._cachedClickableColor;
                     }
                 } else {
-                    if(blockStyle === 1){
+                    if(blockStyle === "rush"){
                         this._clickableRushColor = RES.getRes(BlockTexture.clickableNormalRushStyle);
                     }else{
                         this._clickableColor = RES.getRes(BlockTexture.clickableNormal);

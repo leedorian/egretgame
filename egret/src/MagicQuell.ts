@@ -15,4 +15,10 @@ class MagicQuell extends MagicBase{
 			offsetY: this.icon.height * this._zoomRate - 12
 		};
 	}
+	disable(){
+		this.icon.texture = RES.getRes("skull_disabled_png");
+	}
+	enable(){
+		this.icon.texture = RES.getRes("skull_png");
+	}
 }

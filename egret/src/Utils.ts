@@ -9,7 +9,7 @@ class Utils{
     public static rowsState:any = {};
     public static rows:number = 6;
     public static columns:number = 6;
-    public static blockStyle:number = 0;
+    public static blockStyle:string = "";
 
     
     public static getBlockWidth():number{

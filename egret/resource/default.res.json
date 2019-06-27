@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "thumb_pb_png,track_pb_png,buttonBg_png,normal_bg_png,lone-wolf-short,game_config,GoogleBtn_png,Bg01_png,WechatBtn_png,BgColor01_png,bg_png,shanguang_json,shanguang_png,blockFrame_png,b_normal_png,bg_score_png,freeze_png,purify_png,nuke_png,rock_bg_png,skull_png,b_purple_rush_png,b_purple_png,b_red_png,b_red_rush_png,b_blue_png,b_blue_rush_png,b_yellow_png,b_yellow_rush_png,b_black_png,b_black_rush_png",
+			"keys": "thumb_pb_png,track_pb_png,buttonBg_png,normal_bg_png,lone-wolf-short,game_config,GoogleBtn_png,Bg01_png,WechatBtn_png,BgColor01_png,bg_png,shanguang_json,shanguang_png,blockFrame_png,b_normal_png,bg_score_png,freeze_png,purify_png,nuke_png,rock_bg_png,skull_png,b_purple_rush_png,b_purple_png,b_red_png,b_red_rush_png,b_blue_png,b_blue_rush_png,b_yellow_png,b_yellow_rush_png,b_black_png,b_black_rush_png,freeze_disabled_png,ice_png,nuke_disabled_png,purify_disabled_png,skull_disabled_png,iceCracking_mp3,midnight-ride_mp3",
 			"name": "preload"
 		}
 	],
@@ -161,6 +161,41 @@
 			"name": "b_black_rush_png",
 			"type": "image",
 			"url": "assets/b_black_rush.png"
+		},
+		{
+			"name": "freeze_disabled_png",
+			"type": "image",
+			"url": "assets/freeze_disabled.png"
+		},
+		{
+			"name": "ice_png",
+			"type": "image",
+			"url": "assets/ice.png"
+		},
+		{
+			"name": "nuke_disabled_png",
+			"type": "image",
+			"url": "assets/nuke_disabled.png"
+		},
+		{
+			"name": "purify_disabled_png",
+			"type": "image",
+			"url": "assets/purify_disabled.png"
+		},
+		{
+			"name": "skull_disabled_png",
+			"type": "image",
+			"url": "assets/skull_disabled.png"
+		},
+		{
+			"name": "iceCracking_mp3",
+			"type": "sound",
+			"url": "assets/iceCracking.mp3"
+		},
+		{
+			"name": "midnight-ride_mp3",
+			"type": "sound",
+			"url": "assets/midnight-ride.mp3"
 		}
 	]
 }

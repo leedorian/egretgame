@@ -200,6 +200,8 @@ class Main extends egret.DisplayObjectContainer {
 
         this._GameScreen = new GameScreen();
         this.addChild(this._GameScreen);
+
+
         // gameScene.skewX = 3;
         // gameScene.skewY = 50;
 

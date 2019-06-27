@@ -11,6 +11,7 @@ class MagicBase extends egret.Sprite {
 		this.icon.x = -iconSize.offsetX;
 		bg.y = iconSize.offsetY;
 		this.addChildAt(bg, 0);
+		this.touchEnabled = true;
 
 	}
 	public icon: egret.Bitmap;

@@ -24,6 +24,7 @@ namespace Time {
         );
         constructor(param, scope: any){
             this._times = param.times;
+            this._timesRemains = param.times;
             this._callbackFinish = param.finish;
             this._scope = scope;
             if (param.interval) {
@@ -41,6 +42,8 @@ namespace Time {
         private _callbackTick: Function;
         private _callbackFinish: Function;
         private _timer: egret.Timer;
+        //剩余次数
+        private _timesRemains: number;
 
         run():egret.Timer {
             if(this._timer == null){
@@ -58,14 +61,16 @@ namespace Time {
                 );
             }else{
                 this._timer.stop();
-                this._timer.repeatCount = this._timer.repeatCount + this._times;
+                this._timesRemains = this._timesRemains + this._times;
+                this._timer.repeatCount = this._timesRemains;
             }
-
+            console.log(this._timer.repeatCount)
 
             this._timer.start();
             return this._timer;
         }
         private _tick() {
+            this._timesRemains--;
             this._time = this._time + this._interval;
             if (this._callbackTick) {
                 this._callbackTick.call(this._scope, this._time);

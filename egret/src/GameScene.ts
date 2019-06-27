@@ -59,14 +59,20 @@ class GameScene extends egret.Sprite {
     private _rushFactor:number;
     private _rushTime:number;
     private _rushWatch:Time.StopWatch;
+    private _freezeWatch:Time.StopWatch;
+    private _quellWatch:Time.StopWatch;
+    private _purifyWatch:Time.StopWatch;
+    private _destroyWatch:Time.StopWatch;    
     private _shrinkTime:number;
     private _shrinkWatch:Time.StopWatch;
     private _levelUpTime:number;
     private _levelUpWatch:Time.StopWatch;
     private _difficulty:number = 0;
-    private _bgm:egret.Sound = RES.getRes("lone-wolf-short");
+    private _bgm:egret.Sound = RES.getRes("midnight-ride_mp3");
     private _bgmChanel:egret.SoundChannel;
-    private _stated:boolean = false;
+    private _freezeSound:egret.Sound = RES.getRes("iceCracking_mp3");
+    private _effectChanel:egret.SoundChannel;
+    public started:boolean = false;
 
     // private _drawBg(){
     //     this._bg = Utils.createBitmapByName("bg_png");
@@ -78,10 +84,14 @@ class GameScene extends egret.Sprite {
     // }
     private _onPause(){
         this._stopbgm();
+        this._effectChanel.stop();
     }
     private _onResume(){
-        if(this._stated){
+        if(this.started){
             this._playbgm();
+        }
+        if(Utils.blockStyle === "freeze"){
+            this._freezeSound.play(0,0);
         }
     }
     private _drawColumns() {
@@ -119,20 +129,22 @@ class GameScene extends egret.Sprite {
 
 
     private _onHitRush(evt: GameEvents.BlockEvent) {
-        if (this._rushWatch == null) {
-            this._rushWatch = new Time.StopWatch({ times: this._rushTime, finish:this._stopRush }, this);
-            this._columnSpeeds = [];
-            for (let i = 0; i < this._blockColumns.length; i++) {
-                let speed: number = this._blockColumns[i].speed;
-                this._columnSpeeds.push(speed);
-                this._blockColumns[i].speed = speed * this._rushFactor;
-                this._blockColumns[i].stopSpeedUpTimer();
-                this._blockColumns[i].updateSpeed();
+        if(Utils.blockStyle.indexOf("freeze") == -1){
+            if (this._rushWatch == null) {
+                this._rushWatch = new Time.StopWatch({ times: this._rushTime, finish:this._stopRush }, this);
+                this._columnSpeeds = [];
+                for (let i = 0; i < this._blockColumns.length; i++) {
+                    let speed: number = this._blockColumns[i].speed;
+                    this._columnSpeeds.push(speed);
+                    this._blockColumns[i].speed = speed * this._rushFactor;
+                    // this._blockColumns[i].stopSpeedUpTimer();
+                    this._blockColumns[i].updateSpeed();
+                }
             }
+            const rushTimer = this._rushWatch.run();
+            //All blocks are in rush style
+            Utils.blockStyle = "rush";
         }
-        const rushTimer = this._rushWatch.run();
-        //All blocks are in rush style
-        Utils.blockStyle = 1;
         // this._bg.texture = RES.getRes("rush_bg_png");
     }
     private _stopRush(){
@@ -140,11 +152,11 @@ class GameScene extends egret.Sprite {
             let speed: number = this._columnSpeeds[i];
             this._blockColumns[i].speed = speed;
             this._blockColumns[i].updateSpeed();
-            this._blockColumns[i].startSpeedUpTimer();
+            // this._blockColumns[i].startSpeedUpTimer();
         }
         this._rushWatch = null;
         //All blocks are in non rush style
-        Utils.blockStyle = 0;
+        Utils.blockStyle = Utils.blockStyle.replace("rush","");
         // this._bg.texture = RES.getRes("normal_bg_png");
     }
     private _onHitUnclickable(){
@@ -172,7 +184,7 @@ class GameScene extends egret.Sprite {
         }
         this._startLevelUp();
         this._playbgm();
-        this._stated = true;
+        this.started = true;
     }
     private _gameOver(){
         for (let i = 0; i < this._blockColumns.length; i++) {
@@ -183,7 +195,9 @@ class GameScene extends egret.Sprite {
         // gameoverEvent.score = this._score.score;
         this.dispatchEvent(gameoverEvent);
         this._stopbgm();
-        this._stated = false;
+        this._stopeffect();
+        this.started = false;
+        Utils.blockStyle = "";
     }
     private _startLevelUp(){
         if (this._levelUpWatch == null) {
@@ -215,24 +229,158 @@ class GameScene extends egret.Sprite {
     private _stopbgm(){
         this._bgmChanel.stop();
     }
-    public reset(){
+    private _stopeffect(){
+        if(this._effectChanel){
+            this._effectChanel.stop();
+        }
+    }
+    /**
+     * @param {boolean} bMagic reset triggered by magic
+     */
+    public reset(bMagic=false){
         this._difficulty = 0;
+        Utils.rowsState = {};
         for (let i = 0; i < this._blockColumns.length; i++) {
             this._blockColumns[i].blockWeightNumber = Service.GAME_CONFIG.difficulty[this._difficulty];
             this._blockColumns[i].reset();
         }
-        if(this._rushWatch != null){
-            this._rushWatch.destroy();
-            this._rushWatch = null;
-            // this._bg.texture = RES.getRes("normal_bg_png");
+        if(!bMagic){
+            if(this._rushWatch != null){
+                this._rushWatch.destroy();
+                this._rushWatch = null;
+            }
+            if(this._freezeWatch != null){
+                this._freezeWatch.destroy();
+                this._freezeWatch = null;
+            }
+            if(this._quellWatch != null){
+                this._quellWatch.destroy();
+                this._quellWatch = null;
+            }
+            if(this._purifyWatch != null){
+                this._purifyWatch.destroy();
+                this._purifyWatch = null;
+            }
+            if(this._destroyWatch != null){
+                this._destroyWatch.destroy();
+                this._destroyWatch = null;
+            }
+            if(this._shrinkWatch != null){
+                this._shrinkWatch.destroy();
+                this._shrinkWatch = null;
+            }
+            if(this._levelUpWatch != null){
+                this._levelUpWatch.destroy();
+                this._levelUpWatch = null;
+            }
+            Utils.blockStyle = "";
         }
-        if(this._shrinkWatch != null){
-            this._shrinkWatch.destroy();
-            this._shrinkWatch = null;
-        }
-        if(this._levelUpWatch != null){
-            this._levelUpWatch.destroy();
-            this._levelUpWatch = null;
+        
+    }
+    private _resetSpeedAndDifficulty(){
+        this.reset(true);
+        for (let i = 0; i < this._blockColumns.length; i++) {
+            this._blockColumns[i].move(true);
         }
     }
+    private _unFreeze(){
+        this._effectChanel.stop();
+        for (let i = 0; i < this._blockColumns.length; i++) {
+            let speed: number = this._columnSpeeds[i];
+            this._blockColumns[i].speed = speed;
+            this._blockColumns[i].updateSpeed();
+            this._blockColumns[i].unFreezeBlocks();
+            // this._blockColumns[i].startSpeedUpTimer();
+        }
+        Utils.blockStyle = Utils.blockStyle.replace("freeze","");
+        this._freezeWatch = null;
+         const unfreezeEvent: GameEvents.MagicEvent = new GameEvents.MagicEvent(
+            GameEvents.MagicEvent.UNFREEZE
+        );
+        this.dispatchEvent(unfreezeEvent);
+    }
+    private _pauseMove(){
+        for (let i = 0; i < this._blockColumns.length; i++) {
+            this._blockColumns[i].stop();
+        }
+    }
+    public freeze(){
+        this._effectChanel = this._freezeSound.play(0,0);
+        if (this._freezeWatch == null) {
+            this._freezeWatch = new Time.StopWatch({ times: this._rushTime, finish:this._unFreeze }, this);
+            this._columnSpeeds = [];
+            for (let i = 0; i < this._blockColumns.length; i++) {
+                let speed: number = this._blockColumns[i].speed;
+                this._columnSpeeds.push(speed);
+                this._blockColumns[i].speed = 1;
+                // this._blockColumns[i].stopSpeedUpTimer();
+                this._blockColumns[i].updateSpeed();
+                this._blockColumns[i].freezeBlocks();
+            }
+        }
+        const freezeTimer = this._freezeWatch.run();
+       
+        Utils.blockStyle = "freeze";
+    }
+     private _unQuell(){
+        Utils.blockStyle = Utils.blockStyle.replace("quell","");
+        this._quellWatch = null;
+         const unQuellEvent: GameEvents.MagicEvent = new GameEvents.MagicEvent(
+            GameEvents.MagicEvent.UNQUELL
+        );
+        this.dispatchEvent(unQuellEvent);
+    }
+    public quell(){
+        Utils.blockStyle = "quell";
+        if (this._quellWatch == null) {
+            this._quellWatch = new Time.StopWatch({ times: this._rushTime, finish:this._unQuell }, this);
+            for (let i = 0; i < this._blockColumns.length; i++) {
+                this._blockColumns[i].quell();
+            }
+        }
+        const quellTimer = this._quellWatch.run();
+    }
+    public purify(){
+        Utils.blockStyle = "purify";
+         if (this._purifyWatch == null) {
+            this._purifyWatch = new Time.StopWatch({ times: this._rushTime, finish:this._unPurify }, this);
+            for (let i = 0; i < this._blockColumns.length; i++) {
+                this._blockColumns[i].purify();
+            }
+            this._resetSpeedAndDifficulty();
+        }
+        const purifyTimer = this._purifyWatch.run();
+    }
+    private _unPurify(){
+        Utils.blockStyle = Utils.blockStyle.replace("purify","");
+        this._purifyWatch = null;
+        const unPurifyEvent: GameEvents.MagicEvent = new GameEvents.MagicEvent(
+            GameEvents.MagicEvent.UNPURIFY
+        );
+        this.dispatchEvent(unPurifyEvent);
+    }
+
+    public destroy(oScore:Score){
+        Utils.blockStyle = "destroy";
+         if (this._destroyWatch == null) {
+            this._destroyWatch = new Time.StopWatch({ times: this._rushTime, finish:this._unDestroy }, this);
+            var destroyed:number = 0;
+            for (let i = 0; i < this._blockColumns.length; i++) {
+                destroyed = destroyed + this._blockColumns[i].destroy();
+            }
+            oScore.score = oScore.score + destroyed;
+        }
+        const destroyTimer = this._destroyWatch.run();
+    }
+
+    private _unDestroy(){
+        Utils.blockStyle = Utils.blockStyle.replace("destroy","");
+        this._destroyWatch = null;
+        const unDestroyEvent: GameEvents.MagicEvent = new GameEvents.MagicEvent(
+            GameEvents.MagicEvent.DESTROY
+        );
+        this.dispatchEvent(unDestroyEvent);
+    }
+
+    
 }

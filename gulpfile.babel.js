@@ -107,6 +107,14 @@ gulp.task('cordova-build', () => new Promise((resolve, reject) => {
         resolve.call();
     });
 }));
+gulp.task('cordova-debug', () => new Promise((resolve, reject) => {
+    exec('cordova build android --debug', {
+        cwd: './cordova',
+    }, (err, stdout, stderr) => {
+        execCallback(err, stdout, stderr);
+        resolve.call();
+    });
+}));
 gulp.task('cordova-run', () => new Promise((resolve, reject) => {
     exec('cordova run android', {
         cwd: './cordova',
@@ -117,6 +125,7 @@ gulp.task('cordova-run', () => new Promise((resolve, reject) => {
 }));
 gulp.task('build', () => runSequence('egret-build', 'clean', 'copy-debug'));
 gulp.task('mobile-run', () => runSequence('egret-build', 'clean', 'copy-debug', 'cordova-run'));
+gulp.task('mobile-debug', () => runSequence('egret-build', 'clean', 'copy-debug', 'cordova-debug'));
 gulp.task('release', () => runSequence('egret-release', 'clean', 'copy-release', 'cordova-hcp', 'cordova-prepare'));
 // gulp.task('deploy', ['build', 'cordova-build', 'sftp-resources', 'sftp-app'], () => {});
 

@@ -15,4 +15,10 @@ class MagicPurify extends MagicBase{
 			offsetY: this.icon.height * this._zoomRate - 12
 		};
 	}
+	disable(){
+		this.icon.texture = RES.getRes("purify_disabled_png");
+	}
+	enable(){
+		this.icon.texture = RES.getRes("purify_png");
+	}
 }

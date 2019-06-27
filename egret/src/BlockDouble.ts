@@ -12,7 +12,7 @@ class BlockDouble extends BlockBase {
         if (this._currentState === BlockState.clickable) {
             this._clickCount++;
             if (this._clickCount === 1) {
-                if(blockStyle === 1){
+                if(blockStyle === "rush"){
                     this._clickableRushColor = RES.getRes(BlockTexture.clickableNormalRushStyle);
                 }else{
                     this._clickableColor = RES.getRes(BlockTexture.clickableNormal);
