@@ -25,13 +25,13 @@ class BlockFlashBase extends BlockBase{
             if(pass === 1){
                 this._activeState = !this._activeState;
                 if (this._activeState) {
-                    if(blockStyle === "rush"){
+                    if(blockStyle.indexOf("rush") !== -1){
                         this._clickableRushColor = this._cachedClickableRushColor;
                     }else{
                         this._clickableColor = this._cachedClickableColor;
                     }
                 } else {
-                    if(blockStyle === "rush"){
+                    if(blockStyle.indexOf("rush") !== -1){
                         this._clickableRushColor = RES.getRes(BlockTexture.clickableNormalRushStyle);
                     }else{
                         this._clickableColor = RES.getRes(BlockTexture.clickableNormal);

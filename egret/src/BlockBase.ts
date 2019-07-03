@@ -70,7 +70,7 @@ abstract class BlockBase extends egret.Sprite{
         }
 
         const blockStyle = Utils.blockStyle;
-        if(blockStyle === "rush"){
+        if(blockStyle.indexOf("rush") !== -1){
             this._colorRect.texture = this._clickableRushColor;
         }else{
             this._colorRect.texture = this._clickableColor;
@@ -94,7 +94,7 @@ abstract class BlockBase extends egret.Sprite{
         }
 
         if(this._currentState > 0){
-            if(blockStyle === "rush"){
+            if(blockStyle.indexOf("rush") !== -1){
                 this._colorRect.texture = this._clickableRushColor;
             }else{
                 this._colorRect.texture = this._clickableColor;

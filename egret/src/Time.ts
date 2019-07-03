@@ -100,4 +100,34 @@ namespace Time {
             }
         }
     }
+
+    export class Timer {
+        constructor(miliseconds:number,finish: ()=>void, scope: any){
+            this._time = miliseconds;
+            this._scope = scope;
+            this._finish = finish;
+        }
+        private _time:number;
+        private _scope:any;
+        private _finish:()=>void;
+        private _nowTime:number;
+
+        run(){
+             this._nowTime = egret.getTimer();
+             egret.startTick(this._counter,this);
+        }
+
+        private _counter(timeStamp:number):boolean{
+            const now = timeStamp;
+            const time = this._nowTime;
+            const pass = now - time;
+            console.log(pass);
+            if(pass >= this._time){
+                egret.stopTick(this._counter,this);
+                this._finish.call(this._scope);
+            }
+            // this._nowTime = now;
+            return false;
+        }
+    }
 }

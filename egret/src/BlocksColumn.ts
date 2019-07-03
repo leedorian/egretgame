@@ -215,11 +215,11 @@ class BlocksColumn extends egret.Sprite {
         }
     }
     private _CalculateSpeed() {
-            if(Utils.blockStyle === "rush"){
-                this.speed = Service.GAME_CONFIG.speedLevels[this._speedLevel] * Service.GAME_CONFIG.rushFactor;
-            }else{
-                this.speed = Service.GAME_CONFIG.speedLevels[this._speedLevel];
-            }
+        if(Utils.blockStyle.indexOf("rush") !== -1){
+            this.speed = Service.GAME_CONFIG.speedLevels[this._speedLevel] * Service.GAME_CONFIG.rushFactor;
+        }else{
+            this.speed = Service.GAME_CONFIG.speedLevels[this._speedLevel];
+        }
     }
     private _slowDown() {
         if (this._speedLevel > 0) {
@@ -322,12 +322,15 @@ class BlocksColumn extends egret.Sprite {
         const blocks: Array<any> = this._blocks;
         for (let i = 0; i < blocks.length; i++) {
             blocks[i].move(this.speed, this._dir);
+            if(isGameSceneTriggered){
+                blocks[i].active = true;
+            }
         }
         if(isGameSceneTriggered){
-            const initialBlocks: Array<any> = this._initialBlocks;
-            for (let i = 0; i < initialBlocks.length; i++) {
-                initialBlocks[i].active = true;
-            }
+            // const initialBlocks: Array<any> = this._initialBlocks;
+            // for (let i = 0; i < initialBlocks.length; i++) {
+            //     initialBlocks[i].active = true;
+            // }
         }
         this.startSpeedUpTimer();
     }

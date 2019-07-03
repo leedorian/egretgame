@@ -71,8 +71,12 @@ class GameScene extends egret.Sprite {
     private _bgm:egret.Sound = RES.getRes("midnight-ride_mp3");
     private _bgmChanel:egret.SoundChannel;
     private _freezeSound:egret.Sound = RES.getRes("iceCracking_mp3");
+    private _windSound:egret.Sound = RES.getRes("wind_mp3");
     private _effectChanel:egret.SoundChannel;
     public started:boolean = false;
+
+    private _FreezeEffectMCs = [];
+    private _QuellEffectMCs = [];
 
     // private _drawBg(){
     //     this._bg = Utils.createBitmapByName("bg_png");
@@ -129,11 +133,15 @@ class GameScene extends egret.Sprite {
 
 
     private _onHitRush(evt: GameEvents.BlockEvent) {
-        if(Utils.blockStyle.indexOf("freeze") == -1){
-            if (this._rushWatch == null) {
-                this._rushWatch = new Time.StopWatch({ times: this._rushTime, finish:this._stopRush }, this);
+        
+        if (this._rushWatch == null) {
+            this._rushWatch = new Time.StopWatch({ times: this._rushTime, finish:this._stopRush }, this);
+            if(Utils.blockStyle.indexOf("freeze") == -1){
                 this._columnSpeeds = [];
-                for (let i = 0; i < this._blockColumns.length; i++) {
+            }
+            
+            for (let i = 0; i < this._blockColumns.length; i++) {
+                if(Utils.blockStyle.indexOf("freeze") == -1){
                     let speed: number = this._blockColumns[i].speed;
                     this._columnSpeeds.push(speed);
                     this._blockColumns[i].speed = speed * this._rushFactor;
@@ -141,22 +149,27 @@ class GameScene extends egret.Sprite {
                     this._blockColumns[i].updateSpeed();
                 }
             }
-            const rushTimer = this._rushWatch.run();
-            //All blocks are in rush style
-            Utils.blockStyle = "rush";
+            
         }
+        const rushTimer = this._rushWatch.run();
+    
+            //All blocks are in rush style
+        Utils.blockStyle = Utils.blockStyle + "rush";
+        
         // this._bg.texture = RES.getRes("rush_bg_png");
     }
     private _stopRush(){
-        for (let i = 0; i < this._blockColumns.length; i++) {
-            let speed: number = this._columnSpeeds[i];
-            this._blockColumns[i].speed = speed;
-            this._blockColumns[i].updateSpeed();
-            // this._blockColumns[i].startSpeedUpTimer();
+        if(Utils.blockStyle.indexOf("freeze") == -1){
+            for (let i = 0; i < this._blockColumns.length; i++) {
+                let speed: number = this._columnSpeeds[i];
+                this._blockColumns[i].speed = speed;
+                this._blockColumns[i].updateSpeed();
+                // this._blockColumns[i].startSpeedUpTimer();
+            }
         }
         this._rushWatch = null;
         //All blocks are in non rush style
-        Utils.blockStyle = Utils.blockStyle.replace("rush","");
+        Utils.blockStyle = Utils.blockStyle.replace(/rush/g,"");
         // this._bg.texture = RES.getRes("normal_bg_png");
     }
     private _onHitUnclickable(){
@@ -292,38 +305,101 @@ class GameScene extends egret.Sprite {
             this._blockColumns[i].unFreezeBlocks();
             // this._blockColumns[i].startSpeedUpTimer();
         }
-        Utils.blockStyle = Utils.blockStyle.replace("freeze","");
+        Utils.blockStyle = Utils.blockStyle.replace(/freeze/g,"");
         this._freezeWatch = null;
          const unfreezeEvent: GameEvents.MagicEvent = new GameEvents.MagicEvent(
             GameEvents.MagicEvent.UNFREEZE
         );
         this.dispatchEvent(unfreezeEvent);
     }
-    private _pauseMove(){
+    private _pauseMove(miliseconds:number, pauseCallBack){
         for (let i = 0; i < this._blockColumns.length; i++) {
-            this._blockColumns[i].stop();
+            this._blockColumns[i].stop(true);
         }
+        const pauseTimer = new Time.Timer(miliseconds, function(){
+            for (let i = 0; i < this._blockColumns.length; i++) {
+                this._blockColumns[i].move(true);
+            }
+            pauseCallBack.call(this);
+        }, this);
+        pauseTimer.run();
     }
     public freeze(){
-        this._effectChanel = this._freezeSound.play(0,0);
-        if (this._freezeWatch == null) {
-            this._freezeWatch = new Time.StopWatch({ times: this._rushTime, finish:this._unFreeze }, this);
-            this._columnSpeeds = [];
-            for (let i = 0; i < this._blockColumns.length; i++) {
-                let speed: number = this._blockColumns[i].speed;
-                this._columnSpeeds.push(speed);
-                this._blockColumns[i].speed = 1;
-                // this._blockColumns[i].stopSpeedUpTimer();
-                this._blockColumns[i].updateSpeed();
-                this._blockColumns[i].freezeBlocks();
-            }
+        this._effectChanel = this._windSound.play(0,1);
+        if(this._FreezeEffectMCs.length === 0){
+            const data1 = RES.getRes("Freeze1_json");
+            const txtr1 = RES.getRes("Freeze1_png");
+            const mcFactory1: egret.MovieClipDataFactory = new egret.MovieClipDataFactory(data1, txtr1);
+            const mc1: egret.MovieClip = new egret.MovieClip(mcFactory1.generateMovieClipData("Freeze"));
+
+            const data2 = RES.getRes("Freeze2_json");
+            const txtr2 = RES.getRes("Freeze2_png");
+            const mcFactory2: egret.MovieClipDataFactory = new egret.MovieClipDataFactory(data2, txtr2);
+            const mc2: egret.MovieClip = new egret.MovieClip(mcFactory2.generateMovieClipData("Freeze"));
+
+            const data3 = RES.getRes("Freeze3_json");
+            const txtr3 = RES.getRes("Freeze3_png");
+            const mcFactory3: egret.MovieClipDataFactory = new egret.MovieClipDataFactory(data3, txtr3);
+            const mc3: egret.MovieClip = new egret.MovieClip(mcFactory3.generateMovieClipData("Freeze"));
+
+            const arenaW = Utils.getArenaWidth();
+            const arenH = Utils.getArenaHeight();
+            const widthRate = arenaW / 360;
+            const heightRate = arenH / 640;
+            // mc1.x = 425 * widthRate;
+            // mc1.y = 1415 * heightRate;
+            mc1.scaleX = widthRate;
+            mc1.scaleY = heightRate;
+            mc2.scaleX = widthRate;
+            mc2.scaleY = heightRate;
+            mc3.scaleX = widthRate;
+            mc3.scaleY = heightRate;
+            
+            mc1.addEventListener(egret.Event.COMPLETE, (e:egret.Event)=>{
+                console.log(mc1);
+                this.removeChild(mc1);
+                this.addChild(mc2);
+                mc2.gotoAndPlay(0);
+            }, this);
+
+            mc2.addEventListener(egret.Event.COMPLETE, (e:egret.Event)=>{
+                this.removeChild(mc2);
+                this.addChild(mc3);
+                mc3.gotoAndPlay(0);
+            }, this);
+
+            mc3.addEventListener(egret.Event.COMPLETE, (e:egret.Event)=>{
+                this.removeChild(mc3);
+            }, this);   
+
+            this._FreezeEffectMCs = [mc1, mc2, mc3];
         }
-        const freezeTimer = this._freezeWatch.run();
-       
-        Utils.blockStyle = "freeze";
+        
+        this.addChild(this._FreezeEffectMCs[0]);
+        this._FreezeEffectMCs[0].gotoAndPlay(0);
+        
+        
+
+        this._pauseMove(4000,function(){
+            this._effectChanel = this._freezeSound.play(0,0);
+            if (this._freezeWatch == null) {
+                this._freezeWatch = new Time.StopWatch({ times: this._rushTime, finish:this._unFreeze }, this);
+                this._columnSpeeds = [];
+                for (let i = 0; i < this._blockColumns.length; i++) {
+                    let speed: number = this._blockColumns[i].speed;
+                    this._columnSpeeds.push(speed);
+                    this._blockColumns[i].speed = 1;
+                    // this._blockColumns[i].stopSpeedUpTimer();
+                    this._blockColumns[i].updateSpeed();
+                    this._blockColumns[i].freezeBlocks();
+                }
+            }
+            const freezeTimer = this._freezeWatch.run();
+        });
+        
     }
      private _unQuell(){
-        Utils.blockStyle = Utils.blockStyle.replace("quell","");
+        Utils.blockStyle = Utils.blockStyle.replace(/quell/g,"");
         this._quellWatch = null;
          const unQuellEvent: GameEvents.MagicEvent = new GameEvents.MagicEvent(
             GameEvents.MagicEvent.UNQUELL
@@ -331,7 +407,7 @@ class GameScene extends egret.Sprite {
         this.dispatchEvent(unQuellEvent);
     }
     public quell(){
-        Utils.blockStyle = "quell";
+        
         if (this._quellWatch == null) {
             this._quellWatch = new Time.StopWatch({ times: this._rushTime, finish:this._unQuell }, this);
             for (let i = 0; i < this._blockColumns.length; i++) {
@@ -341,7 +417,7 @@ class GameScene extends egret.Sprite {
         const quellTimer = this._quellWatch.run();
     }
     public purify(){
-        Utils.blockStyle = "purify";
+        
          if (this._purifyWatch == null) {
             this._purifyWatch = new Time.StopWatch({ times: this._rushTime, finish:this._unPurify }, this);
             for (let i = 0; i < this._blockColumns.length; i++) {
@@ -352,7 +428,7 @@ class GameScene extends egret.Sprite {
         const purifyTimer = this._purifyWatch.run();
     }
     private _unPurify(){
-        Utils.blockStyle = Utils.blockStyle.replace("purify","");
+        Utils.blockStyle = Utils.blockStyle.replace(/purify/g,"");
         this._purifyWatch = null;
         const unPurifyEvent: GameEvents.MagicEvent = new GameEvents.MagicEvent(
             GameEvents.MagicEvent.UNPURIFY
@@ -361,7 +437,7 @@ class GameScene extends egret.Sprite {
     }
 
     public destroy(oScore:Score){
-        Utils.blockStyle = "destroy";
+        
          if (this._destroyWatch == null) {
             this._destroyWatch = new Time.StopWatch({ times: this._rushTime, finish:this._unDestroy }, this);
             var destroyed:number = 0;
@@ -374,7 +450,7 @@ class GameScene extends egret.Sprite {
     }
 
     private _unDestroy(){
-        Utils.blockStyle = Utils.blockStyle.replace("destroy","");
+        Utils.blockStyle = Utils.blockStyle.replace(/destroy/g,"");
         this._destroyWatch = null;
         const unDestroyEvent: GameEvents.MagicEvent = new GameEvents.MagicEvent(
             GameEvents.MagicEvent.DESTROY

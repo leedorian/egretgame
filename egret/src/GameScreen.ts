@@ -137,6 +137,7 @@ class GameScreen extends egret.Sprite {
     }
     private _freeze(){
         if(this._gameScene.started && Utils.blockStyle.indexOf("freeze") === -1){
+            Utils.blockStyle = Utils.blockStyle + "freeze";
             this._handleMagicsState();
             this._gameScene.freeze();
         }
@@ -146,18 +147,21 @@ class GameScreen extends egret.Sprite {
     }
     private _quell(){
         if(this._gameScene.started && Utils.blockStyle.indexOf("quell") === -1){
+            Utils.blockStyle = Utils.blockStyle + "quell";
             this._handleMagicsState();
             this._gameScene.quell();
         }
     }
     private _purify(){
         if(this._gameScene.started && Utils.blockStyle.indexOf("purify") === -1){
+            Utils.blockStyle = Utils.blockStyle + "purify";
             this._handleMagicsState();
             this._gameScene.purify();
         }
     }
     private _destroy(){
         if(this._gameScene.started && Utils.blockStyle.indexOf("destroy") === -1){
+            Utils.blockStyle = Utils.blockStyle + "destroy";
             this._handleMagicsState();
             this._gameScene.destroy(this._score);
         }
