@@ -58,5 +58,6 @@ enum TextColors{
 }
 enum BlockCoverState{
     normal = 0,
-    freezed = 1
+    freezed = 1,
+    quelled = 2
 }

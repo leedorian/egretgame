@@ -1,0 +1,286 @@
+{
+	"groups": [
+		{
+			"keys": "thumb_pb_png,track_pb_png,buttonBg_png,normal_bg_png,lone-wolf-short,game_config,GoogleBtn_png,Bg01_png,WechatBtn_png,BgColor01_png,bg_png,shanguang_json,shanguang_png,blockFrame_png,b_normal_png,bg_score_png,freeze_png,purify_png,nuke_png,rock_bg_png,skull_png,b_purple_rush_png,b_purple_png,b_red_png,b_red_rush_png,b_blue_png,b_blue_rush_png,b_yellow_png,b_yellow_rush_png,b_black_png,b_black_rush_png,freeze_disabled_png,ice_png,nuke_disabled_png,purify_disabled_png,skull_disabled_png,iceCracking_mp3,midnight-ride_mp3,Freeze1_json,Freeze1_png,Freeze2_json,Freeze2_png,Freeze3_json,Freeze3_png,Quell1_json,Quell1_png,Quell2_png,Quell2_json,Quell3_json,Quell3_png,Quell4_json,Quell4_png,Quell5_json,Quell5_png,wind_mp3",
+			"name": "preload"
+		}
+	],
+	"resources": [
+		{
+			"url": "assets/ProgressBar/thumb_pb.png",
+			"type": "image",
+			"name": "thumb_pb_png"
+		},
+		{
+			"url": "assets/ProgressBar/track_pb.png",
+			"type": "image",
+			"name": "track_pb_png"
+		},
+		{
+			"name": "rush_bg_png",
+			"type": "image",
+			"url": "assets/rush_bg.png"
+		},
+		{
+			"name": "normal_bg_png",
+			"type": "image",
+			"url": "assets/normal_bg.png"
+		},
+		{
+			"name": "buttonBg_png",
+			"type": "image",
+			"url": "assets/buttonBg.png"
+		},
+		{
+			"name": "lone-wolf-short",
+			"type": "sound",
+			"soundType": "music",
+			"url": "assets/lone-wolf-short.wav"
+		},
+		{
+			"name": "GoogleBtn_png",
+			"type": "image",
+			"url": "assets/Login/GoogleBtn.jpeg"
+		},
+		{
+			"name": "Bg01_png",
+			"type": "image",
+			"url": "assets/Bg01.png"
+		},
+		{
+			"name": "WechatBtn_png",
+			"type": "image",
+			"url": "assets/Login/WechatBtn.jpeg"
+		},
+		{
+			"name": "BgColor01_png",
+			"type": "image",
+			"url": "assets/BgColor01.png"
+		},
+		{
+			"name": "bg_png",
+			"type": "image",
+			"url": "assets/bg.png"
+		},
+		{
+			"name": "shanguang_json",
+			"type": "json",
+			"url": "assets/shanguang.json"
+		},
+		{
+			"name": "shanguang_png",
+			"type": "image",
+			"url": "assets/shanguang.png"
+		},
+		{
+			"name": "blockFrame_png",
+			"type": "image",
+			"url": "assets/blockFrame.png"
+		},
+		{
+			"name": "b_normal_png",
+			"type": "image",
+			"url": "assets/b_normal.png"
+		},
+		{
+			"name": "bg_score_png",
+			"type": "image",
+			"url": "assets/bg_score.png"
+		},
+		{
+			"name": "freeze_png",
+			"type": "image",
+			"url": "assets/freeze.png"
+		},
+		{
+			"name": "purify_png",
+			"type": "image",
+			"url": "assets/purify.png"
+		},
+		{
+			"name": "nuke_png",
+			"type": "image",
+			"url": "assets/nuke.png"
+		},
+		{
+			"name": "rock_bg_png",
+			"type": "image",
+			"url": "assets/rock_bg.png"
+		},
+		{
+			"name": "skull_png",
+			"type": "image",
+			"url": "assets/skull.png"
+		},
+		{
+			"name": "b_purple_rush_png",
+			"type": "image",
+			"url": "assets/b_purple_rush.png"
+		},
+		{
+			"name": "b_purple_png",
+			"type": "image",
+			"url": "assets/b_purple.png"
+		},
+		{
+			"name": "b_red_png",
+			"type": "image",
+			"url": "assets/b_red.png"
+		},
+		{
+			"name": "b_red_rush_png",
+			"type": "image",
+			"url": "assets/b_red_rush.png"
+		},
+		{
+			"name": "b_blue_png",
+			"type": "image",
+			"url": "assets/b_blue.png"
+		},
+		{
+			"name": "b_blue_rush_png",
+			"type": "image",
+			"url": "assets/b_blue_rush.png"
+		},
+		{
+			"name": "b_yellow_png",
+			"type": "image",
+			"url": "assets/b_yellow.png"
+		},
+		{
+			"name": "b_yellow_rush_png",
+			"type": "image",
+			"url": "assets/b_yellow_rush.png"
+		},
+		{
+			"name": "b_black_png",
+			"type": "image",
+			"url": "assets/b_black.png"
+		},
+		{
+			"name": "b_black_rush_png",
+			"type": "image",
+			"url": "assets/b_black_rush.png"
+		},
+		{
+			"name": "freeze_disabled_png",
+			"type": "image",
+			"url": "assets/freeze_disabled.png"
+		},
+		{
+			"name": "ice_png",
+			"type": "image",
+			"url": "assets/ice.png"
+		},
+		{
+			"name": "nuke_disabled_png",
+			"type": "image",
+			"url": "assets/nuke_disabled.png"
+		},
+		{
+			"name": "purify_disabled_png",
+			"type": "image",
+			"url": "assets/purify_disabled.png"
+		},
+		{
+			"name": "skull_disabled_png",
+			"type": "image",
+			"url": "assets/skull_disabled.png"
+		},
+		{
+			"name": "iceCracking_mp3",
+			"type": "sound",
+			"url": "assets/iceCracking.mp3"
+		},
+		{
+			"name": "midnight-ride_mp3",
+			"type": "sound",
+			"url": "assets/midnight-ride.mp3"
+		},
+		{
+			"name": "Freeze1_json",
+			"type": "json",
+			"url": "assets/Freeze1.json"
+		},
+		{
+			"name": "Freeze1_png",
+			"type": "image",
+			"url": "assets/Freeze1.png"
+		},
+		{
+			"name": "Freeze2_json",
+			"type": "json",
+			"url": "assets/Freeze2.json"
+		},
+		{
+			"name": "Freeze2_png",
+			"type": "image",
+			"url": "assets/Freeze2.png"
+		},
+		{
+			"name": "Freeze3_json",
+			"type": "json",
+			"url": "assets/Freeze3.json"
+		},
+		{
+			"name": "Freeze3_png",
+			"type": "image",
+			"url": "assets/Freeze3.png"
+		},
+		{
+			"name": "Quell1_json",
+			"type": "json",
+			"url": "assets/Quell1.json"
+		},
+		{
+			"name": "Quell1_png",
+			"type": "image",
+			"url": "assets/Quell1.png"
+		},
+		{
+			"name": "Quell2_png",
+			"type": "image",
+			"url": "assets/Quell2.png"
+		},
+		{
+			"name": "Quell2_json",
+			"type": "json",
+			"url": "assets/Quell2.json"
+		},
+		{
+			"name": "Quell3_json",
+			"type": "json",
+			"url": "assets/Quell3.json"
+		},
+		{
+			"name": "Quell3_png",
+			"type": "image",
+			"url": "assets/Quell3.png"
+		},
+		{
+			"name": "Quell4_json",
+			"type": "json",
+			"url": "assets/Quell4.json"
+		},
+		{
+			"name": "Quell4_png",
+			"type": "image",
+			"url": "assets/Quell4.png"
+		},
+		{
+			"name": "Quell5_json",
+			"type": "json",
+			"url": "assets/Quell5.json"
+		},
+		{
+			"name": "Quell5_png",
+			"type": "image",
+			"url": "assets/Quell5.png"
+		},
+		{
+			"name": "wind_mp3",
+			"type": "sound",
+			"url": "assets/wind.mp3"
+		}
+	]
+}

@@ -16,9 +16,11 @@ class MagicPurify extends MagicBase{
 		};
 	}
 	disable(){
+		super.disable();
 		this.icon.texture = RES.getRes("purify_disabled_png");
 	}
 	enable(){
+		super.enable();
 		this.icon.texture = RES.getRes("purify_png");
 	}
 }

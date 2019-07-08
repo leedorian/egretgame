@@ -1,0 +1,78 @@
+{
+    "levelUpInterval": 10,//难度增加间隔 秒
+    "rushFactor":1.3, //红块加速倍率，1.3倍
+    "rushTime":5, //红块加速持续时间 5秒
+    "shrinkTime":5,//紫块缩小持续时间 5秒
+    "colmuns":[//列加速间隔
+        {
+            "interval": 4 //第一列 4秒
+        },
+        {
+            "interval": 8//第二列 8秒
+        },
+        {
+            "interval": 12//第三列 12秒
+        },
+        {
+            "interval": 16//第四列 16秒
+        }
+    ],
+    "speedLevels":[
+        1,//速度一级
+        1.5,//速度二级
+        2,//速度三级
+        2.5,//速度四级
+        3,//速度五级
+        3.5//速度六级
+    ],
+    "difficulty":[//色块难度
+        {//难度一级
+            "blockNormal":10,//普通块 10个/10个
+            "blockDouble":0,//蓝块 0个/10个
+            "blockRush":0,//红块 0个/10个
+            "blockBlink":0,//黄块 0个/10个
+            "blockShrink":0,//紫块 0个/10个
+            "blockBonus":0//金块 0个/10个
+        },
+        {//难度二级
+            "blockNormal":8,
+            "blockDouble":2,
+            "blockRush":0,
+            "blockBlink":0,
+            "blockShrink":0,
+            "blockBonus":0
+        },
+        {//难度三级
+            "blockNormal":7,
+            "blockDouble":2,
+            "blockRush":1,
+            "blockBlink":0,
+            "blockShrink":0,
+            "blockBonus":0
+        },
+        {//难度四级
+            "blockNormal":5,
+            "blockDouble":3,
+            "blockRush":1,
+            "blockBlink":0,
+            "blockShrink":1,
+            "blockBonus":0
+        },
+        {//难度五级
+            "blockNormal":5,
+            "blockDouble":2,
+            "blockRush":1,
+            "blockBlink":1,
+            "blockShrink":1,
+            "blockBonus":0
+        },
+        {//难度六级
+            "blockNormal":3,
+            "blockDouble":3,
+            "blockRush":1,
+            "blockBlink":1,
+            "blockShrink":2,
+            "blockBonus":0
+        }
+    ]
+}

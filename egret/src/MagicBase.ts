@@ -19,6 +19,12 @@ class MagicBase extends egret.Sprite {
 	protected _bg: egret.Bitmap;
 	protected _drawIcon() { }
 	protected _getIconOffset(): any {}
+	protected enable() { 
+		this.touchEnabled = true;
+	}
+	protected disable() { 
+		this.touchEnabled = false;
+	}
 	public getBaseWidth():number{
 		return this._bg.width * this._zoomRate;
 	}

@@ -391,17 +391,21 @@ class BlocksColumn extends egret.Sprite {
             blocks[i].freeze();
         }
     }
-
-    public unFreezeBlocks(){
+    private _removeEffectCover(){
         this._blockCoverState = BlockCoverState.normal;
         const blocks: Array<any> = this._blocks;
         for (let i = 0; i < blocks.length; i++) {
             blocks[i].cleanCover();
         }
-        
     }
-
+    public unFreezeBlocks(){
+        this._removeEffectCover();
+    }
+    public unQuell(){
+        this._removeEffectCover();
+    }
     public quell(){
+        this._blockCoverState = BlockCoverState.quelled;
         const blocks: Array<any> = this._blocks;
         for (let i = 0; i < blocks.length; i++) {
             let tarBlock = blocks[i];
@@ -411,7 +415,8 @@ class BlocksColumn extends egret.Sprite {
                 this.removeChild(tarBlock);
                 tarBlock = null;
                 const block = this._createBlock({
-                    state:BlockState.clickable
+                    state:BlockState.clickable,
+                    coverState: BlockCoverState.quelled
                 });
                 this.addChild(block);
                 block.x = 0;

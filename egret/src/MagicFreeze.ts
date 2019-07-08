@@ -16,9 +16,11 @@ class MagicFreeze extends MagicBase{
 		};
 	}
 	disable(){
+		super.disable();
 		this.icon.texture = RES.getRes("freeze_disabled_png");
 	}
 	enable(){
+		super.enable();
 		this.icon.texture = RES.getRes("freeze_png");
 	}
 }

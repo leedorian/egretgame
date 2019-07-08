@@ -64,7 +64,7 @@ namespace Time {
                 this._timesRemains = this._timesRemains + this._times;
                 this._timer.repeatCount = this._timesRemains;
             }
-            console.log(this._timer.repeatCount)
+            // console.log(this._timer.repeatCount)
 
             this._timer.start();
             return this._timer;
@@ -121,7 +121,7 @@ namespace Time {
             const now = timeStamp;
             const time = this._nowTime;
             const pass = now - time;
-            console.log(pass);
+            // console.log(pass);
             if(pass >= this._time){
                 egret.stopTick(this._counter,this);
                 this._finish.call(this._scope);

@@ -72,6 +72,7 @@ class GameScene extends egret.Sprite {
     private _bgmChanel:egret.SoundChannel;
     private _freezeSound:egret.Sound = RES.getRes("iceCracking_mp3");
     private _windSound:egret.Sound = RES.getRes("wind_mp3");
+    private _quellSound:egret.Sound = RES.getRes("quell_mp3");
     private _effectChanel:egret.SoundChannel;
     public started:boolean = false;
 
@@ -94,8 +95,11 @@ class GameScene extends egret.Sprite {
         if(this.started){
             this._playbgm();
         }
-        if(Utils.blockStyle === "freeze"){
+        if(Utils.blockStyle.indexOf("freeze") !== -1){
             this._freezeSound.play(0,0);
+        }
+        if(Utils.blockStyle.indexOf("quell") !== -1){
+            this._quellSound.play(0,0);
         }
     }
     private _drawColumns() {
@@ -130,7 +134,6 @@ class GameScene extends egret.Sprite {
         // let tarBlock: Block = evt.target;
         // let missed: boolean = evt.missed;
     }
-
 
     private _onHitRush(evt: GameEvents.BlockEvent) {
         
@@ -324,61 +327,51 @@ class GameScene extends egret.Sprite {
         }, this);
         pauseTimer.run();
     }
+    private _setEffectMCSize(mc){
+        const arenaW = Utils.getArenaWidth();
+        const arenH = Utils.getArenaHeight();
+        const widthRate = arenaW / 360;
+        const heightRate = arenH / 640;
+
+        mc.scaleX = widthRate;
+        mc.scaleY = heightRate;
+    }
+    private _concatenateClips(aClips){
+        const nClips = aClips.length;
+        for(var i = 0; i < nClips; i++){
+            let nextClip = aClips[i+1];
+            let clip = aClips[i];
+            let index = i;
+            clip.addEventListener(egret.Event.COMPLETE, (e:egret.Event)=>{
+                this.removeChild(clip);
+                if(index < nClips - 1){
+                    this.addChild(nextClip);
+                    nextClip.gotoAndPlay(0);
+                }
+            }, this);
+        }
+    }
+    private _createEffectClips(name, length){
+        var aClips = [];
+        for(var i = 1; i <= length; i++){
+            const data = RES.getRes(name + i + "_json");
+            const txtr = RES.getRes(name + i + "_png");
+            const mcFactory: egret.MovieClipDataFactory = new egret.MovieClipDataFactory(data, txtr);
+            const mc: egret.MovieClip = new egret.MovieClip(mcFactory.generateMovieClipData(name));
+            this._setEffectMCSize(mc);
+            aClips.push(mc);
+        }
+        return aClips;
+    }
     public freeze(){
         this._effectChanel = this._windSound.play(0,1);
         if(this._FreezeEffectMCs.length === 0){
-            const data1 = RES.getRes("Freeze1_json");
-            const txtr1 = RES.getRes("Freeze1_png");
-            const mcFactory1: egret.MovieClipDataFactory = new egret.MovieClipDataFactory(data1, txtr1);
-            const mc1: egret.MovieClip = new egret.MovieClip(mcFactory1.generateMovieClipData("Freeze"));
-
-            const data2 = RES.getRes("Freeze2_json");
-            const txtr2 = RES.getRes("Freeze2_png");
-            const mcFactory2: egret.MovieClipDataFactory = new egret.MovieClipDataFactory(data2, txtr2);
-            const mc2: egret.MovieClip = new egret.MovieClip(mcFactory2.generateMovieClipData("Freeze"));
-
-            const data3 = RES.getRes("Freeze3_json");
-            const txtr3 = RES.getRes("Freeze3_png");
-            const mcFactory3: egret.MovieClipDataFactory = new egret.MovieClipDataFactory(data3, txtr3);
-            const mc3: egret.MovieClip = new egret.MovieClip(mcFactory3.generateMovieClipData("Freeze"));
-
-            const arenaW = Utils.getArenaWidth();
-            const arenH = Utils.getArenaHeight();
-            const widthRate = arenaW / 360;
-            const heightRate = arenH / 640;
-            // mc1.x = 425 * widthRate;
-            // mc1.y = 1415 * heightRate;
-            mc1.scaleX = widthRate;
-            mc1.scaleY = heightRate;
-            mc2.scaleX = widthRate;
-            mc2.scaleY = heightRate;
-            mc3.scaleX = widthRate;
-            mc3.scaleY = heightRate;
-            
-            mc1.addEventListener(egret.Event.COMPLETE, (e:egret.Event)=>{
-                console.log(mc1);
-                this.removeChild(mc1);
-                this.addChild(mc2);
-                mc2.gotoAndPlay(0);
-            }, this);
-
-            mc2.addEventListener(egret.Event.COMPLETE, (e:egret.Event)=>{
-                this.removeChild(mc2);
-                this.addChild(mc3);
-                mc3.gotoAndPlay(0);
-            }, this);
-
-            mc3.addEventListener(egret.Event.COMPLETE, (e:egret.Event)=>{
-                this.removeChild(mc3);
-            }, this);   
-
-            this._FreezeEffectMCs = [mc1, mc2, mc3];
+            this._FreezeEffectMCs = this._createEffectClips("Freeze", 3);
+            this._concatenateClips(this._FreezeEffectMCs);
         }
         
         this.addChild(this._FreezeEffectMCs[0]);
         this._FreezeEffectMCs[0].gotoAndPlay(0);
-        
-        
 
         this._pauseMove(4000,function(){
             this._effectChanel = this._freezeSound.play(0,0);
@@ -399,6 +392,10 @@ class GameScene extends egret.Sprite {
         
     }
      private _unQuell(){
+         this._effectChanel.stop();
+        for (let i = 0; i < this._blockColumns.length; i++) {
+            this._blockColumns[i].unQuell();
+        }
         Utils.blockStyle = Utils.blockStyle.replace(/quell/g,"");
         this._quellWatch = null;
          const unQuellEvent: GameEvents.MagicEvent = new GameEvents.MagicEvent(
@@ -407,14 +404,26 @@ class GameScene extends egret.Sprite {
         this.dispatchEvent(unQuellEvent);
     }
     public quell(){
-        
-        if (this._quellWatch == null) {
-            this._quellWatch = new Time.StopWatch({ times: this._rushTime, finish:this._unQuell }, this);
-            for (let i = 0; i < this._blockColumns.length; i++) {
-                this._blockColumns[i].quell();
-            }
+        this._effectChanel = this._quellSound.play(0,0);
+        if(this._QuellEffectMCs.length === 0){
+            this._QuellEffectMCs = this._createEffectClips("Quell", 5);
+            this._concatenateClips(this._QuellEffectMCs);
         }
-        const quellTimer = this._quellWatch.run();
+        
+        this.addChild(this._QuellEffectMCs[0]);
+        this._QuellEffectMCs[0].gotoAndPlay(0);
+
+        this._pauseMove(5100,function(){
+            // this._effectChanel = this._quellSound.play(0,0);
+            if (this._quellWatch == null) {
+                this._quellWatch = new Time.StopWatch({ times: this._rushTime, finish:this._unQuell }, this);
+                for (let i = 0; i < this._blockColumns.length; i++) {
+                    this._blockColumns[i].quell();
+                }
+            }
+            const quellTimer = this._quellWatch.run();
+        });
+        
     }
     public purify(){
         

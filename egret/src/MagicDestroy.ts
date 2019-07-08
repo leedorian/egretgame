@@ -16,9 +16,11 @@ class MagicDestroy extends MagicBase{
 		};
 	}
 	disable(){
+		super.disable();
 		this.icon.texture = RES.getRes("nuke_disabled_png");
 	}
 	enable(){
+		super.enable();
 		this.icon.texture = RES.getRes("nuke_png");
 	}
 }

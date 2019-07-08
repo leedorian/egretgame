@@ -16,9 +16,11 @@ class MagicQuell extends MagicBase{
 		};
 	}
 	disable(){
+		super.disable();
 		this.icon.texture = RES.getRes("skull_disabled_png");
 	}
 	enable(){
+		super.enable();
 		this.icon.texture = RES.getRes("skull_png");
 	}
 }

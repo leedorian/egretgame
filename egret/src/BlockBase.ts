@@ -119,6 +119,8 @@ abstract class BlockBase extends egret.Sprite{
         if(this._currentState !== BlockState.unclickable){
             if(this._coverState === BlockCoverState.freezed){
                 this._coverRect.texture = RES.getRes("ice_png");
+            }else if(this._coverState === BlockCoverState.quelled){
+                this._coverRect.texture = RES.getRes("quellEye_png");
             }else{
                 this._coverRect.texture = null;
             }
