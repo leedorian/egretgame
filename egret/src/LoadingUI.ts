@@ -26,7 +26,6 @@
 //  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 //////////////////////////////////////////////////////////////////////////////////////
-
 class LoadingUI extends egret.Sprite implements RES.PromiseTaskReporter {
 
     public constructor() {
@@ -40,6 +39,7 @@ class LoadingUI extends egret.Sprite implements RES.PromiseTaskReporter {
    
     private createView(): void {
         this.textField = new egret.TextField();
+        this.textField.fontFamily = "Ngaan";
         this.addChild(this.textField);
         this.textField.y = 300;
         this.textField.width = 480;

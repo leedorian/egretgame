@@ -10,6 +10,7 @@ class Score extends egret.Sprite {
         bg.y = scoreY;
         this.addChild(bg);
         let label: egret.TextField = new egret.TextField();
+        label.fontFamily = "Ngaan";
         label.width = Utils.getStageWidth();
         label.y = scoreY;
         label.height = scoreHeight;

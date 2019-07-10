@@ -61,6 +61,9 @@ abstract class BlockBase extends egret.Sprite{
     private _blockMargin:number = 2;
     private _blockPadding:number = 3;
 
+    private _sparkSound:egret.Sound = RES.getRes("spark_mp3");
+    private _effectChanel:egret.SoundChannel;
+
     protected _draw(){
         // let fillColor: BlockColor;
         // let bgFillColor: BlockColor = this._unClickableColor;
@@ -197,6 +200,23 @@ abstract class BlockBase extends egret.Sprite{
         return false;
     }
     protected _hit(){
+        this._effectChanel = this._sparkSound.play(0,1);
+
+        
+        const data = RES.getRes("light_json");
+        const txtr = RES.getRes("light_png");
+        const mcFactory: egret.MovieClipDataFactory = new egret.MovieClipDataFactory(data, txtr);
+        const mc: egret.MovieClip = new egret.MovieClip(mcFactory.generateMovieClipData("light"));
+        const widthRate = this.width / 126;
+        const heightRate = this.height / 153;
+        mc.scaleX = widthRate;
+        mc.scaleY = heightRate;
+        this.addChild(mc);
+        mc.gotoAndPlay(0);
+        mc.addEventListener(egret.Event.COMPLETE, (e:egret.Event)=>{
+            this.removeChild(mc);
+        }, this);
+
         // this.addEventListener(egret.Event.ENTER_FRAME, this._hitAni, this);
         egret.startTick(this._hitAni, this);
         this.state = "clicked";
