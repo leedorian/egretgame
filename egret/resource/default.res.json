@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "thumb_pb_png,track_pb_png,buttonBg_png,normal_bg_png,lone-wolf-short,game_config,GoogleBtn_png,Bg01_png,WechatBtn_png,BgColor01_png,bg_png,shanguang_json,shanguang_png,blockFrame_png,b_normal_png,bg_score_png,freeze_png,purify_png,nuke_png,rock_bg_png,skull_png,b_purple_rush_png,b_purple_png,b_red_png,b_red_rush_png,b_blue_png,b_blue_rush_png,b_yellow_png,b_yellow_rush_png,b_black_png,b_black_rush_png,freeze_disabled_png,ice_png,nuke_disabled_png,purify_disabled_png,skull_disabled_png,iceCracking_mp3,midnight-ride_mp3,Freeze1_json,Freeze1_png,Freeze2_json,Freeze2_png,Freeze3_json,Freeze3_png,Quell1_json,Quell1_png,Quell2_png,Quell2_json,Quell3_json,Quell3_png,Quell4_json,Quell4_png,Quell5_json,Quell5_png,wind_mp3,quellEye_png,quell_mp3",
+			"keys": "thumb_pb_png,track_pb_png,buttonBg_png,normal_bg_png,lone-wolf-short,game_config,GoogleBtn_png,Bg01_png,WechatBtn_png,BgColor01_png,bg_png,shanguang_json,shanguang_png,blockFrame_png,b_normal_png,bg_score_png,freeze_png,purify_png,nuke_png,rock_bg_png,skull_png,b_purple_rush_png,b_purple_png,b_red_png,b_red_rush_png,b_blue_png,b_blue_rush_png,b_yellow_png,b_yellow_rush_png,b_black_png,b_black_rush_png,freeze_disabled_png,ice_png,nuke_disabled_png,purify_disabled_png,skull_disabled_png,iceCracking_mp3,midnight-ride_mp3,Freeze1_json,Freeze1_png,Freeze2_json,Freeze2_png,Freeze3_json,Freeze3_png,Quell1_json,Quell1_png,Quell2_png,Quell2_json,Quell3_json,Quell3_png,Quell4_json,Quell4_png,Quell5_json,Quell5_png,wind_mp3,quellEye_png,quell_mp3,Purify2_json,Purify1_png,Purify3_json,Purify3_png,Purify2_png,Purify4_json,Purify4_png,Purify5_json,Purify5_png,Purify1_json,Purify_mp3,Destroy1_json,Destroy1_png,Destroy2_json,Destroy2_png,Destroy3_png,Destroy3_json,Destroy1_mp3,light_json,light_png",
 			"name": "preload"
 		}
 	],
@@ -291,6 +291,106 @@
 			"name": "quell_mp3",
 			"type": "sound",
 			"url": "assets/quell.mp3"
+		},
+		{
+			"name": "Purify2_json",
+			"type": "json",
+			"url": "assets/Purify2.json"
+		},
+		{
+			"name": "Purify1_png",
+			"type": "image",
+			"url": "assets/Purify1.png"
+		},
+		{
+			"name": "Purify3_json",
+			"type": "json",
+			"url": "assets/Purify3.json"
+		},
+		{
+			"name": "Purify3_png",
+			"type": "image",
+			"url": "assets/Purify3.png"
+		},
+		{
+			"name": "Purify2_png",
+			"type": "image",
+			"url": "assets/Purify2.png"
+		},
+		{
+			"name": "Purify4_json",
+			"type": "json",
+			"url": "assets/Purify4.json"
+		},
+		{
+			"name": "Purify4_png",
+			"type": "image",
+			"url": "assets/Purify4.png"
+		},
+		{
+			"name": "Purify5_json",
+			"type": "json",
+			"url": "assets/Purify5.json"
+		},
+		{
+			"name": "Purify5_png",
+			"type": "image",
+			"url": "assets/Purify5.png"
+		},
+		{
+			"name": "Purify1_json",
+			"type": "json",
+			"url": "assets/Purify1.json"
+		},
+		{
+			"name": "Purify_mp3",
+			"type": "sound",
+			"url": "assets/Purify.mp3"
+		},
+		{
+			"name": "Destroy1_json",
+			"type": "json",
+			"url": "assets/Destroy1.json"
+		},
+		{
+			"name": "Destroy1_png",
+			"type": "image",
+			"url": "assets/Destroy1.png"
+		},
+		{
+			"name": "Destroy2_json",
+			"type": "json",
+			"url": "assets/Destroy2.json"
+		},
+		{
+			"name": "Destroy2_png",
+			"type": "image",
+			"url": "assets/Destroy2.png"
+		},
+		{
+			"name": "Destroy3_png",
+			"type": "image",
+			"url": "assets/Destroy3.png"
+		},
+		{
+			"name": "Destroy3_json",
+			"type": "json",
+			"url": "assets/Destroy3.json"
+		},
+		{
+			"name": "Destroy1_mp3",
+			"type": "sound",
+			"url": "assets/Destroy1.mp3"
+		},
+		{
+			"name": "light_json",
+			"type": "json",
+			"url": "assets/light.json"
+		},
+		{
+			"name": "light_png",
+			"type": "image",
+			"url": "assets/light.png"
 		}
 	]
 }

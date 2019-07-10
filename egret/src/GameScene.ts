@@ -73,11 +73,15 @@ class GameScene extends egret.Sprite {
     private _freezeSound:egret.Sound = RES.getRes("iceCracking_mp3");
     private _windSound:egret.Sound = RES.getRes("wind_mp3");
     private _quellSound:egret.Sound = RES.getRes("quell_mp3");
+    private _purifySound:egret.Sound = RES.getRes("Purify_mp3");
+    private _destroySound:egret.Sound = RES.getRes("Destroy1_mp3");
     private _effectChanel:egret.SoundChannel;
     public started:boolean = false;
 
     private _FreezeEffectMCs = [];
     private _QuellEffectMCs = [];
+    private _PurifyEffectMCs = [];
+    private _DestroyEffectMCs = [];
 
     // private _drawBg(){
     //     this._bg = Utils.createBitmapByName("bg_png");
@@ -293,9 +297,10 @@ class GameScene extends egret.Sprite {
         }
         
     }
-    private _resetSpeedAndDifficulty(){
-        this.reset(true);
+    private _resetSpeed(){
+        // this.reset(true);
         for (let i = 0; i < this._blockColumns.length; i++) {
+            this._blockColumns[i].reset();
             this._blockColumns[i].move(true);
         }
     }
@@ -426,17 +431,30 @@ class GameScene extends egret.Sprite {
         
     }
     public purify(){
-        
-         if (this._purifyWatch == null) {
-            this._purifyWatch = new Time.StopWatch({ times: this._rushTime, finish:this._unPurify }, this);
-            for (let i = 0; i < this._blockColumns.length; i++) {
-                this._blockColumns[i].purify();
-            }
-            this._resetSpeedAndDifficulty();
+        this._effectChanel = this._purifySound.play(0,1);
+        if(this._PurifyEffectMCs.length === 0){
+            this._PurifyEffectMCs = this._createEffectClips("Purify", 5);
+            this._concatenateClips(this._PurifyEffectMCs);
         }
-        const purifyTimer = this._purifyWatch.run();
+        
+        this.addChild(this._PurifyEffectMCs[0]);
+        this._PurifyEffectMCs[0].gotoAndPlay(0);
+
+        this._pauseMove(5000,function(){
+            // this._effectChanel = this._quellSound.play(0,0);
+            if (this._purifyWatch == null) {
+                this._purifyWatch = new Time.StopWatch({ times: 3, finish:this._unPurify }, this);
+                for (let i = 0; i < this._blockColumns.length; i++) {
+                    this._blockColumns[i].purify();
+                }
+                this._resetSpeed();
+            }
+            const purifyTimer = this._purifyWatch.run();
+        });
+    
     }
     private _unPurify(){
+        this._effectChanel.stop();
         Utils.blockStyle = Utils.blockStyle.replace(/purify/g,"");
         this._purifyWatch = null;
         const unPurifyEvent: GameEvents.MagicEvent = new GameEvents.MagicEvent(
@@ -446,19 +464,32 @@ class GameScene extends egret.Sprite {
     }
 
     public destroy(oScore:Score){
-        
-         if (this._destroyWatch == null) {
-            this._destroyWatch = new Time.StopWatch({ times: this._rushTime, finish:this._unDestroy }, this);
-            var destroyed:number = 0;
-            for (let i = 0; i < this._blockColumns.length; i++) {
-                destroyed = destroyed + this._blockColumns[i].destroy();
-            }
-            oScore.score = oScore.score + destroyed;
+        this._effectChanel = this._destroySound.play(0,1);
+        if(this._DestroyEffectMCs.length === 0){
+            this._DestroyEffectMCs = this._createEffectClips("Destroy", 3);
+            this._concatenateClips(this._DestroyEffectMCs);
         }
-        const destroyTimer = this._destroyWatch.run();
+        
+        this.addChild(this._DestroyEffectMCs[0]);
+        this._DestroyEffectMCs[0].gotoAndPlay(0);
+
+        this._pauseMove(5000,function(){
+            // this._effectChanel = this._quellSound.play(0,0);
+           if (this._destroyWatch == null) {
+                this._destroyWatch = new Time.StopWatch({ times: this._rushTime, finish:this._unDestroy }, this);
+                var destroyed:number = 0;
+                for (let i = 0; i < this._blockColumns.length; i++) {
+                    destroyed = destroyed + this._blockColumns[i].destroy();
+                }
+                oScore.score = oScore.score + destroyed;
+            }
+            const destroyTimer = this._destroyWatch.run();
+        });
+         
     }
 
     private _unDestroy(){
+        this._effectChanel.stop();
         Utils.blockStyle = Utils.blockStyle.replace(/destroy/g,"");
         this._destroyWatch = null;
         const unDestroyEvent: GameEvents.MagicEvent = new GameEvents.MagicEvent(
@@ -466,6 +497,4 @@ class GameScene extends egret.Sprite {
         );
         this.dispatchEvent(unDestroyEvent);
     }
-
-    
 }
