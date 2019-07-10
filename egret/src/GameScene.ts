@@ -301,6 +301,7 @@ class GameScene extends egret.Sprite {
         // this.reset(true);
         for (let i = 0; i < this._blockColumns.length; i++) {
             this._blockColumns[i].reset();
+            this._blockColumns[i].updateSpeed();
             this._blockColumns[i].move(true);
         }
     }
@@ -430,7 +431,7 @@ class GameScene extends egret.Sprite {
         });
         
     }
-    public purify(){
+    public purify(oScore:Score){
         this._effectChanel = this._purifySound.play(0,1);
         if(this._PurifyEffectMCs.length === 0){
             this._PurifyEffectMCs = this._createEffectClips("Purify", 5);
@@ -444,10 +445,11 @@ class GameScene extends egret.Sprite {
             // this._effectChanel = this._quellSound.play(0,0);
             if (this._purifyWatch == null) {
                 this._purifyWatch = new Time.StopWatch({ times: 3, finish:this._unPurify }, this);
+                var purified:number = 0;
                 for (let i = 0; i < this._blockColumns.length; i++) {
-                    this._blockColumns[i].purify();
+                    purified = purified + this._blockColumns[i].purify();
                 }
-                this._resetSpeed();
+                oScore.score = oScore.score + purified;
             }
             const purifyTimer = this._purifyWatch.run();
         });
@@ -463,7 +465,7 @@ class GameScene extends egret.Sprite {
         this.dispatchEvent(unPurifyEvent);
     }
 
-    public destroy(oScore:Score){
+    public destroy(){
         this._effectChanel = this._destroySound.play(0,1);
         if(this._DestroyEffectMCs.length === 0){
             this._DestroyEffectMCs = this._createEffectClips("Destroy", 3);
@@ -477,11 +479,10 @@ class GameScene extends egret.Sprite {
             // this._effectChanel = this._quellSound.play(0,0);
            if (this._destroyWatch == null) {
                 this._destroyWatch = new Time.StopWatch({ times: this._rushTime, finish:this._unDestroy }, this);
-                var destroyed:number = 0;
                 for (let i = 0; i < this._blockColumns.length; i++) {
-                    destroyed = destroyed + this._blockColumns[i].destroy();
+                    this._blockColumns[i].destroy();
                 }
-                oScore.score = oScore.score + destroyed;
+                this._resetSpeed();
             }
             const destroyTimer = this._destroyWatch.run();
         });

@@ -156,14 +156,14 @@ class GameScreen extends egret.Sprite {
         if(this._gameScene.started && Utils.blockStyle.indexOf("purify") === -1){
             Utils.blockStyle = Utils.blockStyle + "purify";
             this._handleMagicsState();
-            this._gameScene.purify();
+            this._gameScene.purify(this._score);
         }
     }
     private _destroy(){
         if(this._gameScene.started && Utils.blockStyle.indexOf("destroy") === -1){
             Utils.blockStyle = Utils.blockStyle + "destroy";
             this._handleMagicsState();
-            this._gameScene.destroy(this._score);
+            this._gameScene.destroy();
         }
     }
     private _onMagicScore(evt:GameEvents.PlayEvent){

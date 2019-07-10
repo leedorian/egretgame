@@ -427,7 +427,7 @@ class BlocksColumn extends egret.Sprite {
         }
     }
 
-    public purify(){
+    public destroy(){
         const blocks: Array<any> = this._blocks;
         for (let i = 0; i < blocks.length; i++) {
             let tarBlock = blocks[i];
@@ -448,7 +448,7 @@ class BlocksColumn extends egret.Sprite {
         }
     }
 
-    public destroy():number{
+    public purify():number{
         const blocks: Array<any> = this._blocks;
         var destroyed:number = 0;
         for (let i = 0; i < blocks.length; i++) {
