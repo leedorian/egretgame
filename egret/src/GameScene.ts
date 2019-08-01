@@ -74,6 +74,7 @@ class GameScene extends egret.Sprite {
     private _windSound:egret.Sound = RES.getRes("wind_mp3");
     private _quellSound:egret.Sound = RES.getRes("quell_mp3");
     private _purifySound:egret.Sound = RES.getRes("Purify_mp3");
+    private _purifyingSound:egret.Sound = RES.getRes("Purifying_mp3");
     private _destroySound:egret.Sound = RES.getRes("Destroy1_mp3");
     private _effectChanel:egret.SoundChannel;
     public started:boolean = false;
@@ -336,8 +337,8 @@ class GameScene extends egret.Sprite {
     private _setEffectMCSize(mc){
         const arenaW = Utils.getArenaWidth();
         const arenH = Utils.getArenaHeight();
-        const widthRate = arenaW / 360;
-        const heightRate = arenH / 640;
+        const widthRate = arenaW / 500;
+        const heightRate = arenH / 889;
 
         mc.scaleX = widthRate;
         mc.scaleY = heightRate;
@@ -434,7 +435,7 @@ class GameScene extends egret.Sprite {
     public purify(oScore:Score){
         this._effectChanel = this._purifySound.play(0,1);
         if(this._PurifyEffectMCs.length === 0){
-            this._PurifyEffectMCs = this._createEffectClips("Purify", 5);
+            this._PurifyEffectMCs = this._createEffectClips("PurifyA", 17);
             this._concatenateClips(this._PurifyEffectMCs);
         }
         
@@ -442,9 +443,9 @@ class GameScene extends egret.Sprite {
         this._PurifyEffectMCs[0].gotoAndPlay(0);
 
         this._pauseMove(5000,function(){
-            // this._effectChanel = this._quellSound.play(0,0);
+            this._effectChanel = this._purifyingSound.play(0,0);
             if (this._purifyWatch == null) {
-                this._purifyWatch = new Time.StopWatch({ times: 3, finish:this._unPurify }, this);
+                this._purifyWatch = new Time.StopWatch({ times: this._rushTime, finish:this._unPurify }, this);
                 var purified:number = 0;
                 for (let i = 0; i < this._blockColumns.length; i++) {
                     purified = purified + this._blockColumns[i].purify();
@@ -474,11 +475,10 @@ class GameScene extends egret.Sprite {
         
         this.addChild(this._DestroyEffectMCs[0]);
         this._DestroyEffectMCs[0].gotoAndPlay(0);
-
         this._pauseMove(5000,function(){
             // this._effectChanel = this._quellSound.play(0,0);
            if (this._destroyWatch == null) {
-                this._destroyWatch = new Time.StopWatch({ times: this._rushTime, finish:this._unDestroy }, this);
+                this._destroyWatch = new Time.StopWatch({ times: 3, finish:this._unDestroy }, this);
                 for (let i = 0; i < this._blockColumns.length; i++) {
                     this._blockColumns[i].destroy();
                 }

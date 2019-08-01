@@ -64,6 +64,8 @@ abstract class BlockBase extends egret.Sprite{
     private _sparkSound:egret.Sound = RES.getRes("spark_mp3");
     private _effectChanel:egret.SoundChannel;
 
+    private _movedIn = false;
+
     protected _draw(){
         // let fillColor: BlockColor;
         // let bgFillColor: BlockColor = this._unClickableColor;
@@ -199,7 +201,7 @@ abstract class BlockBase extends egret.Sprite{
 
         return false;
     }
-    protected _hit(){
+    protected _hit(bProgramTriggered?: boolean){
         this._effectChanel = this._sparkSound.play(0,1);
 
         
@@ -239,6 +241,9 @@ abstract class BlockBase extends egret.Sprite{
     }
     public stop(){
         egret.stopTick(this._moveBlock, this);
+    }
+    public hitit(){
+        this._hit(true);
     }
     protected _moveBlock(timeStamp: number):boolean{
 
@@ -282,8 +287,11 @@ abstract class BlockBase extends egret.Sprite{
         this.dispatchEvent(movedOutEvent);
     }
     private _triggerAllMovedInEvent(){
-        let allMovedInEvent:GameEvents.BlockEvent = new GameEvents.BlockEvent(GameEvents.BlockEvent.ALL_MOVED_IN);
-        this.dispatchEvent(allMovedInEvent);
+        if(!this._movedIn){
+            let allMovedInEvent:GameEvents.BlockEvent = new GameEvents.BlockEvent(GameEvents.BlockEvent.ALL_MOVED_IN);
+            this.dispatchEvent(allMovedInEvent);
+            this._movedIn = true;
+        }
     }
     /**
      * sizeUpdate

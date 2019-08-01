@@ -6,9 +6,9 @@ class BlockRush extends BlockFlashBase{
         this._clickableRushColor = RES.getRes(BlockTexture.clickableRushRushStyle);
         this._clickableColor = RES.getRes(BlockTexture.clickableRush);
     }
-    _hit() {
-        super._hit();
-        if (this._activeState) {
+    _hit(bProgramTriggered?:boolean) {
+        super._hit(bProgramTriggered);
+        if (!bProgramTriggered && this._activeState) {
             let hitRushEvent: GameEvents.BlockEvent = new GameEvents.BlockEvent(GameEvents.BlockEvent.HIT_RUSH);
             this.dispatchEvent(hitRushEvent);
         }

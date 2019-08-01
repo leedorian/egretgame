@@ -124,14 +124,15 @@ class BlocksColumn extends egret.Sprite {
         let tarBlock: BlockBase = evt.target;
         let y = tarBlock.y;
         let idx;
-        if(Utils.blockStyle.indexOf("destroy") !== -1 && (tarBlock.state === "clickable" || tarBlock instanceof BlockBlink || tarBlock instanceof BlockShrink)){
+        if(Utils.blockStyle.indexOf("purify") !== -1 && (tarBlock.state === "clickable" || tarBlock instanceof BlockBlink || tarBlock instanceof BlockShrink)){
             for(var i = 0; i< this._blocks.length; i++){
                 if(this._blocks[i] === tarBlock){
                     idx = i;
                     break;
                 }
             }
-            tarBlock.stop();
+            tarBlock.hitit();
+            /*tarBlock.stop();
             this.removeChild(tarBlock);
             tarBlock = null;
             const block = this._createBlock({
@@ -146,7 +147,7 @@ class BlocksColumn extends egret.Sprite {
             let scoreEvent:GameEvents.PlayEvent = new GameEvents.PlayEvent(GameEvents.PlayEvent.SCORE);
             
             scoreEvent.score = 1;
-            this.dispatchEvent(scoreEvent);
+            this.dispatchEvent(scoreEvent);*/
         }
     }
     private _onMovedOut(evt: GameEvents.BlockEvent) {
