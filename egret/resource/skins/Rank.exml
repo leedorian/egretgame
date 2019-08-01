@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="LoginSkin" width="1080" height="1920" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
+	<w:Config id="168a1cc9fac" ></w:Config>
+	<e:Image fillMode="repeat" left="3" right="-3" top="0" bottom="0" source="BgColor01_png"/>
+	<e:Image width="1074.55" height="403.33" x="2.73" y="0" anchorOffsetX="0" anchorOffsetY="0" source="rank_topbg_png"/>
+	<e:Label id="label_bottom" text="今日" x="502" y="256.07" size="40" bold="true"/>
+	<e:Label id="label_right" text="本周" x="863.03" y="109.1" size="40" textColor="0x603811" bold="true"/>
+	<e:Label id="label_left" text="单局" x="106.3" y="109.1" size="40" textColor="0x603811" bold="true"/>
+	<e:Image id="back" width="72" height="64" x="36" y="340" source="rank_back_png" anchorOffsetX="0" anchorOffsetY="0"/>
+	<e:Scroller id="contentScroller" width="1080" height="1378" x="2" y="532" anchorOffsetX="0" anchorOffsetY="0">
+	</e:Scroller>
+
+	
+	
+
+
+</e:Skin>

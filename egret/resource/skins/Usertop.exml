@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="LoginSkin" width="1080" height="266" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
+	<w:Config id="168a1cc9fac" ></w:Config>
+	<e:Image fillMode="repeat" left="0" right="0" top="0" bottom="1655" source="BgColor01_png" anchorOffsetY="0"/>
+	<e:Image width="1074.54" height="265.46" x="0" y="0" anchorOffsetX="0" anchorOffsetY="0" source="indextop_png"/>
+	<e:Image id="avater" width="175" height="175" x="58.03" y="62.12" anchorOffsetX="0" anchorOffsetY="0" source=""/>
+	<e:Image width="292.73" height="80.61" x="247.27" y="69.01" source="namelabel_png" anchorOffsetX="0" anchorOffsetY="0"/>
+	<e:Label id="nickText" text="" x="245.27" y="69.01" width="292" height="80" size="50" textAlign="center" verticalAlign="middle"/>
+	<e:Image id="power1" width="52" height="38" x="262" y="188" source="quqi_b_png" anchorOffsetX="0" anchorOffsetY="0"/>
+	<e:Image id="power2" width="52" height="38" x="327.27" y="188" source="quqi_b_png" anchorOffsetX="0" anchorOffsetY="0"/>
+	<e:Image id="power3" width="52" height="38" x="391.27" y="188" source="quqi_b_png" anchorOffsetX="0" anchorOffsetY="0"/>
+	<e:Image id="power4" width="52" height="38" x="455" y="188" source="quqi_b_png" anchorOffsetX="0" anchorOffsetY="0"/>
+	<e:Image id="power5" width="52" height="38" x="524" y="188" source="quqi_b_png" anchorOffsetX="0" anchorOffsetY="0"/>
+	<e:Image width="362.73" height="80.61" x="621.27" y="69.01" source="namelabel_png" anchorOffsetX="0" anchorOffsetY="0"/>
+	<e:Image width="299.73" height="80.61" x="684.27" y="156.51" source="namelabel_png" anchorOffsetX="0" anchorOffsetY="0"/>
+	<e:Image width="95" height="95" x="584.77" y="60.73" source="money_png" anchorOffsetX="0" anchorOffsetY="0"/>
+	<e:Image id="addmoney" width="84" height="77" x="900" y="69.01" source="indexadd_png" anchorOffsetX="0" anchorOffsetY="0"/>
+	<e:Image id="addpower" width="84" height="77" x="900" y="160.12" source="indexadd_png" anchorOffsetX="0" anchorOffsetY="0"/>
+	<e:Label id="moneyText" text="" x="632.27" y="69.01" width="292" height="80" size="50" textAlign="center" verticalAlign="middle"/>
+	<e:Label id="powerText" text="" x="656.64" y="155.73" width="292" height="80" size="50" textAlign="center" verticalAlign="middle"/>
+	<e:Rect id="avamask" width="175" height="175" x="58" y="62" ellipseWidth="200" ellipseHeight="200"/>
+
+
+
+</e:Skin>

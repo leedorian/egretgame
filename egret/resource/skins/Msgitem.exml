@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="LoginSkin" width="1080" height="402" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
+	<w:Config id="168a1cc9fac" ></w:Config>
+	<e:Image fillMode="repeat" left="0" right="0" top="0"  source="BgColor01_png" anchorOffsetY="0" height="399"/>
+	<e:Image width="1080" height="362" x="0" y="50" anchorOffsetX="0" anchorOffsetY="0" source="msg_png"/>
+	<e:Image id="typeImg" width="70" height="70" x="26" y="25" anchorOffsetX="0" anchorOffsetY="0" source="{data.typeimg}"/>
+	<e:Label id="typeText" text="{data.title}" x="122" y="105" textColor="0x2b388f" anchorOffsetX="0" width="216" anchorOffsetY="0" height="42" textAlign="center" verticalAlign="middle" bold="true"/>
+	<e:Label id="datetime" text="{data.addtime}" x="838" y="132" textColor="0x603813" anchorOffsetX="0" width="182" verticalAlign="middle" textAlign="center" bold="true"/>
+	<e:Label id="text" text="{data.content}" x="128" y="188" anchorOffsetX="0" width="922" anchorOffsetY="0" height="198" textColor="0x59595a"/>
+</e:Skin>

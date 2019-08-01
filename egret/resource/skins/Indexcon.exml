@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="LoginSkin" width="1080" height="1920" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
+	<w:Config id="168a1cc9fac" ></w:Config>
+	<e:Image fillMode="repeat" left="2" right="-2" top="0" bottom="0" source="BgColor01_png"/>
+	<e:Image width="1082.12" height="660" x="0" y="320" anchorOffsetX="0" anchorOffsetY="0" source="Bg01_png"/>
+	<e:Button id="playgame" label="" x="182.5" y="1130" height="108">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="play_png" source.down="play_png" source.disabled="play_png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:Button id="rankImg" label="" x="183" y="1460" height="130" width="130" enabled="true">
+		<e:skinName>
+		<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="indexrank_png" source.down="indexrank_png" source.disabled="indexrank_png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+		</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:Button id="faceImg" label="" x="398.55" y="1460" height="130" anchorOffsetX="0" width="130" anchorOffsetY="0">
+		<e:skinName>
+		<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="indexblcok_png" source.down="indexblcok_png" source.disabled="indexblcok_png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+		</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:Button id="settingImg" label="" x="600.98" y="1460" height="130" anchorOffsetX="0" width="130" anchorOffsetY="0">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="indexsetting_png" source.down="indexsetting_png" source.disabled="indexsetting_png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:Button id="scoreImg" label="" x="797.5" y="1460" height="130" anchorOffsetX="0" width="130" anchorOffsetY="0">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="indexscore_png" source.down="indexscore_png" source.disabled="indexscore_png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+
+
+
+
+	<e:Image id="faceIcon" width="20" height="20" x="520" y="1450" source="unread_png"/>
+	<e:Image id="scoreIcon" width="20" height="20" x="920" y="1450" source="unread_png"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</e:Skin>

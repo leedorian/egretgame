@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<e:Skin class="aboutUISkin" width="480" height="800" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image height="100%" width="100%" x="0" y="0" source="task-bg_png"/>
+
+	<e:Label id="task_name" text="每日任务" x="180" y="36" fontFamily="SimHei"/>
+	<e:Label id="task_date" text="2.1~2.10" x="200.5" y="80" size="20" fontFamily="DFKai-SB" textColor="0xfff4af"/>
+	<e:Image width="438" height="591" x="21" y="114" anchorOffsetX="0" anchorOffsetY="0" source="task_tmp1_png"/>
+	<e:Image width="31" height="81" x="415.5" y="10.5" source="task_star_png"/>
+	<e:Image width="25" height="53" x="8.5" y="80" source="task_star_png" fillMode="scale" anchorOffsetX="0" anchorOffsetY="0"/>
+	<e:Image width="25" height="53" x="363.5" y="47" source="task_star_png" fillMode="scale" anchorOffsetX="0" anchorOffsetY="0"/>
+	<e:Button id="btnClose_bak" horizontalCenter="206.5" verticalCenter="-284" visible="false">
+		<e:skinName>
+		<e:Skin states="up,down,disabled">
+			<e:Image width="90%" height="90%" width.down="100%" height.down="100%" source="task_close_png" source.down="task_close_png" source.disabled="task_close_png" horizontalCenter="-1.5" verticalCenter="-1.5"/>
+		</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:Image id="task_pic" width="348" height="244" x="62" y="185" anchorOffsetX="0" anchorOffsetY="0" source="task_pic_png"/>
+	<e:Image width="342" height="159" x="73.5" y="475" anchorOffsetX="0" anchorOffsetY="0" source="task_sbg_png"/>
+	<e:Image id="task_percent" width="287" height="30" x="101.5" y="570.5" anchorOffsetX="0" anchorOffsetY="0" source="task_noticebg_png"/>
+	<e:Image width="20" height="42" x="378.5" y="570.5" source="task_star_png" fillMode="scale" anchorOffsetX="0" anchorOffsetY="0"/>
+	<e:Label id="task_desc" text="删除90个黑块" x="95.5" y="509" anchorOffsetX="0" width="289" textAlign="center" size="20"/>
+	<e:Label text="REWARD" x="39.5" y="654" textColor="0x56331d" size="25" bold="true"/>
+	<e:Image width="125" height="31" x="173.5" y="654" anchorOffsetX="0" anchorOffsetY="0" source="task_reward_bg_png"/>
+	<e:Image width="40" height="40" x="160.5" y="646.5" source="task_pointpic_png"/>
+	<e:Image width="20" height="20" x="180" y="674" source="task_finish_png"/>
+	<e:Label id="task_reward" text="299" x="227.5" y="659.5" size="20"/>
+	<e:Button id="receive_btn" label="" x="317" y="647.5" anchorOffsetX="0" width="118" anchorOffsetY="0" height="39">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="btn_receive_png" source.down="btn_receive_png" source.disabled="btn_receive_png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:Button id="btnClose" label="" x="423.5" y="91.5">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="task_close_png" source.down="task_close_png" source.disabled="task_close_png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:Image width="58" height="52" x="33.5" y="724" anchorOffsetX="0" anchorOffsetY="0" source="task_ppp_png"/>
+	<e:Label text="Daily missions end at midnight and Moday" x="151" y="728" anchorOffsetX="0" width="238" textAlign="center" size="20" textColor="0xfff4af"/>
+</e:Skin>

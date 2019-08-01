@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="LoginSkin" width="1080" height="215" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
+	<w:Config id="168a1cc9fac" ></w:Config>
+	<e:Image fillMode="repeat" left="0" right="0" top="0"  source="BgColor01_png" anchorOffsetY="0" height="399"/>
+	<e:Image width="1080" height="207.45" x="0" y="1.52" anchorOffsetX="0" anchorOffsetY="0" source="friend_yellow_png"/>
+	<e:Image id="avater" width="138.18" height="107.88" x="90" y="41.97" anchorOffsetX="0" anchorOffsetY="0" source="indexadd_png"/>
+	<e:Image width="116.97" height="104.85" x="18" y="45" anchorOffsetX="0" anchorOffsetY="0" source="rank_pic_png"/>
+	<e:Label id="rank" text="9" x="26.12" y="66.59" size="50" textAlign="center" anchorOffsetX="0" width="100.73" anchorOffsetY="0" height="40.91"/>
+	<e:Label id="nickname" text="Dorian" x="264.03" y="72.43" size="50" textAlign="left" anchorOffsetX="0" width="186.64" textColor="0x845816" bold="true"/>
+	<e:Label id="score" text="120000" x="540" y="72.43" size="50" textAlign="left" anchorOffsetX="0" width="186.64" textColor="0x845816" bold="true"/>
+	<e:Image width="135.15" height="120" x="760.18" y="37.43" anchorOffsetX="0" anchorOffsetY="0" source="money_png"/>
+	<e:Image id="sendactionpointBtn" width="83.64" height="74.55" x="951.18" y="66.59" anchorOffsetX="0" anchorOffsetY="0" source="actionpoint_send_on_png"/>
+
+
+
+
+</e:Skin>

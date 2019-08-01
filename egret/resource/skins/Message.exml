@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="LoginSkin" width="1080" height="1920" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
+	<w:Config id="168a1cc9fac" ></w:Config>
+	<e:Image fillMode="repeat" left="0" right="0" top="0" bottom="0" source="BgColor01_png"/>
+	<e:Image width="1080" height="386" x="0" y="0" anchorOffsetX="0" anchorOffsetY="0" source="msg_top_png"/>
+	<e:Label id="msgBtn" text="信息" x="490" y="238" size="50" bold="true"/>
+	<e:Label id="rightLabel" text="朋友" x="846.5" y="86" size="50" textColor="0x603813" bold="true"/>
+	<e:Image id="back" width="68" height="78" x="20" y="308" anchorOffsetX="0" anchorOffsetY="0" source="rank_back_png"/>
+	<e:List width="1080" height="1512" y="406" anchorOffsetX="0" anchorOffsetY="0" visible="false">
+		<e:layout>
+		<e:VerticalLayout/>
+		</e:layout>
+	</e:List>
+	<e:Scroller id="dataScroll" width="1080" height="1506" x="0" y="412" anchorOffsetX="0" anchorOffsetY="0">
+		<e:List id="datalist">
+			<e:layout>
+				<e:VerticalLayout/>
+			</e:layout>
+		</e:List>
+	</e:Scroller>
+	<e:Label text="BOX" x="482.5" y="136" size="55"/>
+	
+</e:Skin>

@@ -27,10 +27,12 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
+import Timer = egret.Timer;
+
 class Main extends egret.DisplayObjectContainer {
 
 
-
+    private tokenTimer:Timer;
     public constructor() {
         super();
 
@@ -64,21 +66,72 @@ class Main extends egret.DisplayObjectContainer {
         this.runGame().catch(e => {
             console.log(e);
         })
+        
+        this.tokenTimer = new egret.Timer(60000,0);
+        this.tokenTimer.addEventListener(egret.TimerEvent.TIMER,this.localCheck,this);
+        this.tokenTimer.start();
+        this.localCheck();
+    }
 
+    private localCheck():void{
+        var token = egret.localStorage.getItem(Constant.G_TOKEN_KEY);
+        var expire = egret.localStorage.getItem(Constant.G_TOKEN_EXPIRE_KEY);
+        var self = this;
+        if (token == "" || expire == "" || Number(expire) < WxgUtils.getNowTimestamp()+300)
+        {
+            var request = new egret.HttpRequest();
+            var respHandler = function (evt) {
+                switch (evt.type) {
+                    case egret.Event.COMPLETE:
+                        var request = evt.currentTarget;
+                        var result = JSON.parse(request.response);
 
+                        if (result.status == 0)
+                        {
+                            egret.localStorage.setItem(Constant.G_TOKEN_KEY, result.token);
+                            egret.localStorage.setItem(Constant.G_TOKEN_EXPIRE_KEY, result.expire);
+                        } else {
+                            //window.alert(result.reason+","+result.status);
+                            console.log("gettoken err =>" + result.reason+","+result.status);
+                        }
+                        break;
+                    case egret.IOErrorEvent.IO_ERROR:
+                        break;
+                }
+            };
+            var url = Constant.getGettokenUrl();
+            egret.ExternalInterface.call("showtest", url);
+            request.once(egret.Event.COMPLETE, respHandler, self);
+            request.once(egret.IOErrorEvent.IO_ERROR, respHandler, self);
 
+            var openid = egret.localStorage.getItem(Constant.G_OPENID_KEY);
+            var uname = egret.localStorage.getItem(Constant.G_UNAME_KEY);
+            if (Constant.isdebug)
+            {
+                if (openid == "" || openid == null || uname == null || uname == "")
+                {
+                    console.log("调用调试openid");
+                    openid = "o7Vp401Z9LZaQoBfO1Zq_wfN7QSk";
+                    egret.localStorage.setItem(Constant.G_UNAME_KEY, "g1561620209406139");
+                }
+            }
+            url = url +"&openid="+openid;
+            // console.log(url);
+            request.open(url, egret.HttpMethod.GET);
+            request.send();
+        }
     }
 
     private async runGame() {
         await this.loadResource();
-       await this.createGameScene();
-
+        await this.createGameScene();
+        Toast.init( this, RES.getRes( "toast-bg_png" ) ); 
         this._attachEvents();
         // const result = await RES.getResAsync("description_json")
         // this.startAnimation(result);
-        await platform.login();
-        const userInfo = await platform.getUserInfo();
-        console.log(userInfo);
+        // await platform.login();
+        // const userInfo = await platform.getUserInfo();
+        // console.log(userInfo);
 
     }
     private loadTheme() {
@@ -149,78 +202,145 @@ class Main extends egret.DisplayObjectContainer {
      * Create a game scene
      */
     private async createGameScene() {
-        this.stage.setContentSize(window.innerWidth, window.innerHeight);
+        //this.stage.setContentSize(Constant.DESIGN_WID, Constant.DESIGN_HEI);
+        // this.stage.setContentSize(window.innerWidth, window.innerHeight);
+        this.setNativeListener();
 
+        //判断是否登录
 
-        // let topMask = new egret.Shape();
-        // topMask.graphics.beginFill(0x000000, 0.5);
-        // topMask.graphics.drawRect(0, 0, stageW, 172);
-        // topMask.graphics.endFill();
-        // topMask.y = 33;
-        // this.addChild(topMask);
+        // this.checkLogin();
+        this.index();
+    }
+    private checkLogin():void{
+        var uid = egret.localStorage.getItem(Constant.G_UID_KEY);
+        if (uid == null || uid == "")
+        {
+            this.login();
+        } else {
+            this.index();
+        }
+    }
+    private index():void{
+        this.removeChildren();
+        var indexcon = new Indexcon();
+        this.addChild(indexcon);
+        var usertopScreen = new Usertop();
+        this.addChild(usertopScreen);
+        indexcon.addEventListener(GameEvent.GAME_START, this.startgame, this);
+        indexcon.addEventListener(GameEvent.GAME_RANK, this.rank, this);
+        indexcon.addEventListener(GameEvent.GAME_MESSAGE,this.message, this);
+        indexcon.addEventListener(GameEvent.GAME_FRIEND, this.friend, this);
+        indexcon.addEventListener(GameEvent.GAME_SETTING, this.setting, this);
+        usertopScreen.addEventListener(GameEvent.GAME_SHOPSKILL, this.skillshop, this);
+        this._testBtn();
+    }
+    private setting():void {
+        this.removeChildren();
+        var settingScreen = new Setting();
+        settingScreen.addEventListener(GameEvent.GAME_INDEX,this.index, this);
+        this.addChild(settingScreen);
+    }
+    private friend():void {
+        this.removeChildren();
+        var friendScreen = new Friend();
+        this.addChild(friendScreen);
+        friendScreen.addEventListener(GameEvent.GAME_INDEX, this.index, this);
+        friendScreen.addEventListener(GameEvent.GAME_SEARCHFRIEND, this.searchuser, this);
+    }
+    private searchuser():void {
+        this.removeChildren();
+        var k = egret.localStorage.getItem(Constant.G_SEARCHUSER_KEY);
+        var searchFriend = new SearchFriend(k);
+        this.addChild(searchFriend);
+        searchFriend.addEventListener(GameEvent.GAME_FRIEND, this.friend, this);
+    }
+    private login():void {
+        this.removeChildren();
+        const loginScreen = new Login();
+        this.addChild(loginScreen);
+    }
+    //消息界面
+    private message():void{
+        this.removeChildren();
+        var msgScreen = new Message();
+        this.addChild(msgScreen);
+        msgScreen.addEventListener(GameEvent.GAME_INDEX, this.index, this);
+    }
+    //排行榜
+    private rank():void{
+        this.removeChildren();
+        var rankScreen = new Rank();
+        this.addChild(rankScreen);
+        rankScreen.addEventListener(GameEvent.GAME_INDEX, this.index, this);
+    }
+    //技能商店
+    private skillshop():void{
+        this.removeChildren();
+        var shopskillScreen = new Shopskill();
+        this.addChild(shopskillScreen);
+        shopskillScreen.addEventListener(GameEvent.GAME_INDEX, this.index, this);
+    }
+    private setNativeListener(): void{
+        var self_m1 = this;
+        egret.ExternalInterface.addCallback("getcode",function(message:string){
+            if (message != "")
+            {
+                window.alert(message);
+            }
+        });
+        egret.ExternalInterface.addCallback("wxloginR",function(message:string){
+            //console.log("message from Native is = "+message);
+            if (message != "")
+            {
+                //进行http登录
+                var request = new egret.HttpRequest();
+                var respHandler = function (evt) {
+                    switch (evt.type) {
+                        case egret.Event.COMPLETE:
+                            var request = evt.currentTarget;
+                            var result = JSON.parse(request.response);
 
-        // let icon = this.createBitmapByName("egret_icon_png");
-        // this.addChild(icon);
-        // icon.x = 26;
-        // icon.y = 33;
+                            if (result.status == 0)
+                            {
+                                // window.alert(result.status + " | "+result.data.uid+" | " + new Date().toString());
+                                egret.localStorage.setItem(Constant.G_UID_KEY, result.data.uid);
+                                egret.localStorage.setItem(Constant.G_NICKNAME_KEY, result.data.truename);
+                                var timestr:string = String((Constant.G_USEREXPIRETIME_KEY, Date.parse(new Date().toString())/1000));
+                                egret.localStorage.setItem(Constant.G_USEREXPIRETIME_KEY,timestr);
+                                egret.localStorage.setItem(Constant.G_UNAME_KEY, result.data.username);
+                                self_m1.index();
+                            } else {
+                                window.alert(result.reason);
+                            }
+                            break;
+                        case egret.IOErrorEvent.IO_ERROR:
+                            break;
+                    }
+                };
+                request.once(egret.Event.COMPLETE, respHandler, self_m1);
+                request.once(egret.IOErrorEvent.IO_ERROR, respHandler, self_m1);
+                var url = Constant.getLoginUrl();
+                var msgArr = JSON.parse(message);
+                egret.localStorage.setItem(Constant.G_OPENID_KEY, msgArr.openid);
+                // egret.ExternalInterface.call("showtest", msgArr.openid);
+                url = url +"&c="+encodeURIComponent(message)+"&type=weixin&openid="+msgArr.openid+"&unionid="+msgArr.unionid;
+                request.open(url, egret.HttpMethod.GET);
+                request.send();
+            }
+        });
+    }
 
-        // let line = new egret.Shape();
-        // line.graphics.lineStyle(2, 0xffffff);
-        // line.graphics.moveTo(0, 0);
-        // line.graphics.lineTo(0, 117);
-        // line.graphics.endFill();
-        // line.x = 172;
-        // line.y = 61;
-        // this.addChild(line);
-
-
-        // let colorLabel = new egret.TextField();
-        // colorLabel.textColor = 0xffffff;
-        // colorLabel.width = stageW - 172;
-        // colorLabel.textAlign = "center";
-        // colorLabel.text = "Hello Egret";
-        // colorLabel.size = 24;
-        // colorLabel.x = 172;
-        // colorLabel.y = 80;
-        // this.addChild(colorLabel);
-
-        // let textfield = new egret.TextField();
-        // this.addChild(textfield);
-        // textfield.alpha = 0;
-        // textfield.width = stageW - 172;
-        // textfield.textAlign = egret.HorizontalAlign.CENTER;
-        // textfield.size = 24;
-        // textfield.textColor = 0xffffff;
-        // textfield.x = 172;
-        // textfield.y = 135;
-        // this.textfield = textfield;
-
-
-
+    //进入游戏界面
+    private startgame():void
+    {
+        //window.alert("进入游戏界面");
+        this.removeChildren();
 
         this._GameScreen = new GameScreen();
         this.addChild(this._GameScreen);
-
-
-        // gameScene.skewX = 3;
-        // gameScene.skewY = 50;
-
-        // gameScene.anchorOffsetX = gameScene.width/2;
-        // gameScene.anchorOffsetY = gameScene.height/2;
-        // gameScene.x = Utils.getStageWidth()/2;
-        // gameScene.y = Utils.getStageHeight()/2;
-        // gameScene.rotation = -45;
-        // gameScene.scaleX = 0.5;
-        // gameScene.scaleY = 0.5;
-
-        // this._gameScene = gameScene;
-        // this._gameScene.x =  Utils.horizontalMargin;
-        // this._gameScene.y =  Utils.verticalMarginTop;
-        // this.addChild(gameScene);
-
         const startButtonWidth:number = Utils.getStageWidth()/2;
         console.log(Utils.getStageWidth());
-        
+
         const startButtonHeight:number = 80;
         const startButton: UIComponents.DefaultButton =
             new UIComponents.DefaultButton(startButtonWidth,startButtonHeight,"Start");
@@ -234,28 +354,46 @@ class Main extends egret.DisplayObjectContainer {
         const gameOverButtonHeight:number = 80;
         const gameOverButton: UIComponents.DefaultButton =
             new UIComponents.DefaultButton(gameOverButtonWidth,gameOverButtonHeight,"Game over");
-            gameOverButton.x = Utils.getStageWidth()/2 - gameOverButtonWidth/2;
-            gameOverButton.y = Utils.getStageHeight() * 0.3;
-            gameOverButton.visible = false;
-            gameOverButton.addEventListener("touchTap", this._restartGame, this);
+        gameOverButton.x = Utils.getStageWidth()/2 - gameOverButtonWidth/2;
+        gameOverButton.y = Utils.getStageHeight() * 0.3;
+        gameOverButton.visible = false;
+        gameOverButton.addEventListener("touchTap", this._restartGame, this);
         this._gameOverButton = gameOverButton;
         this.addChild(gameOverButton);
-        
-        
-        // const loginScreen = new Login();
-        
-        // this.stage.addChild(loginScreen);
+
+        //这里是测试代码 add by wuxiaoguang 20190426 start
+        // const testButton: UIComponents.DefaultButton =
+        //     new UIComponents.DefaultButton(startButtonWidth,startButtonHeight,"弹出层测试");
+        // testButton.x = Utils.getStageWidth()/2 - startButtonWidth/2;
+        // testButton.y = Utils.getStageHeight() * 0.5;
+        // testButton.addEventListener("touchTap", this._testBtn, this);
+        // this.addChild(testButton);
+        //这里是测试代码 add by wuxiaoguang 20190426 end
+
+
 
     }
     private _startGame() {
         this._startButton.visible = false;
         this._GameScreen.gameScene.gameStart();
     }
+    private _testBtn(){
+        //进入测试的界面
+        console.log("点击了测试按钮哦..................我哈哈");
+        var ymd = WxgUtils.getYmd(new Date().getTime());
+        var lookYmd = egret.localStorage.getItem(Constant.G_FIRST_LOOKDATE);
+        if(lookYmd == null || lookYmd == "" || lookYmd != ymd){
+            egret.localStorage.setItem(Constant.G_FIRST_LOOKDATE, ymd);
+            var taskUI = new TaskUI();
+            taskUI.x = 0;
+            taskUI.y = 0;
+            this.addChild(taskUI);
+        }
+    }
     private _restartGame() {
         this._startButton.visible = true;
         this._gameOverButton.visible = false;
         this._GameScreen.reset();
-
     }
 
     private _attachEvents(){

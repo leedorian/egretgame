@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="LoginSkin" width="1080" height="120" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
+	<w:Config id="168a1cc9fac" ></w:Config>
+	<e:Image fillMode="repeat" left="0" right="0" top="0" bottom="1655" source="BgColor01_png" anchorOffsetY="0"/>
+	<e:Image id="bg" width="1080" height="114" x="0" y="3.39" anchorOffsetX="0" anchorOffsetY="0" source="rank_blue_png"/>
+	<e:Image id="avater" width="83.79" height="83.21" x="18.5" y="17.49" anchorOffsetX="0" anchorOffsetY="0" source="indexadd_png"/>
+	<e:Label id="nicktext" text="nick" x="209.63" y="45.39" size="30"/>
+	<e:Label id="scoretext" text="123123123" x="514.5" y="45" size="30"/>
+	<e:Image id="rank_pic" width="84.36" height="86.28" x="879.45" y="14.42" anchorOffsetX="0" anchorOffsetY="0" source="rank_pic_png"/>
+	<e:Label id="rank_num" text="9999" x="879.45" y="32.55" anchorOffsetX="0" width="91.57" anchorOffsetY="0" height="50.03" size="40" textAlign="center"/>
+
+
+
+
+</e:Skin>

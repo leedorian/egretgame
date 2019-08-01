@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="LoginSkin" width="1080" height="1920" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
+	<w:Config id="168a1cc9fac" ></w:Config>
+	<e:Image fillMode="repeat" left="0" right="0" top="0" bottom="0" source="BgColor01_png"/>
+	<e:Image id="avater" width="300" height="300" x="373" y="76" anchorOffsetX="0" anchorOffsetY="0" source="indexadd_png"/>
+	<e:Label text="设置" x="115" y="473.06" size="50" bold="true"/>
+	<e:Label text="手机号" x="115" y="582.15" size="45" textColor="0xff0000"/>
+	<e:Label text="国家" x="115" y="746.7" size="45" textColor="0xFF0000"/>
+	<e:Label text="收货地址" x="115" y="915" size="45" textColor="0xFF0000"/>
+	<e:Image width="829.09" height="29.09" x="115" y="691.33" anchorOffsetX="0" anchorOffsetY="0" source="white_line_png"/>
+	<e:Image width="829.09" height="29.09" x="115" y="855.27" anchorOffsetX="0" anchorOffsetY="0" source="white_line_png"/>
+	<e:Image width="829.09" height="29.09" x="115" y="1028.91" anchorOffsetX="0" anchorOffsetY="0" source="white_line_png"/>
+	<e:EditableText id="mobileinput" width="821.22" height="72.73" text="" x="115" y="633.15" anchorOffsetX="0" textAlign="left" verticalAlign="middle" anchorOffsetY="0"/>
+	<e:EditableText id="nationinput" width="821.22" height="72.73" text="" x="115" y="797.09" anchorOffsetX="0" textAlign="left" verticalAlign="middle" anchorOffsetY="0"/>
+	<e:EditableText id="receiveinput" width="821.22" height="72.73" text="" x="115" y="970.73" anchorOffsetX="0" textAlign="left" verticalAlign="middle" anchorOffsetY="0"/>
+	<e:ToggleSwitch id="musicState" label="" x="936.22" y="1136.79" anchorOffsetX="0" width="131.15" anchorOffsetY="0" height="61.79">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="switch_on_png" source.down="switch_off_png" source.disabled="switch_off_png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:ToggleSwitch>
+	<e:HSlider id="musicSlider" width="613.39" height="62.42" x="280.77" y="1136.79" anchorOffsetX="0" anchorOffsetY="0" enabled="true" skinName="skins.HSliderSkin"/>
+	<e:Image width="100" height="100" x="115" y="1118" anchorOffsetX="0" anchorOffsetY="0" source="music_png"/>
+	<e:Button id="saveBtn" label="" x="424" y="1518" anchorOffsetX="0" width="296" anchorOffsetY="0" height="74">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="savesettingbtn_png" source.down="savesettingbtn_png" source.disabled="savesettingbtn_png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:Image id="back" width="120" height="120" x="78.94" y="17.51" anchorOffsetX="0" anchorOffsetY="0" source="back_png"/>
+	<e:Rect id="avamask" width="300" height="300" x="373" y="76" anchorOffsetX="0" anchorOffsetY="0" ellipseWidth="300" ellipseHeight="300" fillAlpha="1" strokeColor="0x42ff42" strokeAlpha="1" strokeWeight="10" fillColor="0x000000"/>
+	
+	
+</e:Skin>

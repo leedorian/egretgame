@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="LoginSkin" width="1080" height="1920" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
+	<w:Config id="168a1cc9fac" ></w:Config>
+	<e:Image fillMode="repeat" left="0" right="0" top="0" bottom="0" source="BgColor01_png"/>
+	<e:Image width="982" height="1645.64" x="49" y="156" anchorOffsetX="0" anchorOffsetY="0" source="shopbg3_png"/>
+	<e:Image width="329.09" height="110.91" x="157.24" y="45" anchorOffsetX="0" anchorOffsetY="0" source="tabuncheck_png"/>
+	<e:Image width="329.09" height="110.91" x="603.61" y="45" anchorOffsetX="0" anchorOffsetY="0" source="tabcheck_png"/>
+	<e:Image id="skilldescimg" width="862.42" height="422" x="109" y="200" anchorOffsetX="0" anchorOffsetY="0" source="shopskillbg_png"/>
+	<e:Label id="skillname" text="冰冻：" x="115" y="642" anchorOffsetX="0" width="140.67" anchorOffsetY="0" height="45.15" textAlign="center" verticalAlign="top" textColor="0xf6921e" bold="true"/>
+	<e:Label id="skilldesc" text="Freeze all totem monsters on the ten second . Desc" x="255.67" y="642" anchorOffsetX="0" width="677.03" anchorOffsetY="0" height="142.12" textAlign="left" verticalAlign="top"/>
+	<e:Image width="135" height="135" x="212" y="873" anchorOffsetX="0" anchorOffsetY="0" source="money_png"/>
+	<e:Label text="Costs" x="400" y="875" anchorOffsetX="0" width="134.61" anchorOffsetY="0" height="45.15" verticalAlign="top" textAlign="center" size="35" bold="true"/>
+	<e:Label text="Youhave" x="700.85" y="875" anchorOffsetX="0" width="167.94" anchorOffsetY="0" height="45.15" verticalAlign="top" textAlign="center" size="35" bold="true" fontFamily="SimHei"/>
+	<e:Label id="skillprice" text="50" x="362.13" y="920" anchorOffsetX="0" width="210.36" anchorOffsetY="0" height="57.27" textAlign="center" size="80" bold="true" textColor="0xf6921e"/>
+	<e:Label id="mymoney" text="50" x="663.47" y="920" anchorOffsetX="0" width="279.36" anchorOffsetY="0" height="57.27" textAlign="center" size="80" bold="true" textColor="0x00d651"/>
+	<e:Image width="298.79" height="62.42" x="390.6" y="1057.97" anchorOffsetX="0" anchorOffsetY="0" source="task_reward_bg_png"/>
+	<e:Label id="buynum" text="1" x="400" y="1057.06" anchorOffsetX="0" width="289.16" anchorOffsetY="0" height="60.3" textAlign="center" verticalAlign="middle" bold="true" size="40"/>
+	<e:Image id="minusBtn" width="70" height="25" x="277" y="1076.68" anchorOffsetX="0" anchorOffsetY="0" source="minus_png"/>
+	<e:Image id="plusBtn" width="70" height="70" x="733.15" y="1057.97" anchorOffsetX="0" anchorOffsetY="0" source="plus_png"/>
+	<e:Image id="freezebtn" width="150" height="150" x="160" y="1337" anchorOffsetX="0" anchorOffsetY="0" source="freeze_png"/>
+	<e:Image id="revivebtn" width="150" height="150" x="160" y="1558" anchorOffsetX="0" anchorOffsetY="0" source="revive_png" visible="false"/>
+	<e:Image id="nukebtn" width="150" height="150" x="360" y="1337" anchorOffsetX="0" anchorOffsetY="0" source="nuke_png"/>
+	<e:Image id="purifybtn" width="150" height="150" x="560" y="1337" anchorOffsetX="0" anchorOffsetY="0" source="purify_png"/>
+	<e:Image id="skullbtn" width="150" height="150" x="760" y="1337" anchorOffsetX="0" anchorOffsetY="0" source="skull_png"/>
+	<e:Image width="40" height="40" x="250" y="1445" anchorOffsetX="0" anchorOffsetY="0" source="unread_png"/>
+	<e:Image width="40" height="40" x="447.31" y="1447" anchorOffsetX="0" anchorOffsetY="0" source="unread_png"/>
+	<e:Image width="40" height="40" x="659.64" y="1445" anchorOffsetX="0" anchorOffsetY="0" source="unread_png"/>
+	<e:Image width="40" height="40" x="850" y="1445" anchorOffsetX="0" anchorOffsetY="0" source="unread_png"/>
+	<e:Image width="40" height="40" x="250" y="1668" anchorOffsetX="0" anchorOffsetY="0" source="unread_png" visible="false"/>
+	<e:Label id="freezenum" text="0" x="235" y="1453.52" textAlign="center" anchorOffsetX="0" width="65.48" anchorOffsetY="0" height="26.97"/>
+	<e:Label id="nukenum" text="0" x="434.56" y="1451.52" textAlign="center" anchorOffsetX="0" width="65.48" anchorOffsetY="0" height="26.97"/>
+	<e:Label id="purifynum" text="0" x="646.9" y="1451.52" textAlign="center" anchorOffsetX="0" width="65.48" anchorOffsetY="0" height="26.97"/>
+	<e:Label id="skullnum" text="0" x="835" y="1451.52" textAlign="center" anchorOffsetX="0" width="65.48" anchorOffsetY="0" height="26.97"/>
+	<e:Label id="revivenum" text="0" x="235" y="1674.52" textAlign="center" anchorOffsetX="0" width="65.48" anchorOffsetY="0" height="26.97" visible="false"/>
+	<e:Label text="块" x="215" y="61" anchorOffsetX="0" width="213.39" anchorOffsetY="0" height="78.48" bold="true" textAlign="center" verticalAlign="middle" size="50"/>
+	<e:Label text="技能" x="661.46" y="61" anchorOffsetX="0" width="213.39" anchorOffsetY="0" height="78.48" bold="true" textAlign="center" verticalAlign="middle" size="50"/>
+	<e:Button id="buybtn" label="" x="383" y="1155" width="323" height="100">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="shopbuy_png" source.down="shopbuy_png" source.disabled="shopbuy_png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:Image id="freezeselect" width="160" height="160" x="161.69" y="1332" anchorOffsetX="0" anchorOffsetY="0" source="skillselected_png"/>
+	<e:Image id="reviveselect" width="160" height="160" x="157.24" y="1558" anchorOffsetX="0" anchorOffsetY="0" source="skillselected_png" visible="false"/>
+	<e:Image id="purifyselect" width="160" height="160" x="552.38" y="1337" anchorOffsetX="0" anchorOffsetY="0" source="skillselected_png"/>
+	<e:Image id="skullselect" width="160" height="160" x="750" y="1337" anchorOffsetX="0" anchorOffsetY="0" source="skillselected_png"/>
+	<e:Image id="nukeselect" width="160" height="160" x="350" y="1332" anchorOffsetX="0" anchorOffsetY="0" source="skillselected_png"/>
+	<e:Image id="back" width="80" height="80" x="504.5" y="1810" anchorOffsetX="0" anchorOffsetY="0" source="circle_png"/>
+	
+</e:Skin>

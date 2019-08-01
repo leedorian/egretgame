@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<e:Skin class="reviveSkin" width="480" height="800" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image height="100%" width="100%" x="0" y="0" source="task-bg_png"/>
+	<e:Image width="475" height="735" x="0" y="0" anchorOffsetX="0" anchorOffsetY="0" source="pop_revivecon_png"/>
+	<e:Image width="65" height="84" x="240" y="543" anchorOffsetX="0" anchorOffsetY="0" source="pop_reviveimg_png"/>
+	<e:Image width="20" height="20" x="278" y="600" source="pop_unreadbg_png"/>
+	<e:Label text="10" x="298" y="606" size="10" anchorOffsetX="18" anchorOffsetY="1" bold="true"/>
+	<e:Label text="Label" x="148" y="433" textColor="0x603a16"/>
+	<e:Image width="35" height="36" x="402" y="157" source="pop_reviveclose_png" anchorOffsetX="0" anchorOffsetY="0"/>
+	<e:Image width="20" height="37" x="34" y="69" source="task_star_png" anchorOffsetY="0"/>
+	<e:Image width="17" height="32" x="363" y="69" source="task_star_png" anchorOffsetY="0" anchorOffsetX="0"/>
+	<e:Image width="18" height="47" x="417" y="32" source="task_star_png" anchorOffsetY="0" anchorOffsetX="0"/>
+	<e:Image width="22" height="55" x="397" y="641" source="task_star_png" anchorOffsetY="0" anchorOffsetX="0"/>
+
+	
+</e:Skin>
