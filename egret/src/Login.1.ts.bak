@@ -1,0 +1,44 @@
+class Login  extends eui.Component implements eui.UIComponent {
+	private WechatBtn:eui.Button;
+	public constructor() {
+		super();
+		this.init();
+	}
+	private init() {
+        console.log("init12 ........");
+        var stageW = Constant.DESIGN_WID;
+        var stageH = Constant.DESIGN_HEI;
+        //背景
+        var bg = new egret.Bitmap();
+        bg.texture = RES.getRes("Bg01_png");
+        bg.height = 660;
+        bg.width = stageW;
+        bg.x = 0;
+        bg.y = stageH/9;
+        this.addChild(bg);
+        //conn_with
+        var connWith = new egret.Bitmap();
+        connWith.texture = RES.getRes("conn_with_png");
+        connWith.width = stageW * 0.8;
+        connWith.height = stageH * 0.1;
+        connWith.x = stageW / 2;
+        connWith.y = stageH / 2;
+        connWith.$setAnchorOffsetX(connWith.width / 2);
+        this.addChild(connWith);
+        //微信按钮
+        this.WechatBtn = new eui.Button();
+        // this.WechatBtn.texture = RES.getRes("WechatBtn_png");
+        // this.WechatBtn.icon = RES.getRes("WechatBtn_png");
+        this.WechatBtn.skinName = "resource/skins/Button/WechatBtn.exml";
+        this.WechatBtn.width = 130;
+        this.WechatBtn.height = 130;
+        this.WechatBtn.x = stageW / 2;
+        this.WechatBtn.y = stageH - stageH / 4;
+        this.WechatBtn.$setAnchorOffsetX(this.WechatBtn.width / 2);
+        this.addChild(this.WechatBtn);
+        this.WechatBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+            console.log("点击了微信登录按钮.........");
+            egret.ExternalInterface.call("sendToNative", "wxlogin");
+        }, this);
+    }
+}
