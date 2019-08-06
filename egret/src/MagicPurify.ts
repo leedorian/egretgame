@@ -12,7 +12,7 @@ class MagicPurify extends MagicBase{
 	_getIconOffset(){
 		return {
 			offsetX: 3,
-			offsetY: this.icon.height * this._zoomRate - 12
+			offsetY: this.icon.height * this._zoomRate - 30
 		};
 	}
 	disable(){

@@ -60,7 +60,8 @@ abstract class BlockBase extends egret.Sprite{
     private _shrinkHeight:number;
     private _blockMargin:number = 2;
     private _blockPadding:number = 3;
-
+    private _blockDisapearSpeedX:number = 20;
+    private _blockDisapearSpeedY:number = 25;
     private _sparkSound:egret.Sound = RES.getRes("spark_mp3");
     private _effectChanel:egret.SoundChannel;
 
@@ -164,11 +165,11 @@ abstract class BlockBase extends egret.Sprite{
             rectHeight = this._colorRect.height;
         }
         if (rectWidth > 0){
-            let tempWidth = rectWidth - 6;
+            let tempWidth = rectWidth - this._blockDisapearSpeedX;
             this._colorRect.width = tempWidth > 0 ? tempWidth : 0;
         }
         if (rectHeight > 0) {
-            let tempHeight = rectHeight - 8;
+            let tempHeight = rectHeight - this._blockDisapearSpeedY;
             this._colorRect.height = tempHeight > 0 ? tempHeight : 0;
         }
 

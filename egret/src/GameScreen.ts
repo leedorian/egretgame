@@ -34,6 +34,11 @@ class GameScreen extends egret.Sprite {
     private _magicPurify: MagicPurify;
     private _magicDestroy: MagicDestroy;
 
+    private _FreezeEffectMCs = [];
+    private _QuellEffectMCs = [];
+    private _PurifyEffectMCs = [];
+    private _DestroyEffectMCs = [];
+
     private _drawBg() {
         this._bg = Utils.createBitmapByName("bg_png");
         const stageW = Utils.getStageWidth();
@@ -135,10 +140,55 @@ class GameScreen extends egret.Sprite {
             
         }
     }
+
+    private _setEffectMCSize(mc){
+        const stageW = Utils.getStageWidth();
+        const stageH = Utils.getStageHeight();
+        const widthRate = stageW / 500;
+        const heightRate = stageH / 889;
+
+        mc.scaleX = widthRate;
+        mc.scaleY = heightRate;
+    }
+    private _concatenateClips(aClips){
+        const nClips = aClips.length;
+        for(var i = 0; i < nClips; i++){
+            let nextClip = aClips[i+1];
+            let clip = aClips[i];
+            let index = i;
+            clip.addEventListener(egret.Event.COMPLETE, (e:egret.Event)=>{
+                this.removeChild(clip);
+                if(index < nClips - 1){
+                    this.addChild(nextClip);
+                    nextClip.gotoAndPlay(0);
+                }
+            }, this);
+        }
+    }
+    private _createEffectClips(name, length){
+        var aClips = [];
+        for(var i = 1; i <= length; i++){
+            const data = RES.getRes(name + i + "_json");
+            const txtr = RES.getRes(name + i + "_png");
+            const mcFactory: egret.MovieClipDataFactory = new egret.MovieClipDataFactory(data, txtr);
+            const mc: egret.MovieClip = new egret.MovieClip(mcFactory.generateMovieClipData(name));
+            this._setEffectMCSize(mc);
+            aClips.push(mc);
+        }
+        return aClips;
+    }
+
     private _freeze(){
         if(this._gameScene.started && Utils.blockStyle.indexOf("freeze") === -1){
             Utils.blockStyle = Utils.blockStyle + "freeze";
             this._handleMagicsState();
+            if(this._FreezeEffectMCs.length === 0){
+                this._FreezeEffectMCs = this._createEffectClips("FreezeA", 6);
+                this._concatenateClips(this._FreezeEffectMCs);
+            }
+            
+            this.addChild(this._FreezeEffectMCs[0]);
+            this._FreezeEffectMCs[0].gotoAndPlay(0);
             this._gameScene.freeze();
         }
     }
@@ -149,6 +199,13 @@ class GameScreen extends egret.Sprite {
         if(this._gameScene.started && Utils.blockStyle.indexOf("quell") === -1){
             Utils.blockStyle = Utils.blockStyle + "quell";
             this._handleMagicsState();
+            if(this._QuellEffectMCs.length === 0){
+                this._QuellEffectMCs = this._createEffectClips("QuellA", 10);
+                this._concatenateClips(this._QuellEffectMCs);
+            }
+            
+            this.addChild(this._QuellEffectMCs[0]);
+            this._QuellEffectMCs[0].gotoAndPlay(0);
             this._gameScene.quell();
         }
     }
@@ -156,6 +213,13 @@ class GameScreen extends egret.Sprite {
         if(this._gameScene.started && Utils.blockStyle.indexOf("purify") === -1){
             Utils.blockStyle = Utils.blockStyle + "purify";
             this._handleMagicsState();
+            if(this._PurifyEffectMCs.length === 0){
+                this._PurifyEffectMCs = this._createEffectClips("PurifyA", 17);
+                this._concatenateClips(this._PurifyEffectMCs);
+            }
+            
+            this.addChild(this._PurifyEffectMCs[0]);
+            this._PurifyEffectMCs[0].gotoAndPlay(0);
             this._gameScene.purify(this._score);
         }
     }
@@ -163,6 +227,13 @@ class GameScreen extends egret.Sprite {
         if(this._gameScene.started && Utils.blockStyle.indexOf("destroy") === -1){
             Utils.blockStyle = Utils.blockStyle + "destroy";
             this._handleMagicsState();
+            if(this._DestroyEffectMCs.length === 0){
+                this._DestroyEffectMCs = this._createEffectClips("DestroyA", 5);
+                this._concatenateClips(this._DestroyEffectMCs);
+            }
+            
+            this.addChild(this._DestroyEffectMCs[0]);
+            this._DestroyEffectMCs[0].gotoAndPlay(0);
             this._gameScene.destroy();
         }
     }

@@ -15,7 +15,7 @@ class MagicBase extends egret.Sprite {
 
 	}
 	public icon: egret.Bitmap;
-	protected _zoomRate: number = 0.4;
+	protected _zoomRate: number = 1;
 	protected _bg: egret.Bitmap;
 	protected _drawIcon() { }
 	protected _getIconOffset(): any {}

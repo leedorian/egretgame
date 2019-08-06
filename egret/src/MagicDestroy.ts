@@ -11,8 +11,8 @@ class MagicDestroy extends MagicBase{
 	}
 	_getIconOffset(){
 		return {
-			offsetX: 12,
-			offsetY: this.icon.height * this._zoomRate - 12
+			offsetX: 30,
+			offsetY: this.icon.height * this._zoomRate - 30
 		};
 	}
 	disable(){

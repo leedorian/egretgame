@@ -11,8 +11,8 @@ class MagicFreeze extends MagicBase{
 	}
 	_getIconOffset(){
 		return {
-			offsetX: 15,
-			offsetY: this.icon.height * this._zoomRate - 19
+			offsetX: 30,
+			offsetY: this.icon.height * this._zoomRate - 40
 		};
 	}
 	disable(){

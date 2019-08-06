@@ -3,8 +3,8 @@ class Utils{
     private static _blockHeight:number = 0;
     private static _stageHeight:number = 0;
     private static _stageWidth:number = 0;
-    public static verticalMarginTop = 60;
-    public static verticalMarginBottom = 140;
+    public static verticalMarginTop = 180;
+    public static verticalMarginBottom = 340;
     public static horizontalMargin = 30;
     public static rowsState:any = {};
     public static rows:number = 6;
@@ -27,7 +27,8 @@ class Utils{
             // const aspectRadio = 214/175;
             // var preferedHeight = Utils.getBlockWidth() * aspectRadio;
             // Utils._blockHeight = preferedHeight;
-            Utils._blockHeight = Math.ceil((egret.MainContext.instance.stage.stageHeight - (Utils.verticalMarginTop + Utils.verticalMarginBottom)) / this.rows);
+            // Utils._blockHeight = Math.ceil((egret.MainContext.instance.stage.stageHeight - (Utils.verticalMarginTop + Utils.verticalMarginBottom)) / this.rows);
+            Utils._blockHeight = Math.ceil((Constant.DESIGN_WID - (Utils.verticalMarginTop + Utils.verticalMarginBottom)) / this.rows);
         }
         return Utils._blockHeight;
     }
@@ -39,13 +40,15 @@ class Utils{
     }
     public static getStageWidth():number{
         if(Utils._stageWidth === 0){
-            Utils._stageWidth = egret.MainContext.instance.stage.stageWidth;
+            // Utils._stageWidth = egret.MainContext.instance.stage.stageWidth;
+            Utils._stageWidth = Constant.DESIGN_HEI;
         }
         return Utils._stageWidth;
     }
     public static getStageHeight():number{
         if(Utils._stageHeight === 0){
-            Utils._stageHeight = egret.MainContext.instance.stage.stageHeight;
+            // Utils._stageHeight = egret.MainContext.instance.stage.stageHeight;
+            Utils._stageHeight = Constant.DESIGN_WID;
         }
         return Utils._stageHeight;
     }

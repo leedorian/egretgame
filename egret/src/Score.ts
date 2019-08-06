@@ -1,8 +1,8 @@
 class Score extends egret.Sprite {
     public constructor() {
         super();
-        const scoreY:number = 20;
-        const scoreHeight:number = 35;
+        const scoreY:number = 45;
+        const scoreHeight:number = 70;
         let bg:egret.Bitmap = Utils.createBitmapByName("bg_score_png");
         bg.height = scoreHeight;
         bg.width = Utils.getStageWidth() * 0.7;
@@ -18,9 +18,9 @@ class Score extends egret.Sprite {
         label.verticalAlign = egret.VerticalAlign.MIDDLE;
         label.textColor = 0xffffff;
         label.strokeColor = 0xfff100;
-        label.size = 26;
+        label.size = 36;
         label.textFlow = <Array<egret.ITextElement>>[
-            {text: this._scorePrefix, style: {"size": 24}},
+            {text: this._scorePrefix, style: {"size": 36}},
             {text: this._score.toString(), style: {"textColor":0xfff100}}
         ];
         // label.text = this._scorePrefix + this._score.toString();
@@ -35,7 +35,7 @@ class Score extends egret.Sprite {
     public set score (score){
         this._score = score;
         this._scoreText.textFlow = <Array<egret.ITextElement>>[
-            {text: this._scorePrefix, style: {"size": 24}},
+            {text: this._scorePrefix, style: {"size": 36}},
             {text: this._score.toString(), style: {"textColor":0xfff100}}
         ];
     }

@@ -30,9 +30,13 @@ declare module skins{
 	class RadioButtonSkin extends eui.Skin{
 	}
 }
+declare class reviveSkin extends eui.Skin{
+}
 declare module skins{
 	class ScrollerSkin extends eui.Skin{
 	}
+}
+declare class aboutUISkin extends eui.Skin{
 }
 declare module skins{
 	class TextInputSkin extends eui.Skin{

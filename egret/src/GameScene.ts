@@ -79,19 +79,6 @@ class GameScene extends egret.Sprite {
     private _effectChanel:egret.SoundChannel;
     public started:boolean = false;
 
-    private _FreezeEffectMCs = [];
-    private _QuellEffectMCs = [];
-    private _PurifyEffectMCs = [];
-    private _DestroyEffectMCs = [];
-
-    // private _drawBg(){
-    //     this._bg = Utils.createBitmapByName("bg_png");
-    //     const stageW = Utils.getStageWidth();
-    //     const stageH = Utils.getStageHeight();
-    //     this._bg.width = stageW;
-    //     this._bg.height = stageH;
-    //     this.addChildAt(this._bg, 0);
-    // }
     private _onPause(){
         this._stopbgm();
         this._effectChanel.stop();
@@ -334,51 +321,9 @@ class GameScene extends egret.Sprite {
         }, this);
         pauseTimer.run();
     }
-    private _setEffectMCSize(mc){
-        const arenaW = Utils.getArenaWidth();
-        const arenH = Utils.getArenaHeight();
-        const widthRate = arenaW / 500;
-        const heightRate = arenH / 889;
-
-        mc.scaleX = widthRate;
-        mc.scaleY = heightRate;
-    }
-    private _concatenateClips(aClips){
-        const nClips = aClips.length;
-        for(var i = 0; i < nClips; i++){
-            let nextClip = aClips[i+1];
-            let clip = aClips[i];
-            let index = i;
-            clip.addEventListener(egret.Event.COMPLETE, (e:egret.Event)=>{
-                this.removeChild(clip);
-                if(index < nClips - 1){
-                    this.addChild(nextClip);
-                    nextClip.gotoAndPlay(0);
-                }
-            }, this);
-        }
-    }
-    private _createEffectClips(name, length){
-        var aClips = [];
-        for(var i = 1; i <= length; i++){
-            const data = RES.getRes(name + i + "_json");
-            const txtr = RES.getRes(name + i + "_png");
-            const mcFactory: egret.MovieClipDataFactory = new egret.MovieClipDataFactory(data, txtr);
-            const mc: egret.MovieClip = new egret.MovieClip(mcFactory.generateMovieClipData(name));
-            this._setEffectMCSize(mc);
-            aClips.push(mc);
-        }
-        return aClips;
-    }
+    
     public freeze(){
         this._effectChanel = this._windSound.play(0,1);
-        if(this._FreezeEffectMCs.length === 0){
-            this._FreezeEffectMCs = this._createEffectClips("Freeze", 3);
-            this._concatenateClips(this._FreezeEffectMCs);
-        }
-        
-        this.addChild(this._FreezeEffectMCs[0]);
-        this._FreezeEffectMCs[0].gotoAndPlay(0);
 
         this._pauseMove(4000,function(){
             this._effectChanel = this._freezeSound.play(0,0);
@@ -412,13 +357,6 @@ class GameScene extends egret.Sprite {
     }
     public quell(){
         this._effectChanel = this._quellSound.play(0,0);
-        if(this._QuellEffectMCs.length === 0){
-            this._QuellEffectMCs = this._createEffectClips("Quell", 5);
-            this._concatenateClips(this._QuellEffectMCs);
-        }
-        
-        this.addChild(this._QuellEffectMCs[0]);
-        this._QuellEffectMCs[0].gotoAndPlay(0);
 
         this._pauseMove(5100,function(){
             // this._effectChanel = this._quellSound.play(0,0);
@@ -434,14 +372,7 @@ class GameScene extends egret.Sprite {
     }
     public purify(oScore:Score){
         this._effectChanel = this._purifySound.play(0,1);
-        if(this._PurifyEffectMCs.length === 0){
-            this._PurifyEffectMCs = this._createEffectClips("PurifyA", 17);
-            this._concatenateClips(this._PurifyEffectMCs);
-        }
         
-        this.addChild(this._PurifyEffectMCs[0]);
-        this._PurifyEffectMCs[0].gotoAndPlay(0);
-
         this._pauseMove(5000,function(){
             this._effectChanel = this._purifyingSound.play(0,0);
             if (this._purifyWatch == null) {
@@ -468,13 +399,7 @@ class GameScene extends egret.Sprite {
 
     public destroy(){
         this._effectChanel = this._destroySound.play(0,1);
-        if(this._DestroyEffectMCs.length === 0){
-            this._DestroyEffectMCs = this._createEffectClips("Destroy", 3);
-            this._concatenateClips(this._DestroyEffectMCs);
-        }
-        
-        this.addChild(this._DestroyEffectMCs[0]);
-        this._DestroyEffectMCs[0].gotoAndPlay(0);
+  
         this._pauseMove(5000,function(){
             // this._effectChanel = this._quellSound.play(0,0);
            if (this._destroyWatch == null) {

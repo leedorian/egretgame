@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "thumb_pb_png,track_pb_png,buttonBg_png,normal_bg_png,lone-wolf-short,game_config,GoogleBtn_png,Bg01_png,WechatBtn_png,BgColor01_png,bg_png,shanguang_json,shanguang_png,b_black_jpeg,b_blue_jpeg,b_purple_jpeg,b_red_jpeg,b_yellow_jpeg,blockFrame_png,b_normal_png,bg_score_png,freeze_png,purify_png,nuke_png,rock_bg_png,skull_png,b_purple_rush_png,b_purple_png,b_red_png,b_red_rush_png,b_blue_png,b_blue_rush_png,b_yellow_png,b_yellow_rush_png,b_black_png,b_black_rush_png,freeze_disabled_png,ice_png,nuke_disabled_png,purify_disabled_png,skull_disabled_png,iceCracking_mp3,midnight-ride_mp3,Freeze1_json,Freeze1_png,Freeze2_json,Freeze2_png,Freeze3_json,Freeze3_png,Quell1_json,Quell1_png,Quell2_png,Quell2_json,Quell3_json,Quell3_png,Quell4_json,Quell4_png,Quell5_json,Quell5_png,wind_mp3,quellEye_png,quell_mp3,Purify2_json,Purify1_png,Purify3_json,Purify3_png,Purify2_png,Purify4_json,Purify4_png,Purify5_json,Purify5_png,Purify1_json,Purify_mp3,Destroy1_json,Destroy1_png,Destroy2_json,Destroy2_png,Destroy3_png,Destroy3_json,Destroy1_mp3,light_json,light_png,spark_mp3,task-bg_png,task_close_png,task_star_png,task_tmp1_png,task_ppp2_png,unreadbg_png,reviveclose_png,revivecon_png,reviveimg_png,urgebg_png,urgeimg_png,conn_with_png,namelabel_png,money_png,quqi_png,quqi_b_png,indexadd_png,indexblcok_png,indexrank_png,indexscore_png,indexsetting_png,indextop_png,play_png,unread_png,rank_blue_png,rank_orange_png,rank_red_png,rank_yellow_png,rank_green_png,shoptop_png,shopcard_png,circle_png,shopbg_png,shopdesc_png,shopbg2_png,money_little_png,money_normal_png,money_much_png,msg_top_png,msgtype_sys_png,msgtype_act_png,msg_service_png,msg_png,friend_2_png,friend_3_png,friend_green_png,friend_talk_png,friend_yellow_png,friendtop_png,reply_png,friend_search_png,friend_add_png,toast-bg_png,white_line_png,switch_off_png,switch_on_png,thumb_png,track_png,tracklight_png,sound_png,music_png,savesettingbtn_png,tabuncheck_png,tabcheck_png,minus_png,plus_png,shopbg3_png,freeze_desc_png,shopbuy_png,revive_png,skillselected_png,back_png",
+			"keys": "thumb_pb_png,track_pb_png,buttonBg_png,normal_bg_png,lone-wolf-short,game_config,GoogleBtn_png,Bg01_png,WechatBtn_png,BgColor01_png,bg_png,shanguang_json,shanguang_png,b_black_jpeg,b_blue_jpeg,b_purple_jpeg,b_red_jpeg,b_yellow_jpeg,blockFrame_png,b_normal_png,bg_score_png,freeze_png,purify_png,nuke_png,rock_bg_png,skull_png,b_purple_rush_png,b_purple_png,b_red_png,b_red_rush_png,b_blue_png,b_blue_rush_png,b_yellow_png,b_yellow_rush_png,b_black_png,b_black_rush_png,freeze_disabled_png,ice_png,nuke_disabled_png,purify_disabled_png,skull_disabled_png,iceCracking_mp3,midnight-ride_mp3,Quell1_json,Quell1_png,Quell2_png,Quell2_json,Quell3_json,Quell3_png,Quell4_json,Quell4_png,Quell5_json,Quell5_png,wind_mp3,quellEye_png,quell_mp3,Purify2_json,Purify1_png,Purify3_json,Purify3_png,Purify2_png,Purify4_json,Purify4_png,Purify5_json,Purify5_png,Purify1_json,Purify_mp3,Destroy1_mp3,light_json,light_png,spark_mp3,task-bg_png,task_close_png,task_star_png,task_tmp1_png,task_ppp2_png,unreadbg_png,reviveclose_png,revivecon_png,reviveimg_png,urgebg_png,urgeimg_png,conn_with_png,namelabel_png,money_png,quqi_png,quqi_b_png,indexadd_png,indexblcok_png,indexrank_png,indexscore_png,indexsetting_png,indextop_png,play_png,unread_png,rank_blue_png,rank_orange_png,rank_red_png,rank_yellow_png,rank_green_png,shoptop_png,shopcard_png,circle_png,shopbg_png,shopdesc_png,shopbg2_png,money_little_png,money_normal_png,money_much_png,msg_top_png,msgtype_sys_png,msgtype_act_png,msg_service_png,msg_png,friend_2_png,friend_3_png,friend_green_png,friend_talk_png,friend_yellow_png,friendtop_png,reply_png,friend_search_png,friend_add_png,toast-bg_png,white_line_png,switch_off_png,switch_on_png,thumb_png,track_png,tracklight_png,sound_png,music_png,savesettingbtn_png,tabuncheck_png,tabcheck_png,minus_png,plus_png,shopbg3_png,freeze_desc_png,shopbuy_png,revive_png,skillselected_png,back_png,actionpoint_send_on_png,actionpoint_send_off_png,jingshi_json,jingshi_png,yanmie_json,yanmie_png,zhenya_json,zhenya_png,shopskillbg_png,PurifyA1_json,PurifyA1_png,PurifyA2_json,PurifyA2_png,PurifyA3_json,PurifyA3_png,PurifyA4_json,PurifyA4_png,PurifyA5_json,PurifyA5_png,PurifyA6_json,PurifyA6_png,PurifyA7_json,PurifyA7_png,PurifyA8_json,PurifyA8_png,PurifyA9_json,PurifyA9_png,PurifyA10_json,PurifyA10_png,PurifyA11_json,PurifyA11_png,PurifyA12_json,PurifyA12_png,PurifyA13_json,PurifyA13_png,PurifyA14_json,PurifyA14_png,PurifyA15_json,PurifyA15_png,PurifyA16_json,PurifyA16_png,PurifyA17_json,PurifyA17_png,Purifying_mp3,FreezeA1_json,FreezeA1_png,FreezeA2_json,FreezeA2_png,FreezeA3_json,FreezeA3_png,FreezeA4_json,FreezeA4_png,FreezeA5_json,FreezeA5_png,FreezeA6_json,FreezeA6_png,DestroyA1_json,DestroyA1_png,DestroyA2_json,DestroyA2_png,DestroyA3_json,DestroyA3_png,DestroyA4_json,DestroyA4_png,DestroyA5_json,DestroyA5_png,QuellA1_json,QuellA1_png,QuellA2_png,QuellA2_json,QuellA3_json,QuellA3_png,QuellA4_json,QuellA4_png,QuellA5_json,QuellA5_png,QuellA6_json,QuellA6_png,QuellA7_json,QuellA7_png,QuellA8_json,QuellA8_png,QuellA9_json,QuellA9_png,QuellA10_json,QuellA10_png",
 			"name": "preload"
 		}
 	],
@@ -418,36 +418,6 @@
 			"url": "assets/midnight-ride.mp3"
 		},
 		{
-			"name": "Freeze1_json",
-			"type": "json",
-			"url": "assets/Freeze1.json"
-		},
-		{
-			"name": "Freeze1_png",
-			"type": "image",
-			"url": "assets/Freeze1.png"
-		},
-		{
-			"name": "Freeze2_json",
-			"type": "json",
-			"url": "assets/Freeze2.json"
-		},
-		{
-			"name": "Freeze2_png",
-			"type": "image",
-			"url": "assets/Freeze2.png"
-		},
-		{
-			"name": "Freeze3_json",
-			"type": "json",
-			"url": "assets/Freeze3.json"
-		},
-		{
-			"name": "Freeze3_png",
-			"type": "image",
-			"url": "assets/Freeze3.png"
-		},
-		{
 			"name": "Quell1_json",
 			"type": "json",
 			"url": "assets/Quell1.json"
@@ -566,36 +536,6 @@
 			"name": "Purify_mp3",
 			"type": "sound",
 			"url": "assets/Purify.mp3"
-		},
-		{
-			"name": "Destroy1_json",
-			"type": "json",
-			"url": "assets/Destroy1.json"
-		},
-		{
-			"name": "Destroy1_png",
-			"type": "image",
-			"url": "assets/Destroy1.png"
-		},
-		{
-			"name": "Destroy2_json",
-			"type": "json",
-			"url": "assets/Destroy2.json"
-		},
-		{
-			"name": "Destroy2_png",
-			"type": "image",
-			"url": "assets/Destroy2.png"
-		},
-		{
-			"name": "Destroy3_png",
-			"type": "image",
-			"url": "assets/Destroy3.png"
-		},
-		{
-			"name": "Destroy3_json",
-			"type": "json",
-			"url": "assets/Destroy3.json"
 		},
 		{
 			"name": "Destroy1_mp3",
@@ -886,6 +826,436 @@
 			"name": "back_png",
 			"type": "image",
 			"url": "assets/back.png"
+		},
+		{
+			"name": "actionpoint_send_on_png",
+			"type": "image",
+			"url": "assets/friend/actionpoint_send_on.png"
+		},
+		{
+			"name": "actionpoint_send_off_png",
+			"type": "image",
+			"url": "assets/friend/actionpoint_send_off.png"
+		},
+		{
+			"name": "jingshi_json",
+			"type": "json",
+			"url": "assets/shop/jingshi.json"
+		},
+		{
+			"name": "jingshi_png",
+			"type": "image",
+			"url": "assets/shop/jingshi.png"
+		},
+		{
+			"name": "yanmie_json",
+			"type": "json",
+			"url": "assets/shop/yanmie.json"
+		},
+		{
+			"name": "yanmie_png",
+			"type": "image",
+			"url": "assets/shop/yanmie.png"
+		},
+		{
+			"name": "zhenya_json",
+			"type": "json",
+			"url": "assets/shop/zhenya.json"
+		},
+		{
+			"name": "zhenya_png",
+			"type": "image",
+			"url": "assets/shop/zhenya.png"
+		},
+		{
+			"name": "shopskillbg_png",
+			"type": "image",
+			"url": "assets/shop/shopskillbg.png"
+		},
+		{
+			"name": "PurifyA1_json",
+			"type": "json",
+			"url": "assets/PurifyA1.json"
+		},
+		{
+			"name": "PurifyA1_png",
+			"type": "image",
+			"url": "assets/PurifyA1.png"
+		},
+		{
+			"name": "PurifyA2_json",
+			"type": "json",
+			"url": "assets/PurifyA2.json"
+		},
+		{
+			"name": "PurifyA2_png",
+			"type": "image",
+			"url": "assets/PurifyA2.png"
+		},
+		{
+			"name": "PurifyA3_json",
+			"type": "json",
+			"url": "assets/PurifyA3.json"
+		},
+		{
+			"name": "PurifyA3_png",
+			"type": "image",
+			"url": "assets/PurifyA3.png"
+		},
+		{
+			"name": "PurifyA4_json",
+			"type": "json",
+			"url": "assets/PurifyA4.json"
+		},
+		{
+			"name": "PurifyA4_png",
+			"type": "image",
+			"url": "assets/PurifyA4.png"
+		},
+		{
+			"name": "PurifyA5_json",
+			"type": "json",
+			"url": "assets/PurifyA5.json"
+		},
+		{
+			"name": "PurifyA5_png",
+			"type": "image",
+			"url": "assets/PurifyA5.png"
+		},
+		{
+			"name": "PurifyA6_json",
+			"type": "json",
+			"url": "assets/PurifyA6.json"
+		},
+		{
+			"name": "PurifyA6_png",
+			"type": "image",
+			"url": "assets/PurifyA6.png"
+		},
+		{
+			"name": "PurifyA7_json",
+			"type": "json",
+			"url": "assets/PurifyA7.json"
+		},
+		{
+			"name": "PurifyA7_png",
+			"type": "image",
+			"url": "assets/PurifyA7.png"
+		},
+		{
+			"name": "PurifyA8_json",
+			"type": "json",
+			"url": "assets/PurifyA8.json"
+		},
+		{
+			"name": "PurifyA8_png",
+			"type": "image",
+			"url": "assets/PurifyA8.png"
+		},
+		{
+			"name": "PurifyA9_json",
+			"type": "json",
+			"url": "assets/PurifyA9.json"
+		},
+		{
+			"name": "PurifyA9_png",
+			"type": "image",
+			"url": "assets/PurifyA9.png"
+		},
+		{
+			"name": "PurifyA10_json",
+			"type": "json",
+			"url": "assets/PurifyA10.json"
+		},
+		{
+			"name": "PurifyA10_png",
+			"type": "image",
+			"url": "assets/PurifyA10.png"
+		},
+		{
+			"name": "PurifyA11_json",
+			"type": "json",
+			"url": "assets/PurifyA11.json"
+		},
+		{
+			"name": "PurifyA11_png",
+			"type": "image",
+			"url": "assets/PurifyA11.png"
+		},
+		{
+			"name": "PurifyA12_json",
+			"type": "json",
+			"url": "assets/PurifyA12.json"
+		},
+		{
+			"name": "PurifyA12_png",
+			"type": "image",
+			"url": "assets/PurifyA12.png"
+		},
+		{
+			"name": "PurifyA13_json",
+			"type": "json",
+			"url": "assets/PurifyA13.json"
+		},
+		{
+			"name": "PurifyA13_png",
+			"type": "image",
+			"url": "assets/PurifyA13.png"
+		},
+		{
+			"name": "PurifyA14_json",
+			"type": "json",
+			"url": "assets/PurifyA14.json"
+		},
+		{
+			"name": "PurifyA14_png",
+			"type": "image",
+			"url": "assets/PurifyA14.png"
+		},
+		{
+			"name": "PurifyA15_json",
+			"type": "json",
+			"url": "assets/PurifyA15.json"
+		},
+		{
+			"name": "PurifyA15_png",
+			"type": "image",
+			"url": "assets/PurifyA15.png"
+		},
+		{
+			"name": "PurifyA16_json",
+			"type": "json",
+			"url": "assets/PurifyA16.json"
+		},
+		{
+			"name": "PurifyA16_png",
+			"type": "image",
+			"url": "assets/PurifyA16.png"
+		},
+		{
+			"name": "PurifyA17_json",
+			"type": "json",
+			"url": "assets/PurifyA17.json"
+		},
+		{
+			"name": "PurifyA17_png",
+			"type": "image",
+			"url": "assets/PurifyA17.png"
+		},
+		{
+			"name": "Purifying_mp3",
+			"type": "sound",
+			"url": "assets/Purifying.mp3"
+		},
+		{
+			"name": "FreezeA1_json",
+			"type": "json",
+			"url": "assets/FreezeA1.json"
+		},
+		{
+			"name": "FreezeA1_png",
+			"type": "image",
+			"url": "assets/FreezeA1.png"
+		},
+		{
+			"name": "FreezeA2_json",
+			"type": "json",
+			"url": "assets/FreezeA2.json"
+		},
+		{
+			"name": "FreezeA2_png",
+			"type": "image",
+			"url": "assets/FreezeA2.png"
+		},
+		{
+			"name": "FreezeA3_json",
+			"type": "json",
+			"url": "assets/FreezeA3.json"
+		},
+		{
+			"name": "FreezeA3_png",
+			"type": "image",
+			"url": "assets/FreezeA3.png"
+		},
+		{
+			"name": "FreezeA4_json",
+			"type": "json",
+			"url": "assets/FreezeA4.json"
+		},
+		{
+			"name": "FreezeA4_png",
+			"type": "image",
+			"url": "assets/FreezeA4.png"
+		},
+		{
+			"name": "FreezeA5_json",
+			"type": "json",
+			"url": "assets/FreezeA5.json"
+		},
+		{
+			"name": "FreezeA5_png",
+			"type": "image",
+			"url": "assets/FreezeA5.png"
+		},
+		{
+			"name": "FreezeA6_json",
+			"type": "json",
+			"url": "assets/FreezeA6.json"
+		},
+		{
+			"name": "FreezeA6_png",
+			"type": "image",
+			"url": "assets/FreezeA6.png"
+		},
+		{
+			"name": "DestroyA1_json",
+			"type": "json",
+			"url": "assets/DestroyA1.json"
+		},
+		{
+			"name": "DestroyA1_png",
+			"type": "image",
+			"url": "assets/DestroyA1.png"
+		},
+		{
+			"name": "DestroyA2_json",
+			"type": "json",
+			"url": "assets/DestroyA2.json"
+		},
+		{
+			"name": "DestroyA2_png",
+			"type": "image",
+			"url": "assets/DestroyA2.png"
+		},
+		{
+			"name": "DestroyA3_json",
+			"type": "json",
+			"url": "assets/DestroyA3.json"
+		},
+		{
+			"name": "DestroyA3_png",
+			"type": "image",
+			"url": "assets/DestroyA3.png"
+		},
+		{
+			"name": "DestroyA4_json",
+			"type": "json",
+			"url": "assets/DestroyA4.json"
+		},
+		{
+			"name": "DestroyA4_png",
+			"type": "image",
+			"url": "assets/DestroyA4.png"
+		},
+		{
+			"name": "DestroyA5_json",
+			"type": "json",
+			"url": "assets/DestroyA5.json"
+		},
+		{
+			"name": "DestroyA5_png",
+			"type": "image",
+			"url": "assets/DestroyA5.png"
+		},
+		{
+			"name": "QuellA1_json",
+			"type": "json",
+			"url": "assets/QuellA1.json"
+		},
+		{
+			"name": "QuellA1_png",
+			"type": "image",
+			"url": "assets/QuellA1.png"
+		},
+		{
+			"name": "QuellA2_png",
+			"type": "image",
+			"url": "assets/QuellA2.png"
+		},
+		{
+			"name": "QuellA2_json",
+			"type": "json",
+			"url": "assets/QuellA2.json"
+		},
+		{
+			"name": "QuellA3_json",
+			"type": "json",
+			"url": "assets/QuellA3.json"
+		},
+		{
+			"name": "QuellA3_png",
+			"type": "image",
+			"url": "assets/QuellA3.png"
+		},
+		{
+			"name": "QuellA4_json",
+			"type": "json",
+			"url": "assets/QuellA4.json"
+		},
+		{
+			"name": "QuellA4_png",
+			"type": "image",
+			"url": "assets/QuellA4.png"
+		},
+		{
+			"name": "QuellA5_json",
+			"type": "json",
+			"url": "assets/QuellA5.json"
+		},
+		{
+			"name": "QuellA5_png",
+			"type": "image",
+			"url": "assets/QuellA5.png"
+		},
+		{
+			"name": "QuellA6_json",
+			"type": "json",
+			"url": "assets/QuellA6.json"
+		},
+		{
+			"name": "QuellA6_png",
+			"type": "image",
+			"url": "assets/QuellA6.png"
+		},
+		{
+			"name": "QuellA7_json",
+			"type": "json",
+			"url": "assets/QuellA7.json"
+		},
+		{
+			"name": "QuellA7_png",
+			"type": "image",
+			"url": "assets/QuellA7.png"
+		},
+		{
+			"name": "QuellA8_json",
+			"type": "json",
+			"url": "assets/QuellA8.json"
+		},
+		{
+			"name": "QuellA8_png",
+			"type": "image",
+			"url": "assets/QuellA8.png"
+		},
+		{
+			"name": "QuellA9_json",
+			"type": "json",
+			"url": "assets/QuellA9.json"
+		},
+		{
+			"name": "QuellA9_png",
+			"type": "image",
+			"url": "assets/QuellA9.png"
+		},
+		{
+			"name": "QuellA10_json",
+			"type": "json",
+			"url": "assets/QuellA10.json"
+		},
+		{
+			"name": "QuellA10_png",
+			"type": "image",
+			"url": "assets/QuellA10.png"
 		}
 	]
 }
