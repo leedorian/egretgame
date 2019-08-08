@@ -169,7 +169,7 @@ class FriendListIRSkin extends eui.ItemRenderer {
         } else {
             this.sendactionpointBtn.texture = RES.getRes("actionpoint_send_off_png");
         }
-        console.log("ffffuck="+this.data.giftuid);
+        // console.log("ffffuck="+this.data.giftuid);
     }
 
     private sendActionPorint():void{
