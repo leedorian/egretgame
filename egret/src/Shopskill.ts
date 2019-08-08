@@ -67,6 +67,7 @@ class Shopskill  extends eui.Component implements eui.UIComponent {
         this.nukebtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.setNukeType, this);
         //初始化数据
         this.initData();
+        // this.playDescEffect("clear");
     }
     private backToIndex():void{
         var event:GameEvent = new GameEvent(GameEvent.GAME_INDEX);
@@ -123,40 +124,81 @@ class Shopskill  extends eui.Component implements eui.UIComponent {
             }
         }
     }
+    private removeEffect(opertype:string)
+    {
+        if(opertype == "speed"){
+            if(this.freeMc != null){
+                this.removeChild(this.freeMc);
+                this.freeMc = null;
+            }
+            
+        } else if(opertype == "clear") {
+            if(this.jingshiMc != null){
+                this.removeChild(this.jingshiMc);
+                this.jingshiMc = null;
+            }
+        } else if(opertype == "lock"){
+            if(this.zhenyaMc != null){
+                this.removeChild(this.zhenyaMc);
+                this.zhenyaMc = null;
+            }
+        } else if(opertype == "stillclear"){
+            if(this.yanmieMc != null){
+                this.removeChild(this.yanmieMc);
+                this.yanmieMc = null;
+            }
+        }
+    }
     private playDescEffect(opertype:string){
+        // console.log("playDescEffect--" + opertype);
+        this.removeEffect("speed");
+        this.removeEffect("clear");
+        this.removeEffect("lock");
+        this.removeEffect("stillclear");
+        var x:number = 220;
+        var y:number = 250;
         if(opertype == "speed"){
             if(this.freeMc == null){
                 this.freeMc = new eui.Image();
                 this.freeMc.texture = RES.getRes("freeze_desc_png");
-                this.freeMc.x = 220;
-                this.freeMc.y = 250;
-                //this.freeMc.anchorOffsetX = 0 - this.skilldescimg.width/2;
-                //this.freeMc.anchorOffsetY = 0 - this.skilldescimg.height/2;
+                this.freeMc.x = x;
+                this.freeMc.y = y;
                 this.addChild(this.freeMc);
             }
             
         } else if(opertype == "clear") {
             if(this.jingshiMc == null){
+                // console.log("播放净世动画");
                 var data = RES.getRes("jingshi_json");
                 var txtr = RES.getRes("jingshi_png");
                 var mcFactory = new egret.MovieClipDataFactory(data, txtr);
-                var mc = new egret.MovieClip(mcFactory.generateMovieClipData("start"));
-                this.addChild(mc);
-                mc.gotoAndPlay(0);
-            }
-            if(this.freeMc != null){
-                this.removeChild(this.freeMc);
-                this.freeMc = null;
+                this.jingshiMc = new egret.MovieClip(mcFactory.generateMovieClipData("jingshi"));
+                this.jingshiMc.x = x;
+                this.jingshiMc.y = y;
+                this.addChild(this.jingshiMc);
+                this.jingshiMc.gotoAndPlay("startjingshi", -1);
             }
         } else if(opertype == "lock"){
-            if(this.freeMc != null){
-                this.removeChild(this.freeMc);
-                this.freeMc = null;
+            if(this.zhenyaMc == null){
+                var data = RES.getRes("zhenya_json");
+                var txtr = RES.getRes("zhenya_png");
+                var mcFactory = new egret.MovieClipDataFactory(data, txtr);
+                this.zhenyaMc = new egret.MovieClip(mcFactory.generateMovieClipData("zhenya"));
+                this.zhenyaMc.x = x;
+                this.zhenyaMc.y = y;
+                this.addChild(this.zhenyaMc);
+                this.zhenyaMc.gotoAndPlay("start", -1);
             }
         } else if(opertype == "stillclear"){
-            if(this.freeMc != null){
-                this.removeChild(this.freeMc);
-                this.freeMc = null;
+            if(this.yanmieMc == null){
+                var data = RES.getRes("yanmie_json");
+                var txtr = RES.getRes("yanmie_png");
+                var mcFactory = new egret.MovieClipDataFactory(data, txtr);
+                this.yanmieMc = new egret.MovieClip(mcFactory.generateMovieClipData("yanmie"));
+                this.yanmieMc.x = x;
+                this.yanmieMc.y = y;
+                this.addChild(this.yanmieMc);
+                this.yanmieMc.gotoAndPlay("start", -1);
             }
         }
     }
