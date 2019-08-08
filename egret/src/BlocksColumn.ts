@@ -152,8 +152,8 @@ class BlocksColumn extends egret.Sprite {
     }
     private _onMovedOut(evt: GameEvents.BlockEvent) {
         let tarBlock: BlockBase = evt.target;
-        // let missed: boolean = evt.missed;
-        let missed: boolean = false;
+        let missed: boolean = evt.missed;
+        // let missed: boolean = false;
         tarBlock.removeEventListener(
             GameEvents.BlockEvent.MOVED_OUT,
             this._onMovedOut,
@@ -168,9 +168,9 @@ class BlocksColumn extends egret.Sprite {
         tarBlock.stop();
         this.removeChild(tarBlock);
         tarBlock = null;
-        if (missed) {
-            this.stop();
-        } else {
+        // if (missed) {
+        //     this.stop();
+        // } else {
             let newBlock: BlockBase = this._createBlock({
                 state: Utils.getRowBlockState(this._creatingRowIndex)[
                     this._index
@@ -193,7 +193,7 @@ class BlocksColumn extends egret.Sprite {
             } else {
                 this._blocks.push(newBlock);
             }
-        }
+        // }
     }
     private _speedLooper() {
         if(Utils.blockStyle.indexOf("freeze") == -1){
@@ -336,14 +336,21 @@ class BlocksColumn extends egret.Sprite {
         this.startSpeedUpTimer();
     }
     public stop(isGameSceneTriggered:boolean = false) {
+        this.stopSpeedUpTimer();
+        this._stopReverseTimer();
+        console.log(this._blocks);
         for (let i = 0; i < this._blocks.length; i++) {
             this._blocks[i].stop();
+            this._blocks[i].removeEventListener(
+                GameEvents.BlockEvent.MOVED_OUT,
+                this._onMovedOut,
+                this
+            );
             if(isGameSceneTriggered){
                 this._blocks[i].active = false;
             }
         }
-        this.stopSpeedUpTimer();
-        this._stopReverseTimer();
+        
     }
     public shrink() {
         this._shrinkRate = 0.5;
