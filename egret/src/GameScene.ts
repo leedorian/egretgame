@@ -123,8 +123,11 @@ class GameScene extends egret.Sprite {
     }
 
     private _onMovedOut(evt: GameEvents.BlockEvent) {
-        // let tarBlock: Block = evt.target;
-        // let missed: boolean = evt.missed;
+        let tarBlock = evt.target;
+        let missed: boolean = evt.missed;
+        if(missed){
+            this._gameOver();
+        }
     }
 
     private _onHitRush(evt: GameEvents.BlockEvent) {
