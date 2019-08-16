@@ -1,4 +1,4 @@
-class Login  extends eui.Component implements eui.UIComponent {
+class Login  extends eui.Component implements eui.UIComponent { 
 	private WechatBtn:eui.Button;
 	public constructor() {
 		super();

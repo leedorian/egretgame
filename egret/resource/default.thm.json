@@ -49,6 +49,8 @@
 		"resource/eui_skins/VSliderSkin.exml",
 		"resource/skins/Button/WechatBtn.exml",
 		"resource/skins/Friend.exml",
+		"resource/skins/Friendadd.exml",
+		"resource/skins/Friendadditem.exml",
 		"resource/skins/Frienditem.exml",
 		"resource/skins/Indexcon.exml",
 		"resource/skins/Login.exml",
