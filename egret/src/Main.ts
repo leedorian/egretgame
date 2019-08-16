@@ -162,8 +162,8 @@ class Main extends egret.DisplayObjectContainer {
             await this.loadTheme();
             await RES.loadGroup("preload", 0, loadingView);
 
-            const gameService: Service = new Service(loadingView);
-            const gameConfig: any = await gameService.getGameConfig();
+            this._gameService = new Service(loadingView);
+            const gameConfig: any = await this._gameService.getGameConfig();
             this.stage.removeChild(loadingView);
             
         }
@@ -196,7 +196,7 @@ class Main extends egret.DisplayObjectContainer {
     private _GameScreen: GameScreen;
     private _startButton: UIComponents.DefaultButton;
     private _gameOverButton: UIComponents.DefaultButton;
-
+    private _gameService: Service;
     /**
      * 创建游戏场景
      * Create a game scene
@@ -331,11 +331,10 @@ class Main extends egret.DisplayObjectContainer {
     }
 
     //进入游戏界面
-    private startgame():void
-    {
+    private async startgame(){
         //window.alert("进入游戏界面");
         this.removeChildren();
-
+        const magicConfig: any = await this._gameService.getMyProlist();
         this._GameScreen = new GameScreen();
         this.addChild(this._GameScreen);
         const startButtonWidth:number = Utils.getStageWidth()/2;
@@ -373,7 +372,7 @@ class Main extends egret.DisplayObjectContainer {
 
 
     }
-    private _startGame() {
+    private  _startGame() {
         this._startButton.visible = false;
         this._GameScreen.gameScene.gameStart();
     }

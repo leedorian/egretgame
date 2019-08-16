@@ -1,6 +1,7 @@
 class BlockDouble extends BlockBase {
     public constructor(param: any) {
         super(param);
+        this.blockTypeName = BlockType.BlockDouble;
     }
     private _clickCount: number = 0;
     _beforeDraw(): void {

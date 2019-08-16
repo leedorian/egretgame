@@ -1,6 +1,7 @@
 class MagicPurify extends MagicBase{
 	public constructor() {
 		super();
+		this.setQty(Service.MAGIC_CONFIG.purify.qty);
 	}
 	_drawIcon(){
 		let icon:egret.Bitmap = Utils.createBitmapByName("purify_png");

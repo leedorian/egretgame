@@ -8,6 +8,7 @@ module GameEvents {
         public static HIT_SHRINK: string = "hitshrink";
         public static HIT_UNCLICKABLE: string = "hitunclickable";
         public missed:boolean = false;
+        public hitBlockType:number;
         public constructor(type:string, bubbles:boolean=true, cancelable:boolean=false)
         {
             super(type,bubbles,cancelable);

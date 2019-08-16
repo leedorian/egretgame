@@ -1,6 +1,7 @@
 class MagicQuell extends MagicBase{
 	public constructor() {
 		super();
+		this.setQty(Service.MAGIC_CONFIG.quell.qty);
 	}
 	_drawIcon(){
 		let icon:egret.Bitmap = Utils.createBitmapByName("skull_png");

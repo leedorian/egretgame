@@ -341,11 +341,11 @@ class BlocksColumn extends egret.Sprite {
         console.log(this._blocks);
         for (let i = 0; i < this._blocks.length; i++) {
             this._blocks[i].stop();
-            this._blocks[i].removeEventListener(
+            /*this._blocks[i].removeEventListener(
                 GameEvents.BlockEvent.MOVED_OUT,
                 this._onMovedOut,
                 this
-            );
+            );*/
             if(isGameSceneTriggered){
                 this._blocks[i].active = false;
             }

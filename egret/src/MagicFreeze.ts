@@ -1,6 +1,7 @@
 class MagicFreeze extends MagicBase{
 	public constructor() {
 		super();
+		this.setQty(Service.MAGIC_CONFIG.freeze.qty);
 	}
 	_drawIcon(){
 		let icon:egret.Bitmap = Utils.createBitmapByName("freeze_png");

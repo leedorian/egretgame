@@ -196,6 +196,8 @@ class GameScene extends egret.Sprite {
         this._startLevelUp();
         this._playbgm();
         this.started = true;
+        //Send start request
+        Service.gameStart();
     }
     private _gameOver(){
         for (let i = 0; i < this._blockColumns.length; i++) {
@@ -233,6 +235,9 @@ class GameScene extends egret.Sprite {
         for (let i = 0; i < this._blockColumns.length; i++) {
             this._blockColumns[i].blockWeightNumber = Service.GAME_CONFIG.difficulty[this._difficulty];
         }
+    }
+    public getLevel(){
+        return this._difficulty;
     }
     private _playbgm(){
         this._bgmChanel = this._bgm.play(0,0);
@@ -296,22 +301,7 @@ class GameScene extends egret.Sprite {
             this._blockColumns[i].move(true);
         }
     }
-    private _unFreeze(){
-        this._effectChanel.stop();
-        for (let i = 0; i < this._blockColumns.length; i++) {
-            let speed: number = this._columnSpeeds[i];
-            this._blockColumns[i].speed = speed;
-            this._blockColumns[i].updateSpeed();
-            this._blockColumns[i].unFreezeBlocks();
-            // this._blockColumns[i].startSpeedUpTimer();
-        }
-        Utils.blockStyle = Utils.blockStyle.replace(/freeze/g,"");
-        this._freezeWatch = null;
-         const unfreezeEvent: GameEvents.MagicEvent = new GameEvents.MagicEvent(
-            GameEvents.MagicEvent.UNFREEZE
-        );
-        this.dispatchEvent(unfreezeEvent);
-    }
+
     private _pauseMove(miliseconds:number, pauseCallBack){
         for (let i = 0; i < this._blockColumns.length; i++) {
             this._blockColumns[i].stop(true);
@@ -324,7 +314,22 @@ class GameScene extends egret.Sprite {
         }, this);
         pauseTimer.run();
     }
-    
+    private _unFreeze(){
+        this._effectChanel.stop();
+        for (let i = 0; i < this._blockColumns.length; i++) {
+            let speed: number = this._columnSpeeds[i];
+            this._blockColumns[i].speed = speed;
+            this._blockColumns[i].updateSpeed();
+            this._blockColumns[i].unFreezeBlocks();
+            // this._blockColumns[i].startSpeedUpTimer();
+        }
+        Utils.blockStyle = Utils.blockStyle.replace(/freeze/g,"");
+        this._freezeWatch = null;
+        const unfreezeEvent: GameEvents.MagicEvent = new GameEvents.MagicEvent(
+            GameEvents.MagicEvent.UNFREEZE
+        );
+        this.dispatchEvent(unfreezeEvent);
+    }
     public freeze(){
         this._effectChanel = this._windSound.play(0,1);
 

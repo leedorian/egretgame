@@ -1,6 +1,7 @@
 class BlockRush extends BlockFlashBase{
     public constructor(param: any) {
         super(param);
+        this.blockTypeName = BlockType.BlockRush;
     }
     _beforeDraw(): void {
         this._clickableRushColor = RES.getRes(BlockTexture.clickableRushRushStyle);

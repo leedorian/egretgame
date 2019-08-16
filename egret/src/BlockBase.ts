@@ -48,6 +48,7 @@ abstract class BlockBase extends egret.Sprite{
     public speed:number;
     public shrinkRate:number;
     public active:boolean = false;
+    public blockTypeName:number;
     private _dir:string;
     private _colorRect:egret.Bitmap;
     private _backRect:egret.Bitmap;
@@ -226,6 +227,7 @@ abstract class BlockBase extends egret.Sprite{
         const hitEvent: GameEvents.BlockEvent = new GameEvents.BlockEvent(
             GameEvents.BlockEvent.HIT
         );
+        hitEvent.hitBlockType = this.blockTypeName;
         this.dispatchEvent(hitEvent);
     }
     private _hitUnclickable(){

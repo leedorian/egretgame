@@ -25,7 +25,8 @@ class GameScreen extends egret.Sprite {
             true
         );
     }
-
+    //道具使用中？
+    public magicActive: boolean = false;
     private _score: Score;
     private _bg: egret.Bitmap;
     private _gameScene: GameScene;
@@ -113,7 +114,20 @@ class GameScreen extends egret.Sprite {
 
     }
     private _onHit(evt: GameEvents.BlockEvent) {
-        this._score.score = this._score.score + 1;
+        if(evt.hitBlockType === BlockType.BlockNormal){
+            this._score.score = this._score.score + parseInt(Service.GAME_CONFIG.blockScoreArr.block_score_black, 10);
+            this._score.BlockNormalNumber++;
+        }else if(evt.hitBlockType === BlockType.BlockRush){
+            this._score.score = this._score.score + parseInt(Service.GAME_CONFIG.blockScoreArr.block_score_red, 10);
+            this._score.BlockRushNumber++;
+        }else if(evt.hitBlockType === BlockType.BlockDouble){
+            this._score.score = this._score.score + parseInt(Service.GAME_CONFIG.blockScoreArr.block_score_blue, 10);
+            this._score.BlockDoubleNumber++;
+        }else if(evt.hitBlockType === BlockType.BlockShrink){
+            this._score.score = this._score.score + parseInt(Service.GAME_CONFIG.blockScoreArr.block_score_purple, 10);
+            this._score.BlockShrinkNumber++;
+        }
+        
     }
     private _drawScore() {
         this._score = new Score();
@@ -121,8 +135,18 @@ class GameScreen extends egret.Sprite {
     }
     private _gameOver() {
         console.log(this._score.score);
+        //Send game score
+        Service.gameScore({
+            level: this._gameScene.getLevel(),
+            score: this._score
+        });
     }
     private _handleMagicsState(reset?:boolean){
+        if(reset){
+            this.magicActive = false;
+        }else{
+            this.magicActive = true;
+        }
         var aMagic = [
             this._magicFreeze,
             this._magicQuell,
@@ -132,7 +156,7 @@ class GameScreen extends egret.Sprite {
         const len = aMagic.length;
         
         for(var i = 0; i < len; i++){
-            if(reset){
+            if(reset && aMagic[i].qty > 0){
                 aMagic[i].enable();
             }else{
                 aMagic[i].disable();
@@ -178,8 +202,8 @@ class GameScreen extends egret.Sprite {
         return aClips;
     }
 
-    private _freeze(){
-        if(this._gameScene.started && Utils.blockStyle.indexOf("freeze") === -1){
+    private async _freeze(){
+        if(Service.MAGIC_CONFIG.freeze.qty > 0 && this._gameScene.started && Utils.blockStyle.indexOf("freeze") === -1){
             Utils.blockStyle = Utils.blockStyle + "freeze";
             this._handleMagicsState();
             if(this._FreezeEffectMCs.length === 0){
@@ -190,13 +214,15 @@ class GameScreen extends egret.Sprite {
             this.addChild(this._FreezeEffectMCs[0]);
             this._FreezeEffectMCs[0].gotoAndPlay(0);
             this._gameScene.freeze();
+            let nNumber = await Service.useMagic({id:Service.MAGIC_CONFIG.freeze.id,name:"freeze"});
+            this._magicFreeze.setQty(nNumber);
         }
     }
     private _enableMagic(){
         this._handleMagicsState(true);
     }
-    private _quell(){
-        if(this._gameScene.started && Utils.blockStyle.indexOf("quell") === -1){
+    private async _quell(){
+        if(Service.MAGIC_CONFIG.quell.qty > 0 && this._gameScene.started && Utils.blockStyle.indexOf("quell") === -1){
             Utils.blockStyle = Utils.blockStyle + "quell";
             this._handleMagicsState();
             if(this._QuellEffectMCs.length === 0){
@@ -207,10 +233,12 @@ class GameScreen extends egret.Sprite {
             this.addChild(this._QuellEffectMCs[0]);
             this._QuellEffectMCs[0].gotoAndPlay(0);
             this._gameScene.quell();
+            let nNumber = await Service.useMagic({id:Service.MAGIC_CONFIG.quell.id,name:"quell"});
+            this._magicQuell.setQty(nNumber);
         }
     }
-    private _purify(){
-        if(this._gameScene.started && Utils.blockStyle.indexOf("purify") === -1){
+    private async _purify(){
+        if(Service.MAGIC_CONFIG.purify.qty > 0 && this._gameScene.started && Utils.blockStyle.indexOf("purify") === -1){
             Utils.blockStyle = Utils.blockStyle + "purify";
             this._handleMagicsState();
             if(this._PurifyEffectMCs.length === 0){
@@ -221,10 +249,12 @@ class GameScreen extends egret.Sprite {
             this.addChild(this._PurifyEffectMCs[0]);
             this._PurifyEffectMCs[0].gotoAndPlay(0);
             this._gameScene.purify(this._score);
+            let nNumber = await Service.useMagic({id:Service.MAGIC_CONFIG.purify.id,name:"purify"});
+            this._magicPurify.setQty(nNumber);
         }
     }
-    private _destroy(){
-        if(this._gameScene.started && Utils.blockStyle.indexOf("destroy") === -1){
+    private async _destroy(){
+        if(Service.MAGIC_CONFIG.destroy.qty > 0 && this._gameScene.started && Utils.blockStyle.indexOf("destroy") === -1){
             Utils.blockStyle = Utils.blockStyle + "destroy";
             this._handleMagicsState();
             if(this._DestroyEffectMCs.length === 0){
@@ -235,6 +265,8 @@ class GameScreen extends egret.Sprite {
             this.addChild(this._DestroyEffectMCs[0]);
             this._DestroyEffectMCs[0].gotoAndPlay(0);
             this._gameScene.destroy();
+            let nNumber = await Service.useMagic({id:Service.MAGIC_CONFIG.destroy.id,name:"destroy"});
+            this._magicDestroy.setQty(nNumber);
         }
     }
     private _onMagicScore(evt:GameEvents.PlayEvent){
@@ -242,7 +274,7 @@ class GameScreen extends egret.Sprite {
         this._score.score = this._score.score + nScore;
     }
     public reset() {
-        this._score.score = 0;
+        this._score.reset();
         this._gameScene.reset();
         this._handleMagicsState(true);
     }

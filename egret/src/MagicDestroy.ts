@@ -1,6 +1,7 @@
 class MagicDestroy extends MagicBase{
 	public constructor() {
 		super();
+		this.setQty(Service.MAGIC_CONFIG.destroy.qty);
 	}
 	_drawIcon(){
 		let icon:egret.Bitmap = Utils.createBitmapByName("nuke_png");

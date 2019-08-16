@@ -1,6 +1,7 @@
 class BlockShrink extends BlockFlashBase{
     public constructor(param: any) {
         super(param);
+        this.blockTypeName = BlockType.BlockShrink;
     }
     
     _beforeDraw(): void {
