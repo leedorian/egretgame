@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="LoginSkin" width="1080" height="1920" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
+	<w:Config id="168a1cc9fac" ></w:Config>
+	<e:Image fillMode="repeat" left="0" right="0" top="0" bottom="0" source="BgColor01_png"/>
+	<e:Image width="1080" height="278" x="0" y="0" anchorOffsetX="0" anchorOffsetY="0" source="friendtop_png"/>
+
+	<e:Scroller id="datascroll" width="1080" height="1591" x="0" y="313" anchorOffsetX="0" anchorOffsetY="0">
+		<e:List id="datalist" height="1324"/>
+	</e:Scroller>
+	<e:Image id="back" width="90.24" height="96" x="44.85" y="26.33" anchorOffsetX="0" anchorOffsetY="0" source="rank_back_png"/>
+	<e:Label text="新朋友" x="463.5" y="49" size="50" bold="true"/>
+
+
+	<e:Image id="friendSearch" width="102" height="74" x="928" y="167" anchorOffsetX="0" anchorOffsetY="0" source="friend_search_png"/>
+	<e:Image id="friendAdd" width="102" height="74" x="928" y="428" anchorOffsetX="0" anchorOffsetY="0" source="friend_add_png"/>
+
+	<e:Image width="90" height="90" x="58" y="428" anchorOffsetX="0" anchorOffsetY="0" source="indexadd_png" visible="false"/>
+	<e:Image width="90" height="74" x="185.5" y="428" anchorOffsetX="0" anchorOffsetY="0" source="indexadd_png" visible="false"/>
+	<e:Image width="90" height="74" x="436" y="428" anchorOffsetX="0" anchorOffsetY="0" source="indexadd_png" visible="false"/>
+	<e:Image width="90" height="74" x="301" y="428" anchorOffsetX="0" anchorOffsetY="0" source="indexadd_png" visible="false"/>
+
+	
+</e:Skin>
