@@ -328,6 +328,47 @@ class Main extends egret.DisplayObjectContainer {
                 request.send();
             }
         });
+        //google login
+        egret.ExternalInterface.addCallback("googleloginR",function(message:string){
+            console.log("message from Native google login is = "+message);
+            if (message != "")
+            {
+                //进行http登录
+                // var request = new egret.HttpRequest();
+                // var respHandler = function (evt) {
+                //     switch (evt.type) {
+                //         case egret.Event.COMPLETE:
+                //             var request = evt.currentTarget;
+                //             var result = JSON.parse(request.response);
+
+                //             if (result.status == 0)
+                //             {
+                //                 // window.alert(result.status + " | "+result.data.uid+" | " + new Date().toString());
+                //                 egret.localStorage.setItem(Constant.G_UID_KEY, result.data.uid);
+                //                 egret.localStorage.setItem(Constant.G_NICKNAME_KEY, result.data.truename);
+                //                 var timestr:string = String((Constant.G_USEREXPIRETIME_KEY, Date.parse(new Date().toString())/1000));
+                //                 egret.localStorage.setItem(Constant.G_USEREXPIRETIME_KEY,timestr);
+                //                 egret.localStorage.setItem(Constant.G_UNAME_KEY, result.data.username);
+                //                 self_m1.index();
+                //             } else {
+                //                 window.alert(result.reason);
+                //             }
+                //             break;
+                //         case egret.IOErrorEvent.IO_ERROR:
+                //             break;
+                //     }
+                // };
+                // request.once(egret.Event.COMPLETE, respHandler, self_m1);
+                // request.once(egret.IOErrorEvent.IO_ERROR, respHandler, self_m1);
+                // var url = Constant.getLoginUrl();
+                // var msgArr = JSON.parse(message);
+                // egret.localStorage.setItem(Constant.G_OPENID_KEY, msgArr.openid);
+                // // egret.ExternalInterface.call("showtest", msgArr.openid);
+                // url = url +"&c="+encodeURIComponent(message)+"&type=weixin&openid="+msgArr.openid+"&unionid="+msgArr.unionid;
+                // request.open(url, egret.HttpMethod.GET);
+                // request.send();
+            }
+        });
     }
 
     //进入游戏界面

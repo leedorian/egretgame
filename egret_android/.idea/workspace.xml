@@ -5,29 +5,329 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="34d5a63a-5de2-46bd-8bb2-d4cbb71e444a" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle____local_aars____Users_i326460_Works_myrepo_egretGame_egret_android_app_libs_httpclient_4_3_2_jar_unspecified_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle____local_aars____Users_i326460_Works_myrepo_egretGame_egret_android_app_libs_httpcore_4_3_1_jar_unspecified_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle____local_aars____Users_i326460_Works_myrepo_egretGame_egret_android_app_libs_httpmime_4_5_3_jar_unspecified_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle___egret__aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_tencent_mm_opensdk_wechat_sdk_android_with_mta_5_3_1_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_annotation_annotation_1_0_0_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_arch_core_core_common_2_0_0_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_arch_core_core_runtime_2_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_asynclayoutinflater_asynclayoutinflater_1_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_collection_collection_1_0_0_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_coordinatorlayout_coordinatorlayout_1_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_core_core_1_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_cursoradapter_cursoradapter_1_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_customview_customview_1_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_documentfile_documentfile_1_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_drawerlayout_drawerlayout_1_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_fragment_fragment_1_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_interpolator_interpolator_1_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_legacy_legacy_support_core_ui_1_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_legacy_legacy_support_core_utils_1_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_common_2_0_0_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_livedata_2_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_livedata_core_2_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_runtime_2_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_viewmodel_2_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_loader_loader_1_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_localbroadcastmanager_localbroadcastmanager_1_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_print_print_1_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_slidingpanelayout_slidingpanelayout_1_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_swiperefreshlayout_swiperefreshlayout_1_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_versionedparcelable_versionedparcelable_1_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_viewpager_viewpager_1_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_auth_17_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_auth_api_phone_17_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_auth_base_17_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_base_17_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_basement_17_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_tasks_17_0_0_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/js/assetsmanager.min_f2e50bd1.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/js/default.thm_afdd97c2.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/js/egret.min_1f88eb98.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/js/egret.web.min_2dd0bd72.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/js/eui.min_38a8c284.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/js/game.min_45aa06f6.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/js/main.min_edb19553.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/js/promise.min_83a6a5d.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/js/tween.min_6c5a88f9.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Bg01.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/BgColor01.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Destroy1.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/DestroyA1.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/DestroyA1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/DestroyA2.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/DestroyA2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/DestroyA3.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/DestroyA3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/DestroyA4.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/DestroyA4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/DestroyA5.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/DestroyA5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/FreezeA1.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/FreezeA1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/FreezeA2.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/FreezeA2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/FreezeA3.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/FreezeA3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/FreezeA4.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/FreezeA4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/FreezeA5.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/FreezeA5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/FreezeA6.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/FreezeA6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Login/GoogleBtn.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Login/WechatBtn.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Login/btnlogin.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Login/conn_with.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Login/signup.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Ngaan.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/ProgressBar/thumb_pb.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/ProgressBar/track_pb.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Purify.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Purify1.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Purify1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Purify2.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Purify2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Purify3.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Purify3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Purify4.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Purify4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Purify5.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Purify5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA1.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA10.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA10.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA11.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA11.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA12.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA13.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA13.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA14.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA14.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA15.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA15.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA16.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA17.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA17.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA2.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA3.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA4.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA5.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA6.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA7.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA8.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA8.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA9.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/PurifyA9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Purifying.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Quell1.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Quell1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Quell2.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Quell2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Quell3.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Quell3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Quell4.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Quell4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Quell5.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Quell5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/QuellA1.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/QuellA1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/QuellA10.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/QuellA10.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/QuellA2.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/QuellA2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/QuellA3.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/QuellA3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/QuellA4.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/QuellA4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/QuellA5.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/QuellA5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/QuellA6.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/QuellA6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/QuellA7.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/QuellA7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/QuellA8.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/QuellA8.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/QuellA9.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/QuellA9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Slider/thumb.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Slider/track.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/Slider/tracklight.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/b_black.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/b_black.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/b_black_rush.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/b_blue.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/b_blue.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/b_blue_rush.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/b_normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/b_purple.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/b_purple.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/b_purple_rush.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/b_red.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/b_red.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/b_red_rush.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/b_yellow.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/b_yellow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/b_yellow_rush.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/back.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/bg_score.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/blockFrame.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/box/msg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/box/msg_service.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/box/msg_top.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/box/msgtype_act.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/box/msgtype_sys.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/buttonBg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/freeze.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/freeze_disabled.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/friend/actionpoint_send_off.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/friend/actionpoint_send_on.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/friend/friend_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/friend/friend_3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/friend/friend_add.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/friend/friend_green.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/friend/friend_search.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/friend/friend_talk.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/friend/friend_yellow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/friend/friendtop.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/friend/reply.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/ice.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/iceCracking.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/index/indexadd.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/index/indexblcok.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/index/indexrank.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/index/indexscore.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/index/indexsetting.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/index/indextop.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/index/play.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/indexbg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/light.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/light.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/lone-wolf-short.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/midnight-ride.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/money.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/namelabel.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/normal_bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/nuke.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/nuke_disabled.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/pop/reviveclose.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/pop/revivecon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/pop/reviveimg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/pop/unreadbg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/pop/urgebg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/pop/urgeimg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/purify.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/purify_disabled.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/quell.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/quellEye.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/quqi.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/quqi_b.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/rank/rank_back.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/rank/rank_blue.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/rank/rank_green.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/rank/rank_no1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/rank/rank_no2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/rank/rank_no3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/rank/rank_orange.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/rank/rank_pic.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/rank/rank_red.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/rank/rank_topbg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/rank/rank_yellow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/revive.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/rock_bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/rush_bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/setting/music.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/setting/savesettingbtn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/setting/sound.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/setting/switch_off.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/setting/switch_on.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/shanguang.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/shanguang.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/shop/circle.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/shop/freeze_desc.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/shop/jingshi.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/shop/jingshi.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/shop/minus.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/shop/money_little.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/shop/money_much.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/shop/money_normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/shop/plus.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/shop/shopbg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/shop/shopbg2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/shop/shopbg3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/shop/shopbuy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/shop/shopcard.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/shop/shopdesc.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/shop/shopskillbg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/shop/shoptop.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/shop/skillselected.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/shop/yanmie.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/shop/yanmie.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/shop/zhenya.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/shop/zhenya.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/skull.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/skull_disabled.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/spark.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/tabcheck.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/tabuncheck.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/task/btn_receive.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/task/task-bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/task/task_close.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/task/task_finish.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/task/task_noticebg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/task/task_pic.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/task/task_pointpic.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/task/task_ppp.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/task/task_reward_bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/task/task_sbg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/task/task_star.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/task/task_tmp1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/task/task_tmp2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/toast-bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/unread.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/white_line.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/assets/wind.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/config/description.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/config/gameconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/config/gameconfig_comment.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/default.res.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/bin-release/web/190805185904/resource/default.thm.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/resource/default.thm.json" beforeDir="false" afterPath="$PROJECT_DIR$/../egret/resource/default.thm.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../egret/src/Main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../egret/src/Main.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.1.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.1.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.1.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.1.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.1.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.1.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.1.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.1.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.1.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.1.1/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.1.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.1.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/release/app-release.apk" beforeDir="false" afterPath="$PROJECT_DIR$/app/release/app-release.apk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/egret_android.iml" beforeDir="false" afterPath="$PROJECT_DIR$/egret_android.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/cn/joycells/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/cn/joycells/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/cn/joycells/wxapi/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/cn/joycells/wxapi/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/game/.empty" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/game/js/default.thm_afdd97c2.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/game/js/main.min_edb19553.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/game/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/game/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/game/resource/assets/freeze_disabled.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/game/resource/assets/freeze_disabled.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/game/resource/assets/nuke_disabled.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/game/resource/assets/nuke_disabled.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/game/resource/assets/purify_disabled.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/game/resource/assets/purify_disabled.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/game/resource/assets/shop/jingshi.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/game/resource/assets/shop/jingshi.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/game/resource/assets/shop/yanmie.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/game/resource/assets/shop/yanmie.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/game/resource/assets/shop/zhenya.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/game/resource/assets/shop/zhenya.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/game/resource/assets/skull_disabled.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/game/resource/assets/skull_disabled.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/game/resource/default.res.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/game/resource/default.res.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/game/resource/default.thm.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/game/resource/default.thm.json" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/build/classes/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -53,7 +353,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="58">
+            <state relative-caret-position="30">
               <caret line="9" column="5" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
             </state>
           </provider>
@@ -62,17 +362,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="735">
+            <state relative-caret-position="360">
               <caret line="49" column="69" selection-start-line="49" selection-start-column="69" selection-end-line="49" selection-end-column="69" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/cn/joycells/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="8" selection-start-column="8" selection-end-column="19" />
+            <state relative-caret-position="375">
+              <caret line="166" column="77" selection-start-line="166" selection-start-column="65" selection-end-line="166" selection-end-column="77" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -80,9 +380,31 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/cn/joycells/wxapi/Constants.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="7" column="47" selection-start-line="7" selection-start-column="31" selection-end-line="7" selection-end-column="47" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/cn/joycells/wxapi/WXEntryActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="399">
+              <caret line="234" column="24" selection-start-line="234" selection-start-column="24" selection-end-line="234" selection-end-column="56" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-          <provider selected="true" editor-type-id="text-editor" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="10" column="41" selection-start-line="10" selection-start-column="41" selection-end-line="10" selection-end-column="41" />
+            </state>
+          </provider>
           <provider editor-type-id="android-manifest" />
         </entry>
       </file>
@@ -92,7 +414,13 @@
     <findStrings>
       <find>Constants</find>
       <find>regToWx</find>
+      <find>wxloginR</find>
+      <find>wxentryactivity</find>
     </findStrings>
+    <dirStrings>
+      <dir>$PROJECT_DIR$/app/src/main/java</dir>
+      <dir>$PROJECT_DIR$/assets/game</dir>
+    </dirStrings>
   </component>
   <component name="GenerateSignedApkSettings">
     <option name="KEY_STORE_PATH" value="$PROJECT_DIR$/../../android/keystore/joycells" />
@@ -109,10 +437,12 @@
         <option value="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" />
         <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/java/cn/joycells/wxapi/Constants.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/cn/joycells/MainActivity.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds">
     <option name="y" value="23" />
     <option name="width" value="1440" />
     <option name="height" value="877" />
@@ -123,6 +453,65 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="egret_android" type="58d84e3e:PackageViewProjectNode" />
+              <item name="app" type="616d4139:PackageViewModuleNode" />
+            </path>
+            <path>
+              <item name="egret_android" type="58d84e3e:PackageViewProjectNode" />
+              <item name="app" type="616d4139:PackageViewModuleNode" />
+              <item name="cn.joycells" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="egret_android" type="58d84e3e:PackageViewProjectNode" />
+              <item name="app" type="616d4139:PackageViewModuleNode" />
+              <item name="cn.joycells" type="1f31426a:PackageElementNode" />
+              <item name="wxapi" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="egret_android" type="58d84e3e:PackageViewProjectNode" />
+              <item name="app" type="616d4139:PackageViewModuleNode" />
+              <item name="drawable" type="1f31426a:PackageElementNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="AndroidView">
+        <subPane>
+          <expand>
+            <path>
+              <item name="egret_android" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+            </path>
+            <path>
+              <item name="egret_android" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+            </path>
+            <path>
+              <item name="egret_android" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+            </path>
+            <path>
+              <item name="egret_android" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+              <item name="values" type="ddeffd01:AndroidResFolderTypeNode" />
+            </path>
+            <path>
+              <item name="egret_android" type="1abcf292:AndroidViewProjectNode" />
+              <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -165,64 +554,37 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="joycells" type="462c0819:PsiDirectoryNode" />
             </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="AndroidView">
-        <subPane>
-          <expand>
             <path>
-              <item name="egret_android" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="egret_android" type="b2602c69:ProjectViewProjectNode" />
+              <item name="egret_android" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="joycells" type="462c0819:PsiDirectoryNode" />
+              <item name="wxapi" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="egret_android" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="egret_android" type="b2602c69:ProjectViewProjectNode" />
+              <item name="egret_android" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="joycells" type="462c0819:PsiDirectoryNode" />
+              <item name="wxapi" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="egret_android" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+              <item name="egret_android" type="b2602c69:ProjectViewProjectNode" />
+              <item name="egret_android" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="assets" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
             </path>
             <path>
-              <item name="egret_android" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="values" type="ddeffd01:AndroidResFolderTypeNode" />
-            </path>
-            <path>
-              <item name="egret_android" type="1abcf292:AndroidViewProjectNode" />
-              <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="egret_android" type="58d84e3e:PackageViewProjectNode" />
-              <item name="app" type="616d4139:PackageViewModuleNode" />
-            </path>
-            <path>
-              <item name="egret_android" type="58d84e3e:PackageViewProjectNode" />
-              <item name="app" type="616d4139:PackageViewModuleNode" />
-              <item name="cn.joycells" type="1f31426a:PackageElementNode" />
-            </path>
-            <path>
-              <item name="egret_android" type="58d84e3e:PackageViewProjectNode" />
-              <item name="app" type="616d4139:PackageViewModuleNode" />
-              <item name="cn.joycells" type="1f31426a:PackageElementNode" />
-              <item name="wxapi" type="1f31426a:PackageElementNode" />
-            </path>
-            <path>
-              <item name="egret_android" type="58d84e3e:PackageViewProjectNode" />
-              <item name="app" type="616d4139:PackageViewModuleNode" />
-              <item name="drawable" type="1f31426a:PackageElementNode" />
+              <item name="egret_android" type="b2602c69:ProjectViewProjectNode" />
+              <item name="egret_android" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="assets" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="game" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -388,8 +750,6 @@
       <window_info id="Capture Tool" order="6" />
       <window_info id="Favorites" order="7" side_tool="true" />
       <window_info id="Resources Explorer" order="8" weight="0.3297568" />
-      <window_info anchor="bottom" id="Android Profiler" />
-      <window_info anchor="bottom" id="Logcat" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3299363" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -400,9 +760,10 @@
       <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49928468" weight="0.3299363" />
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5007153" side_tool="true" weight="0.3299363" />
       <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.49928468" weight="0.3299363" />
-      <window_info anchor="bottom" id="Build" order="10" visible="true" weight="0.32866243" />
+      <window_info anchor="bottom" id="Build" order="10" visible="true" weight="0.18598726" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.32992327" />
-      <window_info anchor="right" id="Device File Explorer" side_tool="true" />
+      <window_info anchor="bottom" id="Android Profiler" order="12" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Logcat" order="13" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -411,6 +772,7 @@
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info anchor="right" id="Palette&#9;" order="6" />
       <window_info anchor="right" id="Assistant" order="7" weight="0.3297568" />
+      <window_info anchor="right" id="Device File Explorer" order="8" side_tool="true" />
     </layout>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -438,6 +800,20 @@
         </entry>
       </map>
     </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$USER_HOME$/.gradle/gradle.properties">
@@ -453,40 +829,61 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/cn/joycells/service/readme.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/cn/joycells/wxapi/Constants.java">
+    <entry file="file://$PROJECT_DIR$/gradle.properties">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        <state relative-caret-position="150">
+          <caret line="10" column="41" selection-start-line="10" selection-start-column="41" selection-end-line="10" selection-end-column="41" />
         </state>
       </provider>
+      <provider editor-type-id="android-manifest" />
     </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="58">
+        <state relative-caret-position="30">
           <caret line="9" column="5" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="735">
+        <state relative-caret-position="360">
           <caret line="49" column="69" selection-start-line="49" selection-start-column="69" selection-end-line="49" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.tencent.mm.opensdk/wechat-sdk-android-with-mta/5.3.1/1230ece73032b3fb6ee655e069f3c6380a2aa899/wechat-sdk-android-with-mta-5.3.1.jar!/com/tencent/mm/opensdk/modelmsg/SendAuth.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="19" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/cn/joycells/wxapi/Constants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="47" selection-start-line="7" selection-start-column="31" selection-end-line="7" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/cn/joycells/wxapi/WXEntryActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="234" column="24" selection-start-line="234" selection-start-column="24" selection-end-line="234" selection-end-column="56" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/cn/joycells/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="8" selection-start-column="8" selection-end-column="19" />
+        <state relative-caret-position="375">
+          <caret line="166" column="77" selection-start-line="166" selection-start-column="65" selection-end-line="166" selection-end-column="77" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-      <provider editor-type-id="android-manifest" />
     </entry>
   </component>
 </project>
