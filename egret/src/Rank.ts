@@ -77,7 +77,7 @@ class Rank  extends eui.Component implements eui.UIComponent {
             this.loadScoreList();
         } else if(this.showType == 2)
         {
-            
+            this.loadWeekScoreList();
         } else {
             this.loadSingleScoreList();
         }
