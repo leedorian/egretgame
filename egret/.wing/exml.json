@@ -1,7 +1,10 @@
 {
-    "168a1cc9fac": {
-        "path": "Login.ts",
-        "class": "Login",
-        "parentPath": ""
-    }
+  "168a1cc9fac": {
+    "path": "Login.ts",
+    "class": "Login",
+    "parentPath": ""
+  },
+  "global": {
+    "globalAutoLayerMarkEnable": false
+  }
 }
