@@ -280,6 +280,14 @@ class Main extends egret.DisplayObjectContainer {
         this.addChild(shopskillScreen);
         shopskillScreen.addEventListener(GameEvent.GAME_INDEX, this.index, this);
     }
+    //游戏结束
+    private gameover():void{
+        this.removeChildren();
+        var gameoverSkin = new Gameover();
+        this.addChild(gameoverSkin);
+        gameoverSkin.addEventListener(GameEvent.GAME_INDEX, this.index, this);
+        gameoverSkin.addEventListener(GameEvent.GAME_START, this.startgame, this);
+    }
     private setNativeListener(): void{
         var self_m1 = this;
         egret.ExternalInterface.addCallback("getcode",function(message:string){
@@ -399,7 +407,8 @@ class Main extends egret.DisplayObjectContainer {
         this.addEventListener(GameEvents.PlayEvent.GAME_OVER, this._gameOver, this);
     }
     private _gameOver(oEvent){
-        this._gameOverButton.visible = true;
+        // this._gameOverButton.visible = true;
+        this.gameover();
     }
 
 
