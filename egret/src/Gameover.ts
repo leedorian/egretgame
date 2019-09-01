@@ -4,6 +4,8 @@ class Gameover extends eui.Component implements  eui.UIComponent {
     private playBtn:eui.Button;
     private currentRankingLabel:eui.Label;
     private weekRankingLabel:eui.Label;
+
+    private score:string = "";
 	public constructor() {
 		super();
         this.addEventListener(eui.UIEvent.CREATION_COMPLETE, this.initEui, this);
@@ -17,8 +19,15 @@ class Gameover extends eui.Component implements  eui.UIComponent {
         this.homepageBtn.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.indexCallBack, this);
         this.homepageBtn.addEventListener(egret.TouchEvent.TOUCH_END, this.indexCallBack, this);
         this.homepageBtn.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.indexCallBack, this);
-    }
 
+        this.score = egret.localStorage.getItem(Constant.G_GAME_SCORE_KEY);
+        this.scoreLabel.text = this.score;
+        //获取当前名次
+        this.loadMyRank();
+    }
+    private loadMyRank(){
+
+    }
     private playCallback(evt:egret.TouchEvent){
         if(evt.type == egret.TouchEvent.TOUCH_BEGIN){
             evt.currentTarget.scaleX = 1.05;

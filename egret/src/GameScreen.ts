@@ -135,6 +135,7 @@ class GameScreen extends egret.Sprite {
     }
     private _gameOver() {
         console.log(this._score.score);
+        egret.localStorage.setItem(Constant.G_GAME_SCORE_KEY, String(this._score.score)); 
         //Send game score
         Service.gameScore({
             level: this._gameScene.getLevel(),
