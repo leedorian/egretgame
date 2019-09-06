@@ -12,6 +12,7 @@ class Constant {
     public static G_MUSIC_DEFAULTVAL:number = 100;
     public static G_MUSIC_VAL_KEY:string = "G_MUSIC_VAL_KEY";//音量大小
     public static G_MUSIC_STATE_KEY:string = "G_MUSIC_STATE_KEY";//音量是否开始
+    public static G_GAME_SCORE_KEY:string = "G_GAME_SCORE_KEY"; //游戏记录
     
     //接口错误码
     public static ERR_LOGINED:number = -214;             //已经登录

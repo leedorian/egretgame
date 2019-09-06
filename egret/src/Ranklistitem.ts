@@ -28,13 +28,19 @@ class Ranklistitem  extends eui.Component implements eui.UIComponent {
         // this.loadAvater(this.avaterUrl);
         this.nicktext.text = this.nickStr;
         this.scoretext.text = this.scoreStr;
-        this.rank_pic.texture = RES.getRes(this.picRes);
+        // this.rank_pic.texture = RES.getRes(this.picRes);
         this.rank_num.text = this.numStr;
         this.bg.texture = RES.getRes(this.bgRes);
         this.loadAvater(this.avaterUrl);
     }
     private loadAvater(url:string):void
     {
+        // if(url.indexOf("?") > 0){
+        //     url += "&"+Math.random()
+        // } else {
+        //     url += "?"+Math.random()
+        // }
+        // console.log(url);
         var self11 = this;
         let imgLoader = new egret.ImageLoader();
         imgLoader.crossOrigin = "anonymous";// 跨域请求

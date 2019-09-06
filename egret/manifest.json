@@ -23,6 +23,7 @@
 		"bin-debug/Events.js",
 		"bin-debug/Friend.js",
 		"bin-debug/GameEvent.js",
+		"bin-debug/Gameover.js",
 		"bin-debug/GameScene.js",
 		"bin-debug/GameScreen.js",
 		"bin-debug/Index.js",

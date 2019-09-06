@@ -27,7 +27,8 @@
 		"Login": "resource/skins/Login.exml",
 		"Setting": "resource/skins/Setting.exml",
 		"SearchFrienditem": "resource/skins/SearchFrienditem.exml",
-		"Shopskill": "resource/skins/Shopskill.exml"
+		"Shopskill": "resource/skins/Shopskill.exml",
+		"Gameover": "resource/skins/Gameover.exml"
 	},
 	"autoGenerateExmlsList": true,
 	"exmls": [
@@ -53,6 +54,7 @@
 		"resource/skins/Friendadd.exml",
 		"resource/skins/Friendadditem.exml",
 		"resource/skins/Frienditem.exml",
+		"resource/skins/Gameover.exml",
 		"resource/skins/Indexcon.exml",
 		"resource/skins/Login.exml",
 		"resource/skins/Message.exml",
