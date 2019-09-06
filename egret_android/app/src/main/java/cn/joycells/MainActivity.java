@@ -164,7 +164,7 @@ public class MainActivity extends Activity {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
             // Signed in successfully, show authenticated UI.
-            MainActivity.sendContentToJs(account.getPhotoUrl(), "googleloginR");
+            MainActivity.sendContentToJs(account.getPhotoUrl().toString(), "googleloginR");
 
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.

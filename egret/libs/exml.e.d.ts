@@ -54,6 +54,8 @@ declare module skins{
 	class VSliderSkin extends eui.Skin{
 	}
 }
+declare class GoogleBtn extends eui.Skin{
+}
 declare class WechatBtn extends eui.Skin{
 }
 declare class LoginSkin extends eui.Skin{

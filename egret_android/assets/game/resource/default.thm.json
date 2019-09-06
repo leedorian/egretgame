@@ -47,6 +47,7 @@
 		"resource/eui_skins/urgeSkin.exml",
 		"resource/eui_skins/VScrollBarSkin.exml",
 		"resource/eui_skins/VSliderSkin.exml",
+		"resource/skins/Button/GoogleBtn.exml",
 		"resource/skins/Button/WechatBtn.exml",
 		"resource/skins/Friend.exml",
 		"resource/skins/Friendadd.exml",

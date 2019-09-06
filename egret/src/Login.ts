@@ -1,27 +1,18 @@
 class Login extends eui.Component implements  eui.UIComponent {
-	public bgIMG:eui.Image;
+	private WechatLoginBtn:eui.Button;
+	private GoogleLoginBtn:eui.Button;
 	public constructor() {
 		super();
-		this.addEventListener(egret.Event.ADDED_TO_STAGE, this.autoFitStage, this);
-		this.addEventListener(eui.UIEvent.CREATION_COMPLETE, this.resize, this)
+        this.addEventListener(eui.UIEvent.CREATION_COMPLETE, this.initEui, this);
 	}
-
-	protected partAdded(partName:string,instance:any):void
-	{
-		super.partAdded(partName,instance);
-	}
-
-
-	protected childrenCreated():void
-	{
-		super.childrenCreated();
-	}
-	
-	autoFitStage():void{
-		this.height = Utils.getStageHeight();
-		this.width = Utils.getStageWidth();
-	}
-	resize():void{
-		Utils.fitToWidth(this.bgIMG, this.width);
-	}
+    private initEui():void{
+        this.WechatLoginBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+            console.log("点击了微信登录按钮.........");
+            egret.ExternalInterface.call("sendToNative", "wxlogin");
+        }, this);
+		this.GoogleLoginBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+            console.log("点击了Goolge登录按钮.........");
+            egret.ExternalInterface.call("sendToNative", "googlelogin");
+        }, this);
+    }
 }
