@@ -210,4 +210,7 @@ class Constant {
     public static giveActionPointUrl():string{
         return Constant._baseURL+"index.php?m=game&f=friend&v=giveActionPoint";
     }
+    public static getTaskUrl():string {
+        return Constant._baseURL+"index.php?m=game&f=index&v=getTaskList";
+    }
 }
