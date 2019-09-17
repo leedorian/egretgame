@@ -1,6 +1,8 @@
 class TaskUI extends eui.Component implements eui.UIComponent{
     private btnClose:eui.Button;
-    
+    private task_date:eui.Label;
+    private task_desc:eui.Label;
+    private taskDataProcess:eui.ProgressBar;
     constructor() {
         super();
         this.addEventListener( eui.UIEvent.COMPLETE, this.uiCompHandler, this );
@@ -14,6 +16,9 @@ class TaskUI extends eui.Component implements eui.UIComponent{
             console.log("点击了关闭按钮.........");
             self00.parent.removeChild(self00);
         }, this );
+        this.task_date.visible = false;
+        this.taskDataProcess.minimum = 0;
+        this.getTaskList();
     }
     private getTaskList(){
         var self = this;
@@ -28,6 +33,17 @@ class TaskUI extends eui.Component implements eui.UIComponent{
                         var dataArr = result.rows;
                         if(dataArr.length > 0) {
                             //目前只取一个任务显示
+                            var reward_type = dataArr[0]["reward_type"];
+                            var reward_num = dataArr[0]["reward_num"];
+                            var curr_num = dataArr[0]["curr_num"];
+                            var target_num = dataArr[0]["target_num"];
+                            self.taskDataProcess.maximum = target_num;
+                            if(target_num >= curr_num) {//表示完成了任务
+                                self.taskDataProcess.value = target_num;
+                            } else {
+                                self.taskDataProcess.value = curr_num;
+                            }
+                            self.task_desc.text = dataArr[0].descript;
                         }
                     } else {
                         //window.alert(result.reason+","+result.status);
