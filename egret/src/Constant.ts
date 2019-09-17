@@ -38,6 +38,11 @@ class Constant {
     public static ERR_NEEDSETPWD:number = -237;//请先设置密码
     public static ERR_NOLOGIN:number = -238;//未登陆
     public static ERR_MOBILE_EXISTS:number = -239;//手机号已经存在
+    public static ERR_PARAMERROR:number = -240;//参数错误
+    public static ERR_NODATA:number = -241;//数据不存在
+    public static ERR_HAVE_RECEIVE:number = -242;//已经领取过了
+
+
 
     public static ERR_BINDFAIL:number = -1000;//账号绑定失败
     public static ERR_GAME_TOKEN:number = -1001;//token验证错误
@@ -125,6 +130,15 @@ class Constant {
             case Constant.ERR_GAME_TOKEN:
                 desc = "token验证错误";
                 break;
+            case Constant.ERR_PARAMERROR:
+                desc = "参数错误";
+                break;
+            case Constant.ERR_NODATA:
+                desc = "数据不存在";
+                break;
+            case Constant.ERR_HAVE_RECEIVE:
+                desc = "已经领取过了";
+                break;
             
         }
         return desc;
@@ -210,7 +224,16 @@ class Constant {
     public static giveActionPointUrl():string{
         return Constant._baseURL+"index.php?m=game&f=friend&v=giveActionPoint";
     }
+    //获取任务列表url
     public static getTaskUrl():string {
         return Constant._baseURL+"index.php?m=game&f=index&v=getTaskList";
+    }
+    //完成任务奖励url
+    public static receiveTaskReward():string{
+        return Constant._baseURL+"index.php?m=game&f=index&v=receiveTaskReward";
+    }
+    //获取我的排名
+    public static getMyRankUrl():string{
+        return Constant._baseURL+"index.php?m=game&f=index&v=getMyRank";
     }
 }

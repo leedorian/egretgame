@@ -29,8 +29,8 @@
 		</e:skinName>
 	</e:Button>
 	<e:Label text="Current Ranking" x="107" y="1410" size="50" anchorOffsetX="0" width="371" textColor="0xfcf3af"/>
-	<e:Label id="currentRankingLabel" text="1023" x="96.5" y="1517" size="60" anchorOffsetX="0" width="371" textColor="0xFCF3AF" textAlign="right" bold="true"/>
-	<e:Label id="weekRankingLabel" text="189" x="539" y="1517" size="60" anchorOffsetX="0" width="371" textColor="0xFCF3AF" textAlign="right" bold="true"/>
+	<e:Label id="currentRankingLabel" text="0" x="96.5" y="1517" size="60" anchorOffsetX="0" width="371" textColor="0xFCF3AF" textAlign="right" bold="true"/>
+	<e:Label id="weekRankingLabel" text="0" x="539" y="1517" size="60" anchorOffsetX="0" width="371" textColor="0xFCF3AF" textAlign="right" bold="true"/>
 	<e:Label text="Week Ranking" x="584.5" y="1410" size="50" anchorOffsetX="0" width="371" textColor="0xFCF3AF"/>
 
 

@@ -12,12 +12,12 @@
 	<e:Image id="task_pic" width="867.64" height="565.46" x="100.11" y="545.25" anchorOffsetX="0" anchorOffsetY="0" source="task_pic_png"/>
 	<e:Image width="900.3" height="316.09" x="80.47" y="1230.7" anchorOffsetX="0" anchorOffsetY="0" source="task_sbg_png"/>
 	<e:Image width="47.27" height="96.54" x="808.8" y="1420.47" source="task_star_png" fillMode="scale" anchorOffsetX="0" anchorOffsetY="0"/>
-	<e:Label id="task_desc" text="删除90个黑块" x="304.3" y="1302.75" anchorOffsetX="0" width="452.64" textAlign="center" size="50"/>
+	<e:Label id="task_desc" text="消除90个黑块" x="304.3" y="1302.75" anchorOffsetX="0" width="452.64" textAlign="center" size="50"/>
 	<e:Label text="REWARD" x="126.3" y="1600.01" textColor="0x56331d" size="40" bold="true"/>
 	<e:Image width="297.48" height="64.33" x="392.87" y="1593.3" anchorOffsetX="0" anchorOffsetY="0" source="task_reward_bg_png"/>
 	<e:Image width="82.42" height="82.42" x="357.98" y="1573.65" source="task_pointpic_png" anchorOffsetX="0" anchorOffsetY="0"/>
-	<e:Image width="47.27" height="50.3" x="416.77" y="1614.86" source="task_finish_png" anchorOffsetX="0" anchorOffsetY="0"/>
-	<e:Label id="task_reward" text="299" x="556.41" y="1605.01" size="35"/>
+	<e:Image id="task_finish" width="47.27" height="50.3" x="416.77" y="1614.86" source="task_finish_png" anchorOffsetX="0" anchorOffsetY="0"/>
+	<e:Label id="task_reward" text="0" x="490.41" y="1605.01" size="35" textAlign="center" anchorOffsetX="0" width="159" anchorOffsetY="0" height="33"/>
 	<e:Button id="receive_btn" label="" x="739.47" y="1584.89" anchorOffsetX="0" width="226.49" anchorOffsetY="0" height="75.24">
 		<e:skinName>
 			<e:Skin states="up,down,disabled">
