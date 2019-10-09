@@ -208,8 +208,8 @@ class Main extends egret.DisplayObjectContainer {
 
         //判断是否登录
 
-        // this.checkLogin();
-        this.index();
+        this.checkLogin();
+        // this.index();
     }
     private checkLogin():void{
         var uid = egret.localStorage.getItem(Constant.G_UID_KEY);
