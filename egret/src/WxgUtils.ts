@@ -15,6 +15,12 @@ class WxgUtils{
     {
         return "token="+egret.localStorage.getItem(Constant.G_TOKEN_KEY)+"&uname="+egret.localStorage.getItem(Constant.G_UNAME_KEY);
     }
+    public static log(logstr:string){
+        if(Constant.isdebug){
+            console.log(logstr);
+        }
+        
+    }
     //检测token
     public static checkToken():void
     {

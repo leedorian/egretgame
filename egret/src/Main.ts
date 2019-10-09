@@ -427,16 +427,16 @@ class Main extends egret.DisplayObjectContainer {
     }
     private _testBtn(){
         //进入测试的界面
-        console.log("点击了测试按钮哦..................我哈哈");
+        // console.log("点击了测试按钮哦..................我哈哈");
         var ymd = WxgUtils.getYmd(new Date().getTime());
         var lookYmd = egret.localStorage.getItem(Constant.G_FIRST_LOOKDATE);
-        if(lookYmd == null || lookYmd == "" || lookYmd != ymd){
+        // if(lookYmd == null || lookYmd == "" || lookYmd != ymd){
             egret.localStorage.setItem(Constant.G_FIRST_LOOKDATE, ymd);
             var taskUI = new TaskUI();
             taskUI.x = 0;
             taskUI.y = 0;
             this.addChild(taskUI);
-        }
+        // }
     }
     private _restartGame() {
         this._startButton.visible = true;

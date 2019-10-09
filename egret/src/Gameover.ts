@@ -42,7 +42,7 @@ class Gameover extends eui.Component implements  eui.UIComponent {
                     } else {
                         Toast.launch(Constant.getErrorDesc(result.status));
                         //window.alert(result.reason+","+result.status);
-                        console.log("getTaskList err =>" + result.reason+","+result.status);
+                        WxgUtils.log("getTaskList err =>" + result.reason+","+result.status);
                     }
                     break;
                 case egret.IOErrorEvent.IO_ERROR:

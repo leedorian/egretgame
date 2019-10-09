@@ -6,7 +6,7 @@ class TaskUI extends eui.Component implements eui.UIComponent{
     private task_finish:eui.Image;
     private task_reward:eui.Label;
     private receive_btn:eui.Button;
-
+    private percent_label:eui.Label;
     //数据
     private currNum:number;
     private targetNum:number;
@@ -84,12 +84,13 @@ class TaskUI extends eui.Component implements eui.UIComponent{
                         var dataArr = result.rows;
                         if(dataArr.length > 0) {
                             //目前只取一个任务显示
-                            var reward_type = dataArr[0]["reward_type"];
-                            var reward_num = dataArr[0]["reward_num"];
-                            var curr_num = dataArr[0]["curr_num"];
-                            var target_num = dataArr[0]["target_num"];
-                            var taskid = dataArr[0]["id"];
-                            var iscomplete = dataArr[0]["iscomplete"];
+                            
+                            var reward_type = Number(dataArr[0]["reward_type"]);
+                            var reward_num = Number(dataArr[0]["reward_num"]);
+                            var curr_num = Number(dataArr[0]["curr_num"]);
+                            var target_num = Number(dataArr[0]["target_num"]);
+                            var taskid = Number(dataArr[0]["id"]);
+                            var iscomplete = Number(dataArr[0]["iscomplete"]);
                             if(iscomplete == 1) {
                                 self.receive_btn.enabled = false;
                             }
@@ -97,21 +98,25 @@ class TaskUI extends eui.Component implements eui.UIComponent{
                             self.currNum = curr_num;
                             self.targetNum = target_num;
                             self.taskDataProcess.maximum = target_num;
+                            WxgUtils.log(curr_num + " _ " + target_num);
                             if(target_num <= curr_num) {//表示完成了任务
+                                WxgUtils.log("任务完成了");
                                 self.taskDataProcess.value = target_num;
                                 self.task_finish.visible = true;
                             } else {
                                 self.taskDataProcess.value = curr_num;
                                 self.task_finish.visible = false;
                             }
+                            self.percent_label.text = curr_num + " / " + target_num;
+                            WxgUtils.log("self.taskDataProcess.value = " + self.taskDataProcess.value);
                             self.task_desc.text = dataArr[0].descript;
                             if(reward_type == 1) {
-                                self.task_reward.text = reward_num;
+                                self.task_reward.text = String(reward_num);
                             }
                         }
                     } else {
                         //window.alert(result.reason+","+result.status);
-                        console.log("getTaskList err =>" + result.reason+","+result.status);
+                        WxgUtils.log("getTaskList err =>" + result.reason+","+result.status);
                     }
                     break;
                 case egret.IOErrorEvent.IO_ERROR:

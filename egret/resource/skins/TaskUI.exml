@@ -37,5 +37,6 @@
 	<e:Image width="155.58" height="135.28" x="64.09" y="1746.84" anchorOffsetX="0" anchorOffsetY="0" source="task_ppp_png"/>
 	<e:Label text="Daily missions end at midnight and Moday" x="304.79" y="1782.12" anchorOffsetX="0" width="562.24" textAlign="center" size="50" textColor="0xfff4af"/>
 	<e:Image id="task_percent" width="641.54" height="66.36" x="189.66" y="1435.56" anchorOffsetX="0" anchorOffsetY="0" source="task_noticebg_png"/>
-	<e:ProgressBar id="taskDataProcess" width="618" height="64" x="204.77" y="1435.56" anchorOffsetX="0" anchorOffsetY="0" enabled="true"/>
+	<e:ProgressBar id="taskDataProcess" width="618" height="64" x="204.77" y="1435.56" anchorOffsetX="0" anchorOffsetY="0" enabled="true" visible="false"/>
+	<e:Label id="percent_label" text="" x="189.66" y="1435.56" anchorOffsetX="0" width="646" anchorOffsetY="0" height="70" textAlign="center" verticalAlign="middle"/>
 </e:Skin>

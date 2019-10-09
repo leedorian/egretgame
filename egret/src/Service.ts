@@ -124,6 +124,7 @@ class Service {
 
         request.once(egret.Event.COMPLETE, respHandler, this);
         request.once(egret.IOErrorEvent.IO_ERROR, respHandler, this);
+        console.log(Service.gameScoreURL + "&" + WxgUtils.getTokenParam() + "&level=" + oResult.level + "&score=" + oResult.score.score + "&gdata=" + JSON.stringify(oGdata), egret.HttpMethod.GET);
         request.open(Service.gameScoreURL + "&" + WxgUtils.getTokenParam() + "&level=" + oResult.level + "&score=" + oResult.score.score + "&gdata=" + JSON.stringify(oGdata), egret.HttpMethod.GET);
         request.send();
     }
