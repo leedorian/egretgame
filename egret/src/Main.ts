@@ -114,7 +114,7 @@ class Main extends egret.DisplayObjectContainer {
                     openid = "o7Vp401Z9LZaQoBfO1Zq_wfN7QSk";
                     egret.localStorage.setItem(Constant.G_UNAME_KEY, "g1561620209406139");
                 }
-            }
+            } 
             url = url +"&openid="+openid;
             // console.log(url);
             request.open(url, egret.HttpMethod.GET);
