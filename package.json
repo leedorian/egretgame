@@ -19,7 +19,7 @@
         "babel-cli": "^6.26.0",
         "run-sequence": "^2.2.1",
         "del": "^3.0.0",
-        "gulp": "^3.9.1",
+        "gulp": "^4.0.2",
         "gulp-rename": "^1.2.2",
         "gulp-sftp": "^0.1.5"
     }
